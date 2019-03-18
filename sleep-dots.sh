@@ -15,12 +15,7 @@ char_print() {
   echo -en "${v// /${str}}"
 }
 
-# Check for invalid script usage. All tests should fail.
-[ "${#@}" -eq 1 ] ||
-[ "$1" == "--help" ] ||
-[ "$1" == "-h" ] ||
-[[ $1 != *[!0-9]* ]] &&
-{ usage ; exit 1 ; }
+[[ "$1" =~ ^[0-9]+$ ]] || { usage ; exit 1 ; }
 
 char_print '.' "$1"
 char_print '\b' "$(( "$1" + 1))"
