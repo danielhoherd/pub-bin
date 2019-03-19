@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Author: github.com/danielhoherd
 
 usage() {
   cat <<EOF

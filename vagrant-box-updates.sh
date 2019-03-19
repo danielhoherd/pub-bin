@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Author: github.com/danielhoherd
 # Updates all downloaded vagrant boxes to the latest version and deletes old box versions
 
 check_for_required_commands() {

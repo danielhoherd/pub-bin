@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Author: daniel.hoherd@renovo.auto
+# Author: github.com/danielhoherd
 # Purpose: Parses arpwatch logs from into a date sorted table
 
 check_for_required_commands() {

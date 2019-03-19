@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Iterate code dirs and pull svn and git updates
-# daniel.hoherd@gmail.com
+# github.com/danielhoherd
 
 usage() {
   echo "Usage:  ${0##*/} [-a] [-x]"

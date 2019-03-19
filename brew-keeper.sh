@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Author: github.com/danielhoherd
 # Attempts to keep homebrew running and current
 
 [ "$(uname)" == 'Darwin' ] || { echo "ABORT: This is meant for OS X." ; exit 1 ; }
