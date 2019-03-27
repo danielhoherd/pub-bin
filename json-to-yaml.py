@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# Author: github.com/danielhoherd
+# License: Unlicense
 import json
 import sys
 

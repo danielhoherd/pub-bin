@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
+# License: Unlicense
 set -e
 
 usage() {
