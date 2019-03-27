@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Author: github.com/danielhoherd
+# License: Unlicense
+# Spawn a new container and drop into a shell
+
+readonly IMAGE="$1"
+shift
+
+kubectl run --restart=Never --rm -t -i "${USER//./-}-test-$(date +%s)" --image="${IMAGE:-danielhoherd/uw}" "${@:-bash}"
