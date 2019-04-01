@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Author: github.com/danielhoherd
+# License: Unlicense
+# Formats `docker ps` in a vertical style similar to mysql's \G
+
+# https://docs.docker.com/engine/reference/commandline/ps/#formatting
+
+docker ps --format="Container ID: {{.ID}}
+    .Image:       {{.Image}}
+    .Command:     {{.Command}}
+    .CreatedAt:   {{.CreatedAt}}
+    .RunningFor:  {{.RunningFor}}
+    .Ports:       {{.Ports}}
+    .Status:      {{.Status}}
+    .Size:        {{.Size}}
+    .Names:       {{.Names}}
+    .Labels:      {{.Labels}}" "$@"
