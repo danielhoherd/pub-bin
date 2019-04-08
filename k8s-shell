@@ -6,4 +6,4 @@
 readonly IMAGE="$1"
 shift
 
-kubectl run --restart=Never --rm -t -i "${USER//./-}-test-$(date +%s)" --image="${IMAGE:-danielhoherd/uw}" "${@:-bash}"
+kubectl run --restart=Never --rm -t -i "${USER//./-}-test-${EPOCHSECONDS}" --image="${IMAGE:-danielhoherd/uw}" "${@:-bash}"
