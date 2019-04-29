@@ -1,0 +1,4 @@
+# https://github.com/ambv/black#configuration-format
+[tool.black]
+line-length = 132
+exclude = '(venv)'
