@@ -4,7 +4,7 @@
 
 help() {
   echo "Shows some metadata for the given media files."
-  echo "See also: http://danielhoherd.com/tech-notes/exiftool/"
+  echo "See also: https://danielhoherd.com/tech-notes/exiftool/"
 }
 
 while getopts hv option
