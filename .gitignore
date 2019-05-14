@@ -11,5 +11,6 @@
 *~
 .DS_Store
 .idea
+.mypy_cache
 build
 dist

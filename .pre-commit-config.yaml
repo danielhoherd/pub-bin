@@ -26,6 +26,11 @@ repos:
     rev: 19.3b0
     hooks:
       - id: black
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v0.701
+    hooks:
+      - id: mypy
+        args: ['--no-strict-optional', '--ignore-missing-imports', '--python-version', '3.6']
   - repo: https://github.com/Lucas-C/pre-commit-hooks
     rev: v1.1.6
     hooks:
@@ -42,3 +47,4 @@ repos:
       - id: remove-unicode-non-breaking-spaces
       - id: remove-unicode-zero-width-non-breaking-spaces
       - id: remove-en-dashes
+      - id: sort-gitignore
