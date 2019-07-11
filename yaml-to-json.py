@@ -13,7 +13,7 @@ if len(sys.argv) > 1:
                 for doc in yaml.safe_load_all(f):
                     print(json.dumps(doc))
             except yaml.scanner.ScannerError as err:
-                sys.stderr.write("ERROR: {0} could not be parsed\n{1}\n".format(filename, err))
+                sys.stderr.write(f"ERROR: {filename} could not be parsed\n{err}\n")
             except KeyboardInterrupt:
                 sys.exit(1)
 

@@ -12,11 +12,11 @@ if len(sys.argv) > 1:
             try:
                 print(yaml.safe_dump(json.load(f), default_flow_style=False))
             except json.decoder.JSONDecodeError as err:
-                sys.stderr.write("ERROR: {0} could not be parsed\n{1}\n".format(filename, err))
+                sys.stderr.write(f"ERROR: {filename} could not be parsed\n{err}\n")
 else:
     try:
         print(yaml.dump(json.load(sys.stdin), default_flow_style=False))
     except json.decoder.JSONDecodeError as err:
-        sys.stderr.write("ERROR: stdin could not be parsed\n{0}\n".format(err))
+        sys.stderr.write(f"ERROR: stdin could not be parsed\n{err}\n")
     except KeyboardInterrupt:
         sys.exit(1)
