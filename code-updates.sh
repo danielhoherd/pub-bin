@@ -9,8 +9,7 @@ usage() {
   echo "    -x  Enable xtrace"
 }
 
-while getopts anx option
-do
+while getopts anx option ; do
   case "${option}"
   in
   a) aggressive=yes ;;
@@ -19,6 +18,7 @@ do
   *) usage ; exit 1 ;
   esac
 done
+shift $((OPTIND - 1))
 
 export GC_TYPE='--auto'
 export GIT_SSH_COMMAND="ssh -o ConnectTimeout=5"
