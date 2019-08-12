@@ -3,9 +3,36 @@
 # License: Unlicense
 # Spawn a new container and drop into a shell
 
+usage(){ cat <<EOF
+Launches a k8s pod with an optional docker container given.
+
+-h  Print help
+-n  Specify a node
+-x  Enable xtrace
+
+${0##*/} [-x] [-n k8s-nodename] [docker-image]
+EOF
+}
+
+while getopts xn: option ; do
+  case "${option}"
+  in
+  x) set -x ;;
+  n) node="$OPTARG" ;;
+  *) usage ; exit 1 ;
+  esac
+done
+shift $((OPTIND - 1))
+
 readonly IMAGE="$1"
 shift
 
 epochtime="$(date +%s)"
 
-kubectl run --restart=Never --rm -t -i "${USER//./-}-test-${epochtime}" --image="${IMAGE:-danielhoherd/uw}" "${@:-bash}"
+extra_args=()
+
+if [ -n "$node" ] ; then
+  extra_args+=( '--overrides={ "spec": { "nodeSelector": { "kubernetes.io/hostname": "'"$node"'" } } }'  )
+fi
+
+kubectl run "${extra_args[@]}" --restart=Never --rm -t -i "${USER//./-}-test-${epochtime}" --image="${IMAGE:-danielhoherd/uw}" "${@:-bash}"
