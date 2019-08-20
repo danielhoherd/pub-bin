@@ -18,15 +18,17 @@ done
 shift $((OPTIND - 1))
 
 [ $# -ne 3 ] && { echo "ERROR" ; usage ; exit 1 ; }
-CODE_DIR="$1"
-EMAIL="$2"
-NAME="$3"
+code_dir="$1"
+git_user_email="$2"
+git_user_name="$3"
 
-find "$CODE_DIR" -maxdepth 1 -mindepth 1 -type d | while read -r DIR ; do
+[ -d "${code_dir}" ] || { echo "ABORT: ${code_dir} does not exist." ; exit 1 ; }
+
+find "${code_dir}" -maxdepth 1 -mindepth 1 -type d | while read -r DIR ; do
   (
     [ "${VERBOSE}" == 1 ] || [ "${VERBOSE}" == "true" ] && set -x
     cd "$DIR"
-    git config --local user.email "$EMAIL"
-    git config --local user.name "$NAME"
+    git config --local user.email "${git_user_email}"
+    git config --local user.name "${git_user_name}"
   )
 done
