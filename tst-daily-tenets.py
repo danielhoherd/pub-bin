@@ -43,11 +43,6 @@ def main(random, all, id):
     if option_count > 1:
         raise click.UsageError("Only one option is allowed.")
 
-    elif id:
-        if id > 7:
-            raise click.UsageError("There are only 7 tenets.")
-        click.echo(wrapped_tenets[id - 1])
-
     elif random:
         click.echo(wrapped_tenets[randint(0, 6)])
 
