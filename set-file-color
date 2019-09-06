@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+command -v osascript &>/dev/null || { echo "osascript is required, are you using OS X?" >&2 ; exit 1 ; }
+
+usage() {
+    echo "Usage: $0 <filename> <int 0-7>"
+    exit
+}
+
+[ $# -eq 2 ] || usage
+
+file="$1"
+test -L "$1" && file="$(readlink "$1")"
+
+osascript -e "tell application \"Finder\" to set label index of alias POSIX file \"$file\" to \"$2\"" 2>/dev/null || { echo ERROR ; usage ; }

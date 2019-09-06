@@ -1,0 +1,138 @@
+#!/usr/bin/env bash
+# iTunes controller for bash by daniel hoherd 2012-08-03
+
+command -v osascript &>/dev/null || { echo "osascript is required, are you using OS X?" >&2 ; exit 1 ; }
+
+function script_usage {
+  cat <<EOF
+Usage: ${0##*/} <verb>
+
+Verbs:
+  pl (play)
+  pa (pause)
+  pp (playpause)
+  st (stop)
+  n (next)
+  pr (previous)
+  vu (volup)
+  vd (voldown)
+  mute
+  unmute
+  rate [0-5]
+  open
+  quit
+  restart
+EOF
+}
+
+if [ $# -lt 1 ] ; then
+  script_usage ;
+  exit ;
+fi
+
+play='tell application "iTunes" to play'
+pause='tell application "iTunes" to pause'
+playpause='tell application "iTunes" to playpause'
+stop='tell application "iTunes" to stop'
+next='tell application "iTunes" to next track'
+prev='tell application "iTunes" to previous track'
+rate="tell application \"iTunes\" to set rating of current track to $(( ${2:-0} * 20 ))"
+get_rating='tell application "iTunes" to get rating of current track'
+title='tell application "iTunes" to name of current track as string'
+volup='tell application "iTunes" to set sound volume to sound volume + 5'
+voldown='tell application "iTunes" to set sound volume to sound volume - 5'
+setvol="tell application \"iTunes\" to set sound volume to $2"
+getvol='tell application "iTunes" to sound volume as integer'
+unmute='tell application "iTunes" to set mute to false'
+mute='tell application "iTunes" to set mute to true'
+quit='tell application "iTunes" to quit'
+
+case "$1" in
+  play | pl )
+    osascript -e "${play}"
+  ;;
+
+  pause | pa )
+    osascript -e "${pause}"
+  ;;
+
+  playpause | pp )
+    osascript -e "${playpause}"
+  ;;
+
+  stop | st )
+    osascript -e "${stop}"
+  ;;
+
+  next | n )
+    osascript -e "${next}"
+  ;;
+
+  prev | pr )
+    osascript -e "${prev}"
+  ;;
+
+  setvol )
+    osascript -e "${setvol}"
+  ;;
+
+  getvol )
+    osascript -e "${getvol}"
+  ;;
+
+  mute )
+    osascript -e "${mute}"
+  ;;
+
+  unmute )
+    osascript -e "${unmute}"
+  ;;
+
+  title )
+    osascript -e "${title}"
+  ;;
+
+  volup | vu )
+    osascript -e "${volup}"
+  ;;
+
+  voldown | vd )
+    osascript -e "${voldown}"
+  ;;
+
+  rate )
+    if [ $# -ne 2 ] ; then
+      rating=$(osascript -e "${get_rating}")
+      echo "$(( rating / 20 ))"
+    else
+      osascript -e "${rate}"
+    fi
+  ;;
+
+  restart )
+    if pgrep -u "$USER" -qxl iTunes ; then
+      osascript -e "${quit}"
+      sleep 10
+      pkill iTunes
+      pkill -9 iTunes
+      sleep 1
+      open -a iTunes
+    else
+      echo "iTunes is not running"
+      exit 1
+    fi
+  ;;
+
+  open )
+    open -a iTunes
+  ;;
+
+  quit )
+    osascript -e "${quit}"
+  ;;
+
+  * )
+    script_usage
+  ;;
+
+esac

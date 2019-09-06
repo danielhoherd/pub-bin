@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+## Set system volume of a mac by Daniel Hoherd 2012-08-09
+
+script_name=${0##*/}
+
+## Check for valid commands
+command -v osascript &>/dev/null || { echo "osascript is required, are you using OS X?" >&2 ; exit 1 ; }
+
+## Define some functions
+function script_usage {
+    echo "Print current volume level:  $script_name" ;
+    echo "Set volume level:            $script_name [0-100]" ;
+}
+
+## Check for one argument. If none, output current volume.
+if [ $# -ne 1 ] ; then
+    osascript -e "get output volume of (get volume settings)" ;
+    exit ;
+fi
+
+## Verify integer
+### https://mywiki.wooledge.org/BashFAQ/054
+if [[ $1 != *[!0-9]* ]]; then
+    ## If integer, set volume
+    osascript -e "set volume output volume $1" ;
+else
+    ## If not integer, print usage
+    script_usage ;
+    exit ;
+fi
