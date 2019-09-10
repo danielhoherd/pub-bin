@@ -12,7 +12,9 @@ DL_OPTIONS=(
   "--file-allocation" "none"
 )
 
-# Mirror list: https://launchpad.net/ubuntu/+cdmirrors
+# Mirror list:
+# - https://launchpad.net/ubuntu/+cdmirrors  # human readable table with alleged speeds (tests show some fat pipes throttle)
+# - http://mirrors.ubuntu.com/mirrors.txt  # simple list of mirrors
 get_file_from_mirror() {
   aria2c "${DL_OPTIONS[@]}" \
     "http://mirror.math.princeton.edu/pub/ubuntu-iso/$1" \
