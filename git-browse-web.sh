@@ -2,12 +2,20 @@
 # Author: github.com/danielhoherd
 # License: Unlicense
 # Purpose: Print and attempt to open the web address for the current repo/branch.
-#          Compatible with git protocol URLs in Github and Gitlab
+#          Compatible with Github and Gitlab.
 
 set -e
 
 branch="$(git rev-parse --abbrev-ref HEAD)"
-remote_url="$(git remote get-url origin | sed -e 's#:#/#' -e 's#^git@#https://#' -e 's#\.git$##')"
+remote_url="$(git remote get-url origin)"
+if [[ "$remote_url" =~ ^git* ]] ; then
+  remote_url="$(echo "${remote_url/%.git/}" | sed -e 's#:#/#' -e 's#^git@#https://#')"
+elif [[ "${remote_url}" =~ ^http* ]] ; then
+  remote_url="${remote_url/%.git/}"
+else
+  echo "Not sure how to handle URL: $remote_url"
+  exit 1
+fi
 
 web_url="$remote_url/tree/$branch"
 
