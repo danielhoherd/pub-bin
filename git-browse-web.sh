@@ -9,4 +9,7 @@ set -e
 branch="$(git rev-parse --abbrev-ref HEAD)"
 remote_url="$(git remote get-url origin | sed -e 's#:#/#' -e 's#^git@#https://#' -e 's#\.git$##')"
 
-open "$remote_url/tree/$branch"
+web_url="$remote_url/tree/$branch"
+
+echo "Opening URL: $web_url"
+open "$web_url"
