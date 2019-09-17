@@ -1,10 +1,25 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
 # License: Unlicense
-# Purpose: Print and attempt to open the web address for the current repo/branch.
-#          Compatible with Github and Gitlab.
-
 set -e
+
+usage() {
+  echo "Description:  Print and attempt to open the web address for the current repo/branch. Compatible with Github and Gitlab." 2>&1
+  echo
+  echo "Usage:  ${0##*/} [-h] [-p]" 2>&1
+  echo
+  echo "        -p Only print the URLs, do not open MacOS browser."
+  echo "        -h Show help and exit."
+}
+
+while getopts ':hp' option ; do
+  case "${option}" in
+    p) readonly print_only=true ;;
+    h) usage ; exit 0 ;;
+    *) usage ; exit 1 ;;
+  esac
+done
+shift $((OPTIND - 1))
 
 branch="$(git rev-parse --abbrev-ref HEAD)"
 remote_url="$(git remote get-url origin)"
@@ -24,4 +39,4 @@ if [[ "$web_url" =~ gitlab.com ]] ; then
 fi
 
 echo "Branch URL:   $web_url"
-open "$web_url"
+[[ "${print_only}" == "true" ]] || open "$web_url"
