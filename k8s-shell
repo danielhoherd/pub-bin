@@ -14,7 +14,7 @@ ${0##*/} [-x] [-n k8s-nodename] [docker-image]
 EOF
 }
 
-while getopts xn: option ; do
+while getopts ':xn:' option ; do
   case "${option}"
   in
   x) set -x ;;

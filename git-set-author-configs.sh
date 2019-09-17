@@ -8,11 +8,10 @@ usage() {
   echo "Usage:        ${0##*/} code_dir git.user.email git.user.name"
 }
 
-while getopts x option
-do
+while getopts ':x' option ; do
   case "${option}" in
     x) VERBOSE=true ;;
-    *) help ; exit 1 ;
+    *) usage ; exit 1 ;
   esac
 done
 shift $((OPTIND - 1))

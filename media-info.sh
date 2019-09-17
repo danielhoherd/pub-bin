@@ -7,8 +7,7 @@ help() {
   echo "See also: https://danielhoherd.com/tech-notes/exiftool/"
 }
 
-while getopts hv option
-do
+while getopts ':hv' option ; do
   case "${option}" in
     h) help ; exit ;;
     v) set -x ; exiftool_args+=( '-a' '-u' '-G:1:2' ) ;;
