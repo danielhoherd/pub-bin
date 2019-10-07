@@ -22,6 +22,8 @@ done
 shift $((OPTIND - 1))
 
 branch="$(git rev-parse --abbrev-ref HEAD)"
+repo_root="$(git rev-parse --show-toplevel)"
+repo_cwd="${PWD#${repo_root}}"
 remote_url="$(git remote get-url origin)"
 if [[ "$remote_url" =~ ^git* ]] ; then
   remote_url="$(echo "${remote_url/%.git/}" | sed -e 's#:#/#' -e 's#^git@#https://#')"
@@ -32,11 +34,13 @@ else
   exit 1
 fi
 
-web_url="$remote_url/tree/$branch"
+branch_url="$remote_url/tree/$branch"
+web_url="$remote_url/tree/$branch${repo_cwd}"
 if [[ "$web_url" =~ gitlab.com ]] ; then
-  echo "CI Pipelines: $remote_url/pipelines"
-  echo "CI Jobs:      $remote_url/-/jobs"
+  echo "CI Pipelines:        $remote_url/pipelines"
+  echo "CI Jobs:             $remote_url/-/jobs"
+  echo "Branch root:         $branch_url"
 fi
 
-echo "Branch URL:   $web_url"
+echo "Current branch dir:  $web_url"
 [[ "${print_only}" == "true" ]] || open "$web_url"
