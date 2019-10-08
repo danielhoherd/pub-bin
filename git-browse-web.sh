@@ -42,5 +42,7 @@ if [[ "$web_url" =~ gitlab.com ]] ; then
   echo "Branch root:         $branch_url"
 fi
 
-echo "Current branch dir:  $web_url"
+if [ ! "${branch_url}" == "${web_url}" ] ; then
+  echo "Current branch dir:  $web_url"
+fi
 [[ "${print_only}" == "true" ]] || open "$web_url"
