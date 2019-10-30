@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
 # License: Unlicense
-set -e
 
 usage() {
   echo "Description:  Add local git author configs to all repo directories in the CWD."
@@ -26,8 +25,10 @@ git_user_name="$3"
 find "${code_dir}" -maxdepth 1 -mindepth 1 -type d | while read -r DIR ; do
   (
     [ "${VERBOSE}" == 1 ] || [ "${VERBOSE}" == "true" ] && set -x
-    cd "$DIR"
-    git config --local user.email "${git_user_email}"
-    git config --local user.name "${git_user_name}"
+    {
+      cd "$DIR" && \
+      git config --local user.email "${git_user_email}" && \
+      git config --local user.name "${git_user_name}"
+    } || echo "ERROR: problem with $DIR"
   )
 done
