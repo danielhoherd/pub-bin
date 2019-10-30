@@ -4,7 +4,7 @@
 set -e
 
 usage() {
-  echo "Description:  For all directories found directly within code_dir, add local git author configs."
+  echo "Description:  Add local git author configs to all repo directories in the CWD."
   echo "Usage:        ${0##*/} code_dir git.user.email git.user.name"
 }
 

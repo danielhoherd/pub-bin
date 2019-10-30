@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# iTunes controller for bash by daniel hoherd 2012-08-03
+# Author: github.com/danielhoherd
+# License: Unlicense
+# Purpose: iTunes controller cli
 
 command -v osascript &>/dev/null || { echo "osascript is required, are you using OS X?" >&2 ; exit 1 ; }
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
 # License: Unlicense
-# Deletes all local tmutil snapshots. Useful for when you've been doing data heavy
+# Delete all local tmutil snapshots. Useful for when you've been doing data heavy
 # things that don't need to be backed up, but were snapshotted, and now you need
 # that disk space back.
 

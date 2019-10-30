@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
 # License: Unlicense
-# Updates all downloaded vagrant boxes to the latest version and deletes old box versions
+# Purpose: Update all downloaded vagrant boxes to the latest version and delete old box versions
 
 check_for_required_commands() {
   for command in "$@" ; do

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
 # License: Unlicense
-# Attempts to keep homebrew running and current
+# Purpose: Attempt to keep homebrew running smooth and current
 
 [ "$(uname)" == 'Darwin' ] || { echo "ABORT: This is meant for OS X." ; exit 1 ; }
 

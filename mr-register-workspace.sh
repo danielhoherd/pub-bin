@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
 # License: Unlicense
-# Purpose: Registers a git worksapce in myrepos
+# Purpose: Register a git worksapce in myrepos
 
 [ "$#" -gt 0 ] || { echo "ERROR: Please provide at least one git workspace to register." ; exit 1 ; }
 

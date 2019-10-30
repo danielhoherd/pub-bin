@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# Fetch information about used AWS resources and output as JSON per region.
-#
-# This assumes credentials are set up for awscli and awless
-# Setup: brew tap wallix/awless; brew install awless aws
+# License: Unlicense
+# Author: github.com/danielhoherd
+# Purpose: Fetch information about used AWS resources and output as JSON per region.
+#          This assumes credentials are set up for awscli and awless
+#          https://github.com/wallix/awless
 
 check_for_required_commands() {
   for command in "$@" ; do

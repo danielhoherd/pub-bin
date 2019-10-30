@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
 # License: Unlicense
+# Purpose: Print some media info about the given media files
 
 help() {
-  echo "Shows some metadata for the given media files."
+  echo "Show some metadata for the given media files."
   echo "See also: https://danielhoherd.com/tech-notes/exiftool/"
 }
 

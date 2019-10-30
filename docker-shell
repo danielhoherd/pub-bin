@@ -7,9 +7,9 @@ shift
 
 usage() {
   cat <<EOF
-Runs a throwaway docker container with optional image and commands.
+Run a throwaway docker container with optional image and commands.
 
-${0##*/} [docker-image] [command]
+${0##*/} [docker-image [command]]
 EOF
 }
 

@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# Author: github.com/danielhoherd
+# License: Unlicense
+# Purpose: Set the color of a file as displayed in Finder.app
+
 
 command -v osascript &>/dev/null || { echo "osascript is required, are you using OS X?" >&2 ; exit 1 ; }
 

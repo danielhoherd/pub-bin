@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# Interactive dialogue boxes that set play count for each file selected in iTunes.
+# Author: github.com/danielhoherd
+# License: Unlicense
+# Purpose: Interactive dialogue boxes that set play count for each file selected in iTunes.
 
 command -v osascript &>/dev/null || { echo "osascript is required, are you using OS X?" >&2 ; exit 1 ; }
 

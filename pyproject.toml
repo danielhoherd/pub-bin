@@ -1,4 +1,5 @@
-# https://github.com/ambv/black#configuration-format
+# https://github.com/psf/black#configuration-format
+# https://www.python.org/dev/peps/pep-0518/#file-format
 [tool.black]
 line-length = 132
 exclude = '(venv)'

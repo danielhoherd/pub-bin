@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
 # License: Unlicense
-# Spawn a new container and drop into a shell
+# Purpose: Spawn a new container and drop into a shell
 
 usage(){ cat <<EOF
 Launches a k8s pod with an optional docker container given.

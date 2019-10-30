@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
+# License: Unlicense
+# Purpose: sleep for the given number of seconds and print a dot at each second
 
 usage() {
   cat <<EOF

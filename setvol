@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-## Set system volume of a mac by Daniel Hoherd 2012-08-09
+# License: Unlicense
+# Author: github.com/danielhoherd
+# Purpose: Set system volume of macOS
 
 script_name=${0##*/}
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
 # License: Unlicense
-# Iterate code dirs and pull svn and git updates
+# Purpose: Iterate code dirs and pull svn and git updates
 
 usage() {
   echo "Usage:  ${0##*/} [-a] [-x]"

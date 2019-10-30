@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Author: github.com/danielhoherd
+# License: Unlicense
+# Purpose: Download ISOs for Ubuntu LTS and latest available release.
 
 command -v aria2c &>/dev/null || { echo "ERROR: the command 'aria2c' is required." >&2 ; exit 1 ; }
 
