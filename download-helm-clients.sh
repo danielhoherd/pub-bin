@@ -5,6 +5,7 @@
 #
 # https://get.helm.sh/helm-v2.11.0-darwin-amd64.tar.gz
 # https://get.helm.sh/helm-v2.11.0-darwin-amd64.tar.gz.sha256
+# https://github.com/helm/helm
 set -e
 
 helm_releases=(
