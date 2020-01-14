@@ -2,13 +2,27 @@
 # Author: github.com/danielhoherd
 # License: Unlicense
 # Purpose: Beautify contents of HTML files
+#
+# TODO:
+# - Implement a --force option, then...
+# - Ask for confirmation when not using --force
+# - Better detect actual HTML, current method has false positives
 
 from bs4 import BeautifulSoup as bs
 import sys
+from pathlib import Path
 
 for filename in sys.argv[1:]:
+    path_to_file = Path(filename)
+    if not path_to_file.exists():
+        print(f"{filename} skipped: it does not exist")
+        continue
     with open(filename, "r+") as f:
-        web_page = f.read()
+        try:
+            web_page = f.read()
+        except UnicodeDecodeError:
+            print(f"{filename} skipped: it appears to be binary")
+            continue
         print(f"{filename} loaded")
 
         file_is_html = bool(bs(web_page, "html.parser").find())
