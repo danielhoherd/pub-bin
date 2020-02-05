@@ -34,8 +34,8 @@ else
   exit 1
 fi
 
-branch_url="$remote_url/tree/$branch"
-web_url="$remote_url/tree/$branch${repo_cwd}"
+branch_url="$remote_url/-/tree/$branch"
+web_url="$remote_url/-/tree/$branch${repo_cwd}"
 if [[ "$web_url" =~ gitlab.com ]] ; then
   echo "CI Pipelines:        $remote_url/pipelines"
   echo "CI Jobs:             $remote_url/-/jobs"
