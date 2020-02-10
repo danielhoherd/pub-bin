@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Author: github.com/danielhoherd
+# License: Unlicense
+# Purpose: Graph du output in termgraph
+
+if ! command -v termgraph >/dev/null 2>&1 ; then
+  echo "ERROR: termgraph is missing. Try: pip3 install --user termgraph"
+  exit 1
+fi
+
+du-graph() {
+  if [ "$#" -eq 0 ] ; then
+    dirs=( * )
+  else
+    dirs=( "$@" )
+  fi
+  du -s "${dirs[@]}" |
+  awk '{print $2,$1}' |
+  termgraph --color blue --format '{:<,.0f}'
+}
+
+du-graph "$@"
