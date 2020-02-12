@@ -3,7 +3,7 @@
 # License: Unlicense
 # Purpose: Attempt to keep homebrew running smooth and current
 
-[ "$(uname)" == 'Darwin' ] || { echo "ABORT: This is meant for OS X." ; exit 1 ; }
+[[ "${OSTYPE}" =~ ^darwin ]]|| { echo "ABORT: This is meant for OS X." ; exit 1 ; }
 
 sudo chown -R "${USER}" /usr/local/{bin,share} && \
 ( set -x ;

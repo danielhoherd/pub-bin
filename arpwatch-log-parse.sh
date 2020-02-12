@@ -14,15 +14,14 @@ check_for_required_commands() {
   fi
 }
 
-HOSTOS=$(uname)
-if [ "${HOSTOS}" == 'Darwin' ] ; then
+if [[ "${OSTYPE}" =~ ^darwin ]] ; then
   check_for_required_commands gdate sort column
   ydate() { gdate "$@" ; }
-elif [ "${HOSTOS}" == "Linux" ] ; then
+elif [[ "${OSTYPE}" =~ ^linux ]] ; then
   check_for_required_commands date sort column
   ydate() { date "$@" ; }
 else
-  echo "Not sure what to do with ${HOSTOS}..."
+  echo "Not sure what to do with ${OSTYPE}..."
   exit 1
 fi
 

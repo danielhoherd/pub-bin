@@ -16,8 +16,7 @@ check_for_required_commands() {
 
 check_for_required_commands xargs vagrant awk date head
 
-HOSTOS=$(uname)
-if [ "${HOSTOS}" == 'Darwin' ] ; then
+if [[ "${OSTYPE}" =~ ^darwin ]] ; then
   for cmd in awk date head sed sort ; do
     command -v "g${cmd}" > /dev/null || { echo "Command missing: 'g${cmd}'" ; error+=1 ; }
     # Evil eval because you can't create a function with a variable for a name
@@ -27,9 +26,12 @@ if [ "${HOSTOS}" == 'Darwin' ] ; then
   done
   if [ "${error:-0}" -gt 0 ] ; then echo "Please install the missing commands." ; exit 1 ; fi ;
   yargs() { xargs "$@" ; }
-elif [ "${HOSTOS}" == "Linux" ] ; then
+elif [[ "${OSTYPE}" =~ ^linux ]] ; then
   # OSX xargs has an implicit -r and no explicit equivalent
   yargs() { xargs -r "$@" ; }
+else
+  echo "ERROR: unsure of how to handle ${OSTYPE}"
+  exit 1
 fi
 
 date "+%F %T%z Pulling new versions of all existing Vagrant boxes"

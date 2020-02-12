@@ -18,11 +18,10 @@ helm_releases=(
   3.0.3
 )
 
-OS=$(uname -s)
-case "$OS" in
-  Darwin)
+case "$OSTYPE" in
+  darwin*)
     platform=darwin ;;
-  Linux)
+  linux*)
     platform=linux ;;
   *)
     echo "ABORT: Unknown platform $OS." ; exit 1 ;;
