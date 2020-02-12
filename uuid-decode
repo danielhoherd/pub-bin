@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+# Author: github.com/danielhoherd
+# License: Unlicense
+# Purpose: Validate and decode UUIDs
+
+import uuid
+import sys
+import time
+import datetime
+
+if len(sys.argv) == 1:
+    sys.exit(f"Usage: {sys.argv[0]} <UUID> [UUID...]")
+
+for UUID in sys.argv[1:]:
+    try:
+        this_uuid = uuid.UUID(UUID)
+        data = {"version": this_uuid.version}
+
+        if data["version"] == 1:
+            data["timestamp"] = datetime.datetime.utcfromtimestamp((uuid.uuid1().time - 0x01B21DD213814000) * 100 / 1e9).strftime(
+                "%F %T"
+            )
+        data["int"] = this_uuid.int
+        data["hex"] = this_uuid.hex
+
+        print(this_uuid)
+        for key, value in sorted(data.items()):
+            print(f"    {key}: {value}")
+
+    except ValueError:
+        print(f"There is something wrong with the given data: {UUID}")
+        continue
