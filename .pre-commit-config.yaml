@@ -1,7 +1,7 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.3.0
+    rev: v2.5.0
     hooks:
       - id: check-byte-order-marker
       - id: check-case-conflict
@@ -13,18 +13,21 @@ repos:
       - id: debug-statements
       - id: detect-private-key
       - id: end-of-file-fixer
-      - id: flake8
       - id: mixed-line-ending
         args: ['--fix=lf' ]
       - id: requirements-txt-fixer
       - id: sort-simple-yaml
       - id: trailing-whitespace
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.7.9
+    hooks:
+      - id: flake8
   - repo: https://github.com/detailyang/pre-commit-shell
     rev: 1.0.5
     hooks:
       - id: shell-lint
   - repo: https://github.com/psf/black
-    rev: 19.3b0
+    rev: 19.10b0
     hooks:
       - id: black
   - repo: https://github.com/Lucas-C/pre-commit-hooks
@@ -33,11 +36,11 @@ repos:
       - id: remove-tabs
         exclude_types: [makefile, binary]
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.17.0
+    rev: v1.20.0
     hooks:
       - id: yamllint
   - repo: https://github.com/danielhoherd/pre-commit-hooks
-    rev: 0b84f996d085b772bcdb94279ebcddc827a2fd57
+    rev: d0ec497c80183b0e8b19216154c26a956103a416
     hooks:
       - id: CVE-2017-18342
       - id: remove-unicode-non-breaking-spaces
