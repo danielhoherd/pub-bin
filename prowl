@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+# Author: github.com/danielhoherd
+# License: Unlicense
+"""Send a notification via the Prowlapp.com notification service."""
+
+import requests
+import platform
+import click
+from sys import exit
+
+app = platform.node()
+
+
+@click.command()
+@click.option("--key", "-k", required=True, help="Prowl API key. PROWL_API_KEY", envvar="PROWL_API_KEY")
+@click.option("--application", "-a", default=app, help="An application identifier.", show_default=True)
+@click.option("--event", "-e", help="An optional name for the event.")
+@click.option("--priority", "-p", default=0, help="Priority of the event. (asc pri 0±2)", show_default=True)
+@click.argument("description")
+def send_notification(key, application, event, description, priority):
+    """Send a notification via the Prowlapp.com notification service."""
+    data = {
+        "apikey": key,
+        "priority": priority,
+        "application": application,
+        "event": event,
+        "description": description,
+    }
+
+    response = requests.post("https://api.prowlapp.com/publicapi/add", data=data)
+
+    if response.status_code != 200:
+        exit(response.status_code)
+
+
+if __name__ == "__main__":
+    send_notification()
