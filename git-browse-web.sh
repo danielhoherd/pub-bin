@@ -34,12 +34,19 @@ else
   exit 1
 fi
 
-branch_url="$remote_url/-/tree/$branch"
-web_url="$remote_url/-/tree/$branch${repo_cwd}"
-if [[ "$web_url" =~ gitlab.com ]] ; then
+if [[ "$remote_url" =~ gitlab.com ]] ; then
+  branch_url="$remote_url/-/tree/$branch"
+  web_url="$remote_url/-/tree/$branch${repo_cwd}"
   echo "CI Pipelines:        $remote_url/pipelines"
   echo "CI Jobs:             $remote_url/-/jobs"
   echo "Branch root:         $branch_url"
+elif [[ "$remote_url" =~ github.com ]] ; then
+  branch_url="$remote_url/tree/$branch"
+  web_url="$remote_url/tree/$branch${repo_cwd}"
+  echo "Branch root:         $branch_url"
+else
+  echo "ERROR: could not find github or gitlab in origin url"
+  exit 1
 fi
 
 if [ ! "${branch_url}" == "${web_url}" ] ; then
