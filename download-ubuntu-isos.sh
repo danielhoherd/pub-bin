@@ -70,9 +70,7 @@ get_file_from_mirror() {
   aria2c "${dl_options[@]}" "${mirrors[@]/%/$1}"
 }
 
-get_file_from_mirror "16.04.6/ubuntu-16.04.6-desktop-amd64.iso"
-get_file_from_mirror "16.04.6/ubuntu-16.04.6-server-amd64.iso"
-get_file_from_mirror "18.04.3/ubuntu-18.04.3-desktop-amd64.iso"
-get_file_from_mirror "18.04.3/ubuntu-18.04.3-live-server-amd64.iso"
-get_file_from_mirror "19.10/ubuntu-19.10-desktop-amd64.iso"
-get_file_from_mirror "19.10/ubuntu-19.10-live-server-amd64.iso"
+get_file_from_mirror "18.04.4/ubuntu-18.04.4-desktop-amd64.iso"
+get_file_from_mirror "18.04.4/ubuntu-18.04.4-live-server-amd64.iso"
+get_file_from_mirror "20.04/ubuntu-20.04-desktop-amd64.iso"
+get_file_from_mirror "20.04/ubuntu-20.04-live-server-amd64.iso"
