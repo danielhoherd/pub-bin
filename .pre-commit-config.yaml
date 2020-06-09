@@ -1,7 +1,7 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.5.0
+    rev: v3.1.0
     hooks:
       - id: check-byte-order-marker
       - id: check-case-conflict
@@ -19,7 +19,7 @@ repos:
       - id: sort-simple-yaml
       - id: trailing-whitespace
   - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.7.9
+    rev: 3.8.3
     hooks:
       - id: flake8
   - repo: https://github.com/detailyang/pre-commit-shell
@@ -36,7 +36,7 @@ repos:
       - id: remove-tabs
         exclude_types: [makefile, binary]
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.20.0
+    rev: v1.23.0
     hooks:
       - id: yamllint
   - repo: https://github.com/danielhoherd/pre-commit-hooks
