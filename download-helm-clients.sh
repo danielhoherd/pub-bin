@@ -39,3 +39,8 @@ for version in "${helm_releases[@]}" ; do
   mv -n ${platform}-amd64/helm "${target_dir}/helm-${version}"
   [ -f "${target_dir}/helm-${version}" ] && echo "${target_dir}/helm-${version} Successfully downloaded" ;
 done
+
+cd "$target_dir"
+ln -fs helm-2.16.9 helm2
+ln -fs helm-3.2.4 helm
+ln -fs helm-3.2.4 helm3
