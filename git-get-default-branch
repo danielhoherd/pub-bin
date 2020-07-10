@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Author: github.com/danielhoherd
+# License: Unlicense
+# Purpose: for each remote, print: <name of remote> <default branch>
+# EG:   $ git-get-default-branch
+#       origin master
+#       github gh-pages
+
+if [ "${#@}" -gt 0 ] ; then
+  remotes=( "${@}" )
+else
+  mapfile -t remotes < <(git remote)
+fi
+
+for remote in "${remotes[@]}" ; do
+  branch=$(git ls-remote --symref "$remote" HEAD | awk '$2 ~ /^refs/ { sub(".*/","", $2) ; print $2 }')
+  echo "$remote $branch"
+done
