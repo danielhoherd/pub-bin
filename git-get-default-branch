@@ -9,7 +9,15 @@
 if [ "${#@}" -gt 0 ] ; then
   remotes=( "${@}" )
 else
-  mapfile -t remotes < <(git remote)
+  # In 2020, macOS 10.15 still has bash 3.2.57, which was released in 2014 🙄
+  if [ $"${BASH_VERSINFO[0]}" -lt 4 ] ; then
+    remotes=()
+    while IFS='' read -r line ; do
+      remotes+=("$line")
+    done < <(git remote)
+  else
+    mapfile -t remotes < <(git remote)
+  fi
 fi
 
 for remote in "${remotes[@]}" ; do
