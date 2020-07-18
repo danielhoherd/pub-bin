@@ -19,6 +19,7 @@ Usage:
     -h    Show this help text
     -s    Skip downloading default list, only download given versions
     -v    Enable verbose mode
+    -V    Show recent helm versions
     -x    set -o xtrace
 
 See Also:
@@ -32,11 +33,20 @@ print-verbose() {
   printf '\e[0;35m%s\e[00m\n' "$(date "+%F %T%z") VERBOSE: $*"
 }
 
-while getopts ':hsvx' option ; do
+show_recent_helm_versions() {
+  curl -s https://api.github.com/repos/helm/helm/releases |
+    jq -r -c '.[] | .tag_name + " " + .created_at' |
+    grep -vE 'alpha|beta|rc' |
+    column -t |
+    sort
+}
+
+while getopts ':hsvVx' option ; do
   case "${option}" in
     h) usage ; exit 0 ;;
     s) SKIP_DEFAULTS=1 ;;
     v) VERBOSE=1 ;;
+    V) show_recent_helm_versions ; exit 0 ;;
     x) set -x ;;
     *) echo "ERROR: Unknown option: -${OPTARG}" ; usage ; exit 1 ;;
   esac
