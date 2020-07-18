@@ -47,6 +47,10 @@ print_gitlab() {
   echo "CI Pipelines:        ${remote_url}/pipelines"
   echo "CI Jobs:             ${remote_url}/-/jobs"
   echo "Branch root:         ${branch}_url"
+  if [ -n "${file}" ] ; then
+    web_file_url="${remote_url}/-/blob/${branch}${repo_cwd}/${file}"
+    echo "File url:            ${web_file_url}"
+  fi
 }
 
 print_github() {
