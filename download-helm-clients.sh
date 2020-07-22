@@ -85,6 +85,7 @@ esac
 target_dir="$HOME/bin"
 
 get_helm_version() {
+  version="$1"
   print-verbose "Downloading helm version ${version}"
   [ -f "${target_dir}/helm-${version}" ] && { echo "Skipping: helm-${version} already exists" ; return ; }
   cd "$(mktemp -d)"
