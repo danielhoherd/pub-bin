@@ -74,7 +74,7 @@ case "$OSTYPE" in
   linux*)
     platform=linux ;;
   *)
-    echo "ABORT: Unknown platform $OS." ; exit 1 ;;
+    echo "ABORT: Unknown platform $OSTYPE." ; exit 1 ;;
 esac
 
 target_dir="$HOME/bin"
