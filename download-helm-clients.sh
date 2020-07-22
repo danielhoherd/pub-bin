@@ -68,6 +68,11 @@ fi
 
 helm_releases+=( "$@" )
 
+case "${HOSTTYPE}" in
+  x86_64) arch=amd64 ;;
+  *) echo "ERROR: Unknown architecture" ; exit 1 ;;
+esac
+
 case "$OSTYPE" in
   darwin*)
     platform=darwin ;;
@@ -79,17 +84,22 @@ esac
 
 target_dir="$HOME/bin"
 
-for version in "${helm_releases[@]}" ; do
+get_helm_version() {
   print-verbose "Downloading helm version ${version}"
-  [ -f "${target_dir}/helm-${version}" ] && { echo "Skipping helm-${version}: already exists" ; continue ; }
+  [ -f "${target_dir}/helm-${version}" ] && { echo "Skipping: helm-${version} already exists" ; return ; }
   cd "$(mktemp -d)"
-  wget -q "https://get.helm.sh/helm-v${version}-${platform}-amd64.tar.gz"
-  wget -q "https://get.helm.sh/helm-v${version}-${platform}-amd64.tar.gz.sha256"
-  sha256=$(sha256sum "helm-v${version}-${platform}-amd64.tar.gz" | cut -d ' ' -f 1)
-  grep -q "${sha256}" "helm-v${version}-${platform}-amd64.tar.gz.sha256" || { echo "ERROR sha256sum failed for helm-v${version}-${platform}-amd64.tar.gz" ; continue ; }
-  tar xf "helm-v${version}-${platform}-amd64.tar.gz"
-  mv -n ${platform}-amd64/helm "${target_dir}/helm-${version}"
+  base_filename="helm-v${version}-${platform}-${arch}"
+  wget -q "https://get.helm.sh/${base_filename}.tar.gz"
+  wget -q "https://get.helm.sh/${base_filename}.tar.gz.sha256"
+  sha256=$(sha256sum "${base_filename}.tar.gz" | cut -d ' ' -f 1)
+  grep -q "${sha256}" "${base_filename}.tar.gz.sha256" || { echo "ERROR sha256sum failed for ${base_filename}.tar.gz" ; return ; }
+  tar xf "${base_filename}.tar.gz"
+  mv -n ${platform}-${arch}/helm "${target_dir}/helm-${version}"
   [ -f "${target_dir}/helm-${version}" ] && echo "${target_dir}/helm-${version} Successfully downloaded" ;
+}
+
+for version in "${helm_releases[@]}" ; do
+  get_helm_version "$version"
 done
 
 cd "$target_dir"
