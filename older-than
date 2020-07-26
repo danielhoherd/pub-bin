@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+# Author: github.com/danielhoherd
+# License: Unlicense
+# Purpose: Return 0 if referenced file is older than the given time
+#
+# The idea for this was taken from <https://blog.afoolishmanifesto.com/posts/unreliable-cronjobs/>
+
+import argparse
+import os
+from pathlib import Path
+import re
+import datetime
+import sys
+
+time_units = {
+    "s": 1,
+    "m": 60,
+    "h": 3600,
+    "d": 86400,
+}
+
+
+def get_unix_mtime_of_file(file: str) -> int:
+    """Return the mtime of the given file as a unix timestamp."""
+    file = Path(file)
+    return int(os.path.getmtime(file))
+
+
+def parse_timespec(spec: str) -> int:
+    """Return the number of seconds the timespec represents."""
+    pattern = re.compile("([0-9]+)([smhd])")
+    try:
+        num, unit = pattern.match(spec).groups()
+    except AttributeError:
+        sys.exit("There was an error matching the timespec. Check your formatting. Units must be one of: s, m, h, d")
+    return int(num) * int(time_units[unit])
+
+
+def main(file: str, timespec: str) -> None:
+    """Exit 0 if the referenced file is older than timespec."""
+
+    file_time = get_unix_mtime_of_file(file)
+    age_limit = parse_timespec(timespec)
+    now = int(datetime.datetime.now().strftime("%s"))
+
+    if now - age_limit > file_time:
+        sys.exit(0)
+    else:
+        sys.exit(1)
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-f", "--file", help="Filename to reference", type=str, required=True)
+parser.add_argument(
+    "-t",
+    "--timespec",
+    help="Timespec to measure against in seconds, minutes, hours or days (eg: 5m, 1h, 3d)",
+    type=str,
+    required=True,
+)
+args = parser.parse_args()
+
+if __name__ == "__main__":
+    args = parser.parse_args()
+    main(file=args.file, timespec=args.timespec)
