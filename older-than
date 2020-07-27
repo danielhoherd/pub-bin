@@ -21,9 +21,14 @@ time_units = {
 
 
 def get_unix_mtime_of_file(file: str) -> int:
-    """Return the mtime of the given file as a unix timestamp."""
+    """Return the mtime of the given file as a unix timestamp. Exit 0 on missing file."""
     file = Path(file)
-    return int(os.path.getmtime(file))
+    try:
+        age = int(os.path.getmtime(file))
+    except FileNotFoundError:
+        print(f"File not found: {file}")
+        sys.exit(0)
+    return age
 
 
 def parse_timespec(spec: str) -> int:
