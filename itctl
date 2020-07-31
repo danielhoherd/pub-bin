@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
 # License: Unlicense
-# Purpose: iTunes controller cli
+# Purpose: Apple Music.app controller cli
 
 command -v osascript &>/dev/null || { echo "osascript is required, are you using OS X?" >&2 ; exit 1 ; }
 
@@ -18,6 +18,8 @@ Verbs:
   pr (previous)
   vu (volup)
   vd (voldown)
+  setvol [0-100]
+  getvol
   mute
   unmute
   rate [0-5]
@@ -32,22 +34,22 @@ if [ $# -lt 1 ] ; then
   exit ;
 fi
 
-play='tell application "iTunes" to play'
-pause='tell application "iTunes" to pause'
-playpause='tell application "iTunes" to playpause'
-stop='tell application "iTunes" to stop'
-next='tell application "iTunes" to next track'
-prev='tell application "iTunes" to previous track'
-rate="tell application \"iTunes\" to set rating of current track to $(( ${2:-0} * 20 ))"
-get_rating='tell application "iTunes" to get rating of current track'
-title='tell application "iTunes" to name of current track as string'
-volup='tell application "iTunes" to set sound volume to sound volume + 5'
-voldown='tell application "iTunes" to set sound volume to sound volume - 5'
-setvol="tell application \"iTunes\" to set sound volume to $2"
-getvol='tell application "iTunes" to sound volume as integer'
-unmute='tell application "iTunes" to set mute to false'
-mute='tell application "iTunes" to set mute to true'
-quit='tell application "iTunes" to quit'
+play='tell application "Music" to play'
+pause='tell application "Music" to pause'
+playpause='tell application "Music" to playpause'
+stop='tell application "Music" to stop'
+next='tell application "Music" to next track'
+prev='tell application "Music" to previous track'
+rate="tell application \"Music\" to set rating of current track to $(( ${2:-0} * 20 ))"
+get_rating='tell application "Music" to get rating of current track'
+title='tell application "Music" to name of current track as string'
+volup='tell application "Music" to set sound volume to sound volume + 5'
+voldown='tell application "Music" to set sound volume to sound volume - 5'
+setvol="tell application \"Music\" to set sound volume to $2"
+getvol='tell application "Music" to get sound volume as integer'
+unmute='tell application "Music" to set mute to false'
+mute='tell application "Music" to set mute to true'
+quit='tell application "Music" to quit'
 
 case "$1" in
   play | pl )
@@ -112,21 +114,21 @@ case "$1" in
   ;;
 
   restart )
-    if pgrep -u "$USER" -qxl iTunes ; then
+    if pgrep -u "$USER" -qxl Music ; then
       osascript -e "${quit}"
       sleep 10
-      pkill iTunes
-      pkill -9 iTunes
+      pkill Music
+      pkill -9 Music
       sleep 1
-      open -a iTunes
+      open -a Music
     else
-      echo "iTunes is not running"
+      echo "Music is not running"
       exit 1
     fi
   ;;
 
   open )
-    open -a iTunes
+    open -a Music
   ;;
 
   quit )
