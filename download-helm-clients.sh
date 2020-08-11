@@ -71,7 +71,7 @@ helm_releases+=( "$@" )
 
 case "${HOSTTYPE}" in
   x86_64) arch=amd64 ;;
-  *) echo "ERROR: Unknown architecture" ; exit 1 ;;
+  *) echo "ERROR: Unknown architecture, please open an issue: https://github.com/danielhoherd/pub-bin/issues" ; exit 1 ;;
 esac
 
 case "$OSTYPE" in
