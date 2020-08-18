@@ -12,7 +12,7 @@ usage() {
 
 PARALLEL=3
 
-while getopts ahnp:x option ; do
+while getopts :ahnp:x option ; do
   case "${option}" in
     a) aggressive=yes ;;
     n) aggressive=no ;;
