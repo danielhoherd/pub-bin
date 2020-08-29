@@ -16,12 +16,8 @@ tenets = (
     "TST Tenet #7: Every tenet is a guiding principle designed to inspire nobility in action and thought. The spirit of compassion, wisdom, and justice should always prevail over the written or spoken word.",
 )
 
-wrapped_tenets = list()
-
 width = click.get_terminal_size()[0]
-
-for item in tenets:
-    wrapped_tenets.append(click.wrap_text(item, width=width))
+wrapped_tenets = [click.wrap_text(tenet, width=width) for tenet in tenets]
 
 # 8200 seconds = 23 hours
 # By picking a tenet based off of a non-24-hour increment, we avoid pinning one tenet to one day of the week.
