@@ -106,6 +106,6 @@ for version in "${helm_releases[@]}" ; do
 done
 
 cd "$target_dir"
-ln -fs helm-2.16.9 helm2
+ln -fs helm-2.16.10 helm2
 ln -fs helm-3.2.4 helm
 ln -fs helm-3.2.4 helm3
