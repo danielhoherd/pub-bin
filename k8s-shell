@@ -7,18 +7,22 @@ usage(){ cat <<EOF
 Launches a k8s pod with an optional docker container given.
 
 -h  Print help
--n  Specify a node
+-N  Specify a node
+-n  Namespace
 -x  Enable xtrace
 
 ${0##*/} [-x] [-n k8s-nodename] [docker-image]
 EOF
 }
 
-while getopts ':xn:' option ; do
+extra_args=()
+
+while getopts ':xn:N:' option ; do
   case "${option}"
   in
   x) set -x ;;
-  n) node="$OPTARG" ;;
+  n) extra_args+=( --namespace "$OPTARG" ) ;;
+  N) node="$OPTARG" ;;
   *) usage ; exit 1 ;
   esac
 done
@@ -28,8 +32,6 @@ readonly IMAGE="$1"
 shift
 
 epochtime="$(date +%s)"
-
-extra_args=()
 
 if [ -n "$node" ] ; then
   extra_args+=( '--overrides={ "spec": { "nodeSelector": { "kubernetes.io/hostname": "'"$node"'" } } }'  )
