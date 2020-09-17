@@ -63,8 +63,7 @@ if [ -z "${SKIP_DEFAULTS}" ] ; then
     3.0.3   # 2020-01-29
     3.1.3   # 2020-04-22
     3.2.4   # 2020-06-15
-    3.3.0   # 2020-08-11
-    3.3.1   # 2020-08-31
+    3.3.2   # 2020-09-17
   )
 fi
 
@@ -107,5 +106,5 @@ done
 
 cd "$target_dir"
 ln -fs helm-2.16.10 helm2
-ln -fs helm-3.2.4 helm
-ln -fs helm-3.2.4 helm3
+ln -fs helm-3.3.2 helm
+ln -fs helm-3.3.2 helm3
