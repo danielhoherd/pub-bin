@@ -59,11 +59,11 @@ if [ -z "${SKIP_DEFAULTS}" ] ; then
   helm_releases+=(
     2.14.3  # 2019-07-30
     2.15.2  # 2019-10-29
-    2.16.10 # 2020-08-12
+    2.16.12 # 2020-09-18
     3.0.3   # 2020-01-29
     3.1.3   # 2020-04-22
     3.2.4   # 2020-06-15
-    3.3.2   # 2020-09-17
+    3.3.3   # 2020-09-18
   )
 fi
 
@@ -105,6 +105,6 @@ for version in "${helm_releases[@]}" ; do
 done
 
 cd "$target_dir"
-ln -fs helm-2.16.10 helm2
-ln -fs helm-3.3.2 helm
-ln -fs helm-3.3.2 helm3
+ln -fs helm-2.16.12 helm2
+ln -fs helm-3.3.3 helm
+ln -fs helm-3.3.3 helm3
