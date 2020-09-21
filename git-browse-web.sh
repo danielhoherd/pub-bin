@@ -6,19 +6,21 @@ set -e
 usage() {
   echo "
 Description:
-    Print and attempt to open the web address for the current repo/branch. Compatible with Github and Gitlab.
+    Print and optionally open the web address for the current repo/branch/file. Compatible with Github and Gitlab.
 
-Usage:  ${0##*/} [-h] [-x] [-p]
-    -p Only print the URLs, do not open browser on MacOS
+Usage:  ${0##*/} [-h] [-x] [-0]
+    -o Open the branch at the given dir or file
     -x set -o xtrace
     -h Show help and exit
 "
 }
 
-while getopts ':hpx' option ; do
+print_only=true
+
+while getopts ':hox' option ; do
   case "${option}" in
     h) usage ; exit 0 ;;
-    p) print_only=true ;;
+    o) print_only=false ;;
     x) set -x ;;
     *) usage ; exit 1 ;;
   esac
