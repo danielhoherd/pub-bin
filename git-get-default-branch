@@ -5,6 +5,13 @@
 # EG:   $ git-get-default-branch
 #       origin master
 #       github gh-pages
+#
+# If you just want to check out the default branch really quickly:
+#       git checkout $(git branch -r | awk -F/ '/HEAD/ {print $NF}')
+#
+# Or if you want an alias to check out the default branch quickly::
+#       git config --global alias.co-default '!'"git checkout \$(git branch -r | awk -F/ '/HEAD/ {print \$NF}')"
+
 
 if [ "${#@}" -gt 0 ] ; then
   remotes=( "${@}" )
