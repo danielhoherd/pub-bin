@@ -41,6 +41,7 @@ code_update() {
       cd "${repo}" || ( echo "ERROR: cannot cd to ${repo}" ; return 1 ; )
       date "+%F %T%z ${repo}"
       if [ -e .git ] ; then
+        git remote | xargs -n1 -I {} git remote set-head {} -a
         if git config --get remote.origin.url > /dev/null 2>&1 ; then
           git pull -q || echo "$(date '+%F %T%z') Problems with ${PWD}"
           git remote prune origin

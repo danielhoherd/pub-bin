@@ -6,6 +6,9 @@
 #       origin master
 #       github gh-pages
 #
+# If the repo default branch has been renamed, you must update it by running something like:
+#       git remote | xargs -n1 -I {} git remote set-head {} -a
+#
 # If you just want to check out the default branch really quickly:
 #       git checkout $(git branch -r | awk -F/ '/HEAD/ {print $NF}')
 #
@@ -28,6 +31,7 @@ else
 fi
 
 for remote in "${remotes[@]}" ; do
+  git remote set-head "$remote" -a >/dev/null
   branch=$(git ls-remote --symref "$remote" HEAD | awk '$2 ~ /^refs/ { sub(".*/","", $2) ; print $2 }')
   echo "$remote $branch"
 done
