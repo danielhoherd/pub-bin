@@ -6,21 +6,24 @@
 usage(){ cat <<EOF
 Launches a k8s pod with an optional docker container given.
 
--h  Print help
--N  Specify a node
--n  Namespace
--x  Enable xtrace
+    -h  Print help
+    -d  Dry run and print output spec
+    -N  Specify a node
+    -n  Namespace
+    -x  Enable xtrace
 
-${0##*/} [-x] [-n k8s-nodename] [docker-image]
+${0##*/} [-x] [-d] [-n namespace] [-N k8s-nodename] [docker-image]
 EOF
 }
 
 extra_args=()
+dry_or_interactive=( -t -i --rm --restart=Never )
 
-while getopts ':xn:N:' option ; do
+while getopts ':xdn:N:' option ; do
   case "${option}"
   in
   x) set -x ;;
+  d) dry_or_interactive=( --dry-run -o yaml --restart=OnFailure ) ;;
   n) extra_args+=( --namespace "$OPTARG" ) ;;
   N) node="$OPTARG" ;;
   *) usage ; exit 1 ;
@@ -37,4 +40,4 @@ if [ -n "$node" ] ; then
   extra_args+=( '--overrides={ "spec": { "nodeSelector": { "kubernetes.io/hostname": "'"$node"'" } } }'  )
 fi
 
-kubectl run "${extra_args[@]}" --restart=Never --rm -t -i "${USER//./-}-test-${epochtime}" --image="${IMAGE:-quay.io/danielhoherd/uw}" "${@:-bash}"
+kubectl run "${extra_args[@]}" "${dry_or_interactive[@]}" "${USER//./-}-test-${epochtime}" --image="${IMAGE:-quay.io/danielhoherd/uw}" "${@:-bash}"
