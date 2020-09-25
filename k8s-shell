@@ -16,7 +16,7 @@ ${0##*/} [-x] [-d] [-n namespace] [-N k8s-nodename] [docker-image]
 EOF
 }
 
-extra_args=()
+extra_args=( --generator=run-pod/v1 )
 dry_or_interactive=( -t -i --rm --restart=Never )
 
 while getopts ':xdn:N:' option ; do
