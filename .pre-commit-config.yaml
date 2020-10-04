@@ -1,42 +1,62 @@
 ---
+exclude: '(venv|.vscode)'  # regex
 repos:
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.7.2
+    hooks:
+      - id: pyupgrade
+        args: ['--py37-plus']
+  - repo: https://github.com/psf/black
+    rev: 20.8b1
+    hooks:
+      - id: black
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.2.0
     hooks:
       - id: check-byte-order-marker
       - id: check-case-conflict
+      - id: check-executables-have-shebangs
       - id: check-json
       - id: check-merge-conflict
+      - id: check-toml
       - id: check-xml
       - id: check-yaml
         args: ['--allow-multiple-documents']
       - id: debug-statements
+      # - id: detect-aws-credentials
       - id: detect-private-key
       - id: end-of-file-fixer
+      - id: file-contents-sorter
+        files: .gitignore
       - id: mixed-line-ending
-        args: ['--fix=lf' ]
+        args: ['--fix=lf']
+      - id: no-commit-to-branch
+        args: ['-b', 'master']
+      - id: pretty-format-json
+        args: ['--autofix', '--no-ensure-ascii']
       - id: requirements-txt-fixer
       - id: sort-simple-yaml
       - id: trailing-whitespace
   - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.8.3
+    rev: 3.8.4
     hooks:
       - id: flake8
   - repo: https://github.com/detailyang/pre-commit-shell
     rev: 1.0.5
     hooks:
       - id: shell-lint
-  - repo: https://github.com/psf/black
-    rev: 20.8b1
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.6.2
     hooks:
-      - id: black
+      - id: bandit
+        args: ['-s', 'B101']
   - repo: https://github.com/Lucas-C/pre-commit-hooks
     rev: v1.1.9
     hooks:
       - id: remove-tabs
         exclude_types: [makefile, binary]
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.24.2
+    rev: v1.25.0
     hooks:
       - id: yamllint
   - repo: https://github.com/danielhoherd/pre-commit-hooks
