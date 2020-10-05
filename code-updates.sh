@@ -33,6 +33,13 @@ if [ $((RANDOM % 500)) -eq 9 ] || [ "${aggressive}" == 'yes' ] ; then
   date "+%F %T%z 'git gc ${GC_TYPE}' selected"
 fi
 
+for host in gitlab.com github.com ; do
+  ssh-keyscan "$host" 2>/dev/null |
+  while read -r line ; do
+    grep -q "$line" ~/.ssh/known_hosts || echo "$line" >> ~/.ssh/known_hosts
+  done
+done
+
 code_update() {
   out=$(
     exec 2>&1
