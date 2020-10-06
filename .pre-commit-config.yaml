@@ -60,7 +60,7 @@ repos:
     hooks:
       - id: yamllint
   - repo: https://github.com/danielhoherd/pre-commit-hooks
-    rev: c169232b9edf88bb07e2e5e38e35b5fdf880fa04
+    rev: fdcede7a5c8ea762c903f242279112161cf35d9f
     hooks:
       - id: CVE-2017-18342
       - id: remove-en-dashes
