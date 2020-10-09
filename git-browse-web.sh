@@ -82,4 +82,10 @@ if [ ! "${branch_url}" == "${web_url}" ] ; then
   echo "Current branch dir:  $web_url"
 fi
 
-[[ "${print_only}" == "true" ]] || open "${web_file_url:-$web_url}"
+if [[ ! "${print_only}" == "true" ]] ; then
+  case "${OSTYPE}" in
+    darwin*) open "${web_file_url:-$web_url}" ;;
+    linux-gnu) echo "ERROR: cannot handle opening browser in linux." ; exit 1 ;;
+    *) echo "ERROR: cannot handle opening browser for OSTYPE '${OSTYPE}'" ; exit 1 ;;
+  esac
+fi
