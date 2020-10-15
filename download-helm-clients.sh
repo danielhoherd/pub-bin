@@ -63,7 +63,7 @@ if [ -z "${SKIP_DEFAULTS}" ] ; then
     3.0.3   # 2020-01-29
     3.1.3   # 2020-04-22
     3.2.4   # 2020-06-15
-    3.3.3   # 2020-09-18
+    3.3.4   # 2020-09-22
   )
 fi
 
@@ -88,16 +88,16 @@ target_dir="$HOME/bin"
 get_helm_version() {
   version="$1"
   print-verbose "Downloading helm version ${version}"
-  [ -f "${target_dir}/helm-${version}" ] && { echo "Skipping: helm-${version} already exists" ; return ; }
-  cd "$(mktemp -d)"
   base_filename="helm-v${version}-${platform}-${arch}"
+  [ -f "${target_dir}/helm-${version}" ] && { echo "Skipping: helm-${version} already exists (https://get.helm.sh/${base_filename}.tar.gz)" ; return ; }
+  cd "$(mktemp -d)"
   wget -q "https://get.helm.sh/${base_filename}.tar.gz"
   wget -q "https://get.helm.sh/${base_filename}.tar.gz.sha256"
   sha256=$(sha256sum "${base_filename}.tar.gz" | cut -d ' ' -f 1)
   grep -q "${sha256}" "${base_filename}.tar.gz.sha256" || { echo "ERROR sha256sum failed for ${base_filename}.tar.gz" ; return ; }
   tar xf "${base_filename}.tar.gz"
   mv -n ${platform}-${arch}/helm "${target_dir}/helm-${version}"
-  [ -f "${target_dir}/helm-${version}" ] && echo "${target_dir}/helm-${version} Successfully downloaded" ;
+  [ -f "${target_dir}/helm-${version}" ] && echo "${target_dir}/helm-${version} Successfully downloaded (https://get.helm.sh/${base_filename}.tar.gz)" ;
 }
 
 for version in "${helm_releases[@]}" ; do
