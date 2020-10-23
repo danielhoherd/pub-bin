@@ -53,13 +53,13 @@ while getopts ':hsvVx' option ; do
 done
 shift $((OPTIND - 1))
 
-helm_releases=()
-
 if [ -z "${SKIP_DEFAULTS}" ] ; then
-  helm_releases+=(
+  helm2_releases=(
     2.14.3  # 2019-07-30
     2.15.2  # 2019-10-29
     2.16.12 # 2020-09-18
+  )
+  helm3_releases=(
     3.0.3   # 2020-01-29
     3.1.3   # 2020-04-22
     3.2.4   # 2020-06-15
@@ -67,7 +67,7 @@ if [ -z "${SKIP_DEFAULTS}" ] ; then
   )
 fi
 
-helm_releases+=( "$@" )
+helm_releases=( "${helm2_releases[@]}" "${helm3_releases[@]}" "$@" )
 
 case "${HOSTTYPE}" in
   x86_64) arch=amd64 ;;
@@ -103,8 +103,9 @@ get_helm_version() {
 for version in "${helm_releases[@]}" ; do
   get_helm_version "$version"
 done
+set -x
 
 cd "$target_dir"
-ln -fs helm-2.16.12 helm2
-ln -fs helm-3.3.3 helm
-ln -fs helm-3.3.3 helm3
+ln -fs "helm-${helm2_releases[-1]}" helm2
+ln -fs "helm-${helm3_releases[-1]}" helm
+ln -fs "helm-${helm3_releases[-1]}" helm3
