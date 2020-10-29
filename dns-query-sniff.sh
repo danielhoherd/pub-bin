@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# danielh@zoosk.com - 2014-04-18
+# Author: danielh@zoosk.com - 2014-04-18
+# License: MIT
 # Listens for DNS queries and prints who is requesting what
 
 # TODO:

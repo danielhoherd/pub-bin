@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# License: Unlicense
+# License: MIT
 # Author: github.com/danielhoherd
 # Purpose: Set system volume of macOS
 

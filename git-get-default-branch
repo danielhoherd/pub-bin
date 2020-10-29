@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
-# License: Unlicense
+# License: MIT
 # Purpose: for each remote, print: <name of remote> <default branch>
 # EG:   $ git-get-default-branch
 #       origin master

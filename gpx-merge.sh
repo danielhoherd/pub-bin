@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
-# License: Unlicense
+# License: MIT
 
 if [ $# -lt 2 ] ; then
     echo "This script merges gpx files and requires at least two gpx files passed as arguments. Output file is merged.gpx";

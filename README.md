@@ -4,4 +4,4 @@ Various command line tools that I've written that I think other people may find 
 
 # License
 
-[UNLICENSE](UNLICENSE)
+MIT License

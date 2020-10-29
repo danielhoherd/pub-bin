@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Author: github.com/danielhoherd
-# License: Unlicense
+# License: MIT
 """Send a notification via the Prowlapp.com notification service."""
 
 import requests

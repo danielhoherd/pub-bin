@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
-# License: Unlicense
+# License: MIT
 # Purpose: Spawn a new container and drop into a shell
 
 usage(){ cat <<EOF

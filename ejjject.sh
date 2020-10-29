@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
-# License: Unlicense
+# License: MIT
 # Purpose: Eject all removable media from a macOS machine
 
 command -v osascript &>/dev/null || { echo "osascript is required, are you using OS X?" >&2 ; exit 1 ; }

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Author: github.com/danielhoherd
-# License: Unlicense
+# License: MIT
 # Purpose: Return 0 if referenced file is older than the given time
 #
 # The idea for this was taken from <https://blog.afoolishmanifesto.com/posts/unreliable-cronjobs/>

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
-# License: Unlicense
+# License: MIT
 # Purpose: Print some media info about the given media files
 
 help() {

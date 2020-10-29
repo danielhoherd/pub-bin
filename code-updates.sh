@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
-# License: Unlicense
+# License: MIT
 # Purpose: Iterate code dirs and pull svn and git updates
 
 usage() {

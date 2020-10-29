@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
-# License: Unlicense
+# License: MIT
 # Purpose: Format 'docker images' in a vertical style similar to mysql's \G
 
 # https://docs.docker.com/engine/reference/commandline/images/#formatting

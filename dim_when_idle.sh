@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# License: Unlicense
+# License: MIT
 # Author: github.com/danielhoherd
 # Purpose: Hacky script to dim LCD screen unless any login sessions have been active recently.
 #          Works on a 2015 macbook pro with Ubuntu 18.04, other setups may not work.

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # https://thesatanictemple.com/pages/tenets
+# License: MIT
 
 import time
 import sys

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# License: Unlicense
+# License: MIT
 # Author: github.com/danielhoherd
 # Purpose: Fetch information about used AWS resources and output as JSON per region.
 #          This assumes credentials are set up for awscli and awless

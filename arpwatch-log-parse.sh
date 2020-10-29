@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
-# License: Unlicense
+# License: MIT
 # Purpose: Parses arpwatch logs from into a date sorted table
 
 check_for_required_commands() {

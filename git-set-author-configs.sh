@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
-# License: Unlicense
+# License: MIT
 
 usage() {
   echo "Description:  Add local git author configs to all repo directories in the CWD."

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
-# License: Unlicense
+# License: MIT
 
 [[ ! "${OSTYPE}" =~ ^darwin ]] && { echo "ERROR: macOS required." ; exit 1 ; }
 

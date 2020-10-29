@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
-# License: Unlicense
+# License: MIT
 # Purpose: Download several versions of helm client
 #
 # https://get.helm.sh/helm-v2.11.0-darwin-amd64.tar.gz

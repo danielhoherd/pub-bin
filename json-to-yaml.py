@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Author: github.com/danielhoherd
-# License: Unlicense
+# License: MIT
 import json
 import sys
 
