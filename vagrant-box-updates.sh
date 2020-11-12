@@ -53,4 +53,4 @@ while read -r box _ ; do
   yargs -t -n1 vagrant box remove "$box" --force --box-version
 done
 
-find ~/.vagrant.d/boxes -empty -delete
+find ~/.vagrant.d/boxes/ -empty -delete
