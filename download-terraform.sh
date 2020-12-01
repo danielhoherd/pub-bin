@@ -41,7 +41,7 @@ download_version() {
   unzip terraform.zip >/dev/null
   rm -rf terraform.zip
   mv terraform "${dest}"
-  echo "Successfully downloaded ${HOME}/bin/terraform-${version}"
+  echo "Successfully downloaded ${dest}"
 }
 
 for version in "${versions[@]}" ; do
