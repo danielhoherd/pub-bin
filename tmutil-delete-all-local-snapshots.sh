@@ -6,7 +6,7 @@
 # that disk space back.
 
 /usr/bin/tmutil listlocalsnapshots / |
-grep -v '^Snapshots for volume' |
+grep -Ev '^Snapshots for (disk|volume)' |
 sed -E 's/com\.apple\.TimeMachine\.([0-9-]*)(\.local)?/\1/' |
 while read -r SNAPSHOT_NAME ; do
   /usr/bin/tmutil deletelocalsnapshots "${SNAPSHOT_NAME}"
