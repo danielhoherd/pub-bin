@@ -41,7 +41,7 @@ vagrant box outdated --machine-readable --global |
   sort -u |
   yargs -n1 vagrant box update --box
 
-date "+%F %T%z Deleting old veresions of each existing Vagrant box, keeping only the latest"
+date "+%F %T%z Deleting old versions of each existing Vagrant box, keeping only the latest"
 vagrant box list |
 while read -r box _ ; do
   vagrant box list |

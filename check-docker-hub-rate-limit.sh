@@ -3,7 +3,7 @@
 # License: MIT
 # Purpose: Check docker rate limits. https://docs.docker.com/docker-hub/download-rate-limit/
 #
-# Unforunately, as of 2020-11-04, you can't check your rate limit without spending one of your alotted API requests:
+# Unfortunately, as of 2020-11-04, you can't check your rate limit without spending one of your allotted API requests:
 # > valid non-rate-limited manifest API requests to Hub will include the following rate limit headers
 # It would be great if they included this header on every request, including HEAD requests, so hopefully they fix that.
 
