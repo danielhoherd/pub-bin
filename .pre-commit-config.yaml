@@ -1,5 +1,5 @@
 ---
-exclude: "(venv|.vscode)" # regex
+exclude: '^(venv|\.vscode)' # regex
 repos:
   - repo: https://github.com/codespell-project/codespell
     rev: v2.0.0
