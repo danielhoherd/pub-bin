@@ -30,6 +30,7 @@ shift $((OPTIND - 1))
 file="$1"
 
 branch="$(git rev-parse --abbrev-ref HEAD)"  # bare branch name
+sha="$(git rev-parse HEAD)"  # full hash
 repo_root="$(git rev-parse --show-toplevel)"  # absolute path to git root
 repo_cwd="${PWD#${repo_root}}"  # cwd relative to repo_root, with leading slash (eg: /bin) # TODO: fix this to not have leading slash
 remote_url_original="$(git remote get-url origin)"  # the remote checkout url (eg: git@github.com:some_org_name/some_repo.git)
@@ -60,8 +61,10 @@ print_github() {
   web_url="${remote_url_https}/tree/${branch}${repo_cwd}"
   echo "Branch root:         ${branch_url}"
   if [ -n "${file}" ] ; then
-    web_file_url="${remote_url_https}/blob/${branch}${repo_cwd}/${file}"
-    echo "File url:            ${web_file_url}"
+    web_file_url_branch="${remote_url_https}/blob/${branch}${repo_cwd}/${file}"
+    web_file_url_sha="${remote_url_https}/blob/${sha::10}${repo_cwd}/${file}"  # only use the last 10 chars of the sha
+    echo "File url (branch):   ${web_file_url_branch}"
+    echo "File url (sha):      ${web_file_url_sha}"
   fi
 
   if [ -f "${repo_root}/.circleci/config.yml" ] ; then
