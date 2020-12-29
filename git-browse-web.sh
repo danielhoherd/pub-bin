@@ -51,8 +51,10 @@ print_gitlab() {
   echo "CI Jobs:             ${remote_url_https}/-/jobs"
   echo "Branch root:         ${branch}_url"
   if [ -n "${file}" ] ; then
-    web_file_url="${remote_url_https}/-/blob/${branch}${repo_cwd}/${file}"
-    echo "File url:            ${web_file_url}"
+    web_file_url_branch="${remote_url_https}/-/blob/${branch}${repo_cwd}/${file}"
+    web_file_url_sha="${remote_url_https}/-/blob/${sha::10}${repo_cwd}/${file}"  # only use the last 10 chars of the sha
+    echo "File url (branch):   ${web_file_url_branch}"
+    echo "File url (sha):      ${web_file_url_sha}"
   fi
 }
 
