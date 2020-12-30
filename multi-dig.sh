@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
-# Run a dig query against lots of public DNS servers
-
 usage() {
   cat <<EOF
 Issue a dig query to many public DNS servers consecutively.
 
-rsage: ${0##*/} [-v] <dig-args>
+Usage: ${0##*/} [-v] <dig-args>
 
 Options:
   -v   Be verbose
