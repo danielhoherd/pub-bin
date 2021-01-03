@@ -10,8 +10,8 @@ trap "kill 0" SIGINT
 lowest_speed_limit=2M  # per connection
 #max_overall_download_limit=500K  # total download speed
 dl_options=(
-  "-s5"
-  "-c"
+  "--split 5"
+  "--continue"
   "--lowest-speed-limit=${lowest_speed_limit:-0}"
   "--max-download-limit=${max_overall_download_limit:-0}"
   "--file-allocation" "none"
