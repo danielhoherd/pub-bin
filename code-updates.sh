@@ -41,7 +41,7 @@ for host in gitlab.com github.com ; do
 done
 
 code_update() {
-  out=$(
+  echo "$(
     exec 2>&1
     repo=$1
     if [ -d "${repo}" ] ; then
@@ -49,7 +49,7 @@ code_update() {
       date "+%F %T%z ${repo}"
       if [ -e .git ] ; then
         git remote | xargs -n1 -I {} git remote set-head {} -a
-        if git config --get remote.origin.url > /dev/null 2>&1 ; then
+        if git config --get remote.origin.url > /dev/null ; then
           git pull -q || echo "$(date '+%F %T%z') Problems with ${PWD}"
           git remote prune origin
           git gc "${GC_TYPE}"
@@ -61,8 +61,7 @@ code_update() {
         svn up
       fi
     fi
-  )
-  echo "$out"
+  )"
 }
 
 export -f code_update
