@@ -10,9 +10,9 @@ cd "$(mktemp -d)" || exit 1
 
 if [[ -z "${*}" ]] ; then
   versions=(
-    "0.12.29" # 2020-07-22
-    "0.13.5"  # 2020-10-21
-    "0.14.3"  # 2020-12-17
+    "0.12.30" # 2021-01-06
+    "0.13.6"  # 2021-01-06
+    "0.14.4"  # 2021-01-06
   )
 else
   versions=( "${@}" )
@@ -41,7 +41,7 @@ download_version() {
   unzip terraform.zip >/dev/null
   rm -rf terraform.zip
   mv terraform "${dest}"
-  ( cd "${HOME}/bin" && ln -s "terraform-${version}" "terraform-${version%.*}" )
+  ( cd "${HOME}/bin" && ln -fs "terraform-${version}" "terraform-${version%.*}" )
   echo "Successfully downloaded ${dest}"
 }
 
