@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Author: danielh@zoosk.com - 2014-04-18
 # License: MIT
-# Listens for DNS queries and prints who is requesting what
+# Description: Listens for DNS queries and prints who is requesting what
 
 # TODO:
 #   Make a mode that only prints out new src hosts
