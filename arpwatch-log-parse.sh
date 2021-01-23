@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Author: github.com/danielhoherd
 # License: MIT
-# Purpose: Parses arpwatch logs from into a date sorted table
+# Purpose: Parses arpwatch logs into a date sorted table
 
 check_for_required_commands() {
   for command in "$@" ; do
