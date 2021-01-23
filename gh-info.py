@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Show a list of a Github user's starred repositories."""
+"""Show a table of info about Github users or orgs."""
 import datetime
 from os import getenv
 from sys import exit
