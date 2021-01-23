@@ -1,2 +1,4 @@
+arrow
 PyYAML
+rich
 typer
