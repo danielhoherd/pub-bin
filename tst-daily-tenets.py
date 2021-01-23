@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # https://thesatanictemple.com/pages/tenets
 # License: MIT
-
-import time
 import sys
+import time
 from random import randint
+
 import click
 
 tenets = (

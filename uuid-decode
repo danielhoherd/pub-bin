@@ -2,11 +2,10 @@
 # Author: github.com/danielhoherd
 # License: MIT
 # Purpose: Validate and decode UUIDs
-
-import uuid
+import datetime
 import sys
 import time
-import datetime
+import uuid
 
 if len(sys.argv) == 1:
     sys.exit(f"Usage: {sys.argv[0]} <UUID> [UUID...]")

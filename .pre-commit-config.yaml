@@ -10,11 +10,15 @@ repos:
     hooks:
       - id: prettier
         args: ["--print-width=135"]
+  - repo: https://github.com/asottile/reorder_python_imports
+    rev: v2.3.6
+    hooks:
+      - id: reorder-python-imports
   - repo: https://github.com/asottile/pyupgrade
     rev: v2.7.4
     hooks:
       - id: pyupgrade
-        args: ["--py37-plus"]
+        args: ["--py38-plus"]
   - repo: https://github.com/psf/black
     rev: 20.8b1
     hooks:
@@ -22,7 +26,6 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.4.0
     hooks:
-      - id: check-byte-order-marker
       - id: check-case-conflict
       - id: check-executables-have-shebangs
       - id: check-json
@@ -32,12 +35,12 @@ repos:
       - id: check-yaml
         args: ["--allow-multiple-documents"]
       - id: debug-statements
-      # - id: detect-aws-credentials
       - id: detect-private-key
       - id: end-of-file-fixer
       - id: file-contents-sorter
         args: ["--ignore-case", "--unique"]
         files: "^(.gitignore|requirements.txt)$"
+      - id: fix-byte-order-marker
       - id: mixed-line-ending
         args: ["--fix=lf"]
       - id: no-commit-to-branch

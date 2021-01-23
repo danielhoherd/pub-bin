@@ -4,13 +4,12 @@
 # Purpose: Return 0 if referenced file is older than the given time
 #
 # The idea for this was taken from <https://blog.afoolishmanifesto.com/posts/unreliable-cronjobs/>
-
 import argparse
-import os
-from pathlib import Path
-import re
 import datetime
+import os
+import re
 import sys
+from pathlib import Path
 
 time_units = {
     "s": 1,

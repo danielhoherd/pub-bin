@@ -2,11 +2,11 @@
 # Author: github.com/danielhoherd
 # License: MIT
 """Send a notification via the Prowlapp.com notification service."""
-
-import requests
 import platform
-import click
 from sys import exit
+
+import click
+import requests
 
 app = platform.node()
 
