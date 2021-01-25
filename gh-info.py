@@ -30,6 +30,21 @@ def hash_repo(args, kwargs):
     return args[0].url
 
 
+@cachier(stale_after=datetime.timedelta(days=1), hash_params=hash_org)
+def get_all_repos_for_org(org: github.Organization.Organization) -> list:
+    return sorted([repo for repo in org.get_repos()], key=lambda x: x.updated_at)
+
+
+@cachier(stale_after=datetime.timedelta(days=1))
+def get_all_repos_for_user(user: github.NamedUser.NamedUser) -> list:
+    return sorted([repo for repo in user.get_repos()], key=lambda x: x.updated_at)
+
+
+@cachier(stale_after=datetime.timedelta(days=1))
+def get_all_starred_repos_for_user(user: github.NamedUser.NamedUser) -> list:
+    return sorted([repo for repo in user.get_starred()], key=lambda x: x.updated_at)
+
+
 @cachier(stale_after=datetime.timedelta(days=1), hash_params=hash_repo)
 def get_license_for_repo(repo):
     try:
@@ -67,10 +82,6 @@ def print_repo_table(title: str, repos: list) -> bool:
 def get_org_repos(org: str):
     gh_org = gh.get_organization(org)
 
-    @cachier(stale_after=datetime.timedelta(days=1), hash_params=hash_org)
-    def get_all_repos_for_org(org: github.Organization.Organization) -> list:
-        return [repo for repo in org.get_repos(type="all", sort="updated", direction="desc")]
-
     repos = get_all_repos_for_org(gh_org)
 
     print_repo_table(title=f"Repositories for {org}", repos=repos)
@@ -79,10 +90,6 @@ def get_org_repos(org: str):
 @app.command()
 def get_user_repos(user: str):
     gh_user = gh.get_user(user)
-
-    @cachier(stale_after=datetime.timedelta(days=1))
-    def get_all_repos_for_user(user: github.NamedUser.NamedUser) -> list:
-        return [repo for repo in user.get_repos(type="all", sort="updated", direction="desc")]
 
     repos = get_all_repos_for_user(gh_user)
 
@@ -96,10 +103,6 @@ def get_user_stars(user: str):
     except github.GithubException as e:
         print(e)
         exit(1)
-
-    @cachier(stale_after=datetime.timedelta(days=1))
-    def get_all_starred_repos_for_user(user: github.NamedUser.NamedUser) -> list:
-        return [repo for repo in user.get_starred(sort="updated", direction="desc")]
 
     stars = get_all_starred_repos_for_user(gh_user)
 
