@@ -32,17 +32,17 @@ def hash_repo(args, kwargs):
 
 @cachier(stale_after=datetime.timedelta(days=1), hash_params=hash_org)
 def get_all_repos_for_org(org: github.Organization.Organization) -> list:
-    return sorted([repo for repo in org.get_repos()], key=lambda x: x.updated_at)
+    return sorted([repo for repo in org.get_repos()], key=lambda x: x.pushed_at)
 
 
 @cachier(stale_after=datetime.timedelta(days=1))
 def get_all_repos_for_user(user: github.NamedUser.NamedUser) -> list:
-    return sorted([repo for repo in user.get_repos()], key=lambda x: x.updated_at)
+    return sorted([repo for repo in user.get_repos()], key=lambda x: x.pushed_at)
 
 
 @cachier(stale_after=datetime.timedelta(days=1))
 def get_all_starred_repos_for_user(user: github.NamedUser.NamedUser) -> list:
-    return sorted([repo for repo in user.get_starred()], key=lambda x: x.updated_at)
+    return sorted([repo for repo in user.get_starred()], key=lambda x: x.pushed_at)
 
 
 @cachier(stale_after=datetime.timedelta(days=30), hash_params=hash_repo)
@@ -58,7 +58,7 @@ def get_license_for_repo(repo):
 def print_repo_table(title: str, repos: list) -> bool:
     table = Table(title=title, show_lines=True, style="grey19", box=box.MINIMAL)
     table.add_column("Index", style="grey42")
-    table.add_column("Last update", style="grey42")
+    table.add_column("Last push", style="grey42")
     table.add_column("Name", style="light_goldenrod1")
     table.add_column("URL", style="blue3")
     table.add_column("Homepage", style="blue3")
@@ -68,7 +68,7 @@ def print_repo_table(title: str, repos: list) -> bool:
     for index, repo in enumerate(repos):
         table.add_row(
             str(index + 1),
-            arrow.get(repo.updated_at, TZ).format("YYYY-MM-DD"),
+            arrow.get(repo.pushed_at, TZ).format("YYYY-MM-DD"),
             repo.name,
             repo.html_url,
             repo.homepage,
