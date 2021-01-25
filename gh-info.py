@@ -45,7 +45,7 @@ def get_all_starred_repos_for_user(user: github.NamedUser.NamedUser) -> list:
     return sorted([repo for repo in user.get_starred()], key=lambda x: x.updated_at)
 
 
-@cachier(stale_after=datetime.timedelta(days=1), hash_params=hash_repo)
+@cachier(stale_after=datetime.timedelta(days=30), hash_params=hash_repo)
 def get_license_for_repo(repo):
     try:
         LICENSE = repo.get_license()
