@@ -12,6 +12,6 @@ set -eu
 repo="${1:-danielhoherd/rate-limit-test}"
 
 token=$(curl -sSL "https://auth.docker.io/token?service=registry.docker.io&scope=repository:${repo}:pull" | jq -r .token)
-curl -v -H "Authorization: Bearer $token" "https://registry-1.docker.io/v2/${repo}/manifests/latest" 2>&1 | grep RateLimit
+curl -v -H "Authorization: Bearer $token" "https://registry-1.docker.io/v2/${repo}/manifests/latest" 2>&1 | grep -Eo 'RateLimit-(Limit|Remaining): [0-9]+'
 
 exit 0
