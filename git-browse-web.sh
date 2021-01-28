@@ -31,6 +31,7 @@ file="$1"
 
 branch="$(git rev-parse --abbrev-ref HEAD)"  # bare branch name
 sha="$(git rev-parse HEAD)"  # full hash
+short_sha="${sha::10}"
 repo_root="$(git rev-parse --show-toplevel)"  # absolute path to git root
 repo_cwd="${PWD#${repo_root}}"  # cwd relative to repo_root, with leading slash (eg: /bin) # TODO: fix this to not have leading slash
 remote_url_original="$(git remote get-url origin)"  # the remote checkout url (eg: git@github.com:some_org_name/some_repo.git)
@@ -46,13 +47,15 @@ fi
 
 print_gitlab() {
   branch_url="${remote_url_https}/-/tree/${branch}"
+  sha_url="${remote_url_https}/-/tree/${short_sha}"
   web_url="${remote_url_https}/-/tree/${branch}${repo_cwd}"
-  echo "CI Pipelines:        ${remote_url_https}/pipelines"
+  echo "CI Pipelines:        ${remote_url_https}/-/pipelines"
   echo "CI Jobs:             ${remote_url_https}/-/jobs"
-  echo "Branch root:         ${branch}_url"
+  echo "Branch root:         ${branch_url}"
+  echo "sha root:            ${sha_url}"
   if [ -n "${file}" ] ; then
     web_file_url_branch="${remote_url_https}/-/blob/${branch}${repo_cwd}/${file}"
-    web_file_url_sha="${remote_url_https}/-/blob/${sha::10}${repo_cwd}/${file}"  # only use the last 10 chars of the sha
+    web_file_url_sha="${remote_url_https}/-/blob/${short_sha}${repo_cwd}/${file}"
     echo "File url (branch):   ${web_file_url_branch}"
     echo "File url (sha):      ${web_file_url_sha}"
   fi
@@ -60,11 +63,13 @@ print_gitlab() {
 
 print_github() {
   branch_url="${remote_url_https}/tree/${branch}"
+  sha_url="${remote_url_https}/tree/${short_sha}${repo_cwd}"
   web_url="${remote_url_https}/tree/${branch}${repo_cwd}"
   echo "Branch root:         ${branch_url}"
+  echo "sha root:            ${sha_url}"
   if [ -n "${file}" ] ; then
     web_file_url_branch="${remote_url_https}/blob/${branch}${repo_cwd}/${file}"
-    web_file_url_sha="${remote_url_https}/blob/${sha::10}${repo_cwd}/${file}"  # only use the last 10 chars of the sha
+    web_file_url_sha="${remote_url_https}/blob/${short_sha}${repo_cwd}/${file}"  # only use the last 10 chars of the sha
     echo "File url (branch):   ${web_file_url_branch}"
     echo "File url (sha):      ${web_file_url_sha}"
   fi
