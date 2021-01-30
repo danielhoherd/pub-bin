@@ -12,7 +12,7 @@ date_print() {
   echo "$(date "+%FT%T%z") $*"
 }
 
-hostname=$1
+readonly hostname=$1
 date_print "Monitoring $hostname $ip_address"
 
 if [[ -n "$2" ]] ; then
@@ -26,19 +26,17 @@ fi
 date_print "$hostname is $ip_address"
 
 check_dns_a_record(){
-  local hostname=$1
-  local ip_address=$2
-
   if ! resolved_address=$(dig +short @8.8.8.8 "$hostname") ; then
     date_print "ERROR: could not resolve ip address"
-    return 1
+    return 255
   fi
 
   if ! [[ "${resolved_address}" == "${ip_address}" ]] ; then
     message="DNS for $hostname changed from $ip_address to $resolved_address"
     date_print "ALERT: $message"
     prowl "$message"
-    return 2
+    ip_address="${resolved_address}"
+    return 1
   fi
 
   date_print "DNS for $hostname remains $ip_address"
@@ -46,6 +44,6 @@ check_dns_a_record(){
 }
 
 while true ; do
-  check_dns_a_record "$hostname" "$ip_address"
+  check_dns_a_record  # use global values so we can change them
   sleep 60
 done
