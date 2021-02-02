@@ -6,17 +6,19 @@ import sys
 
 import yaml
 
-if len(sys.argv) > 1:
-    for filename in sys.argv[1:]:
+files = sys.argv[1:]
+
+if len(files) == 0:
+    files.append("/dev/stdin")
+
+try:
+    for filename in files:
         with open(filename) as f:
-            try:
-                print(yaml.safe_dump(json.load(f), default_flow_style=False))
-            except json.decoder.JSONDecodeError as err:
-                sys.stderr.write(f"ERROR: {filename} could not be parsed\n{err}\n")
-else:
-    try:
-        print(yaml.dump(json.load(sys.stdin), default_flow_style=False))
-    except json.decoder.JSONDecodeError as err:
-        sys.stderr.write(f"ERROR: stdin could not be parsed\n{err}\n")
-    except KeyboardInterrupt:
-        sys.exit(1)
+            print(yaml.safe_dump(json.load(f), default_flow_style=False))
+
+except json.decoder.JSONDecodeError as err:
+    sys.stderr.write(f"ERROR: {filename} could not be parsed\n{err}\n")
+except BrokenPipeError:
+    pass
+except KeyboardInterrupt:
+    sys.exit(1)

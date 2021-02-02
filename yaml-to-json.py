@@ -6,20 +6,17 @@ import sys
 
 import yaml  # pyyaml
 
-if len(sys.argv) > 1:
-    for filename in sys.argv[1:]:
-        with open(filename) as f:
-            try:
-                for doc in yaml.safe_load_all(f):
-                    print(json.dumps(doc))
-            except yaml.scanner.ScannerError as err:
-                sys.stderr.write(f"ERROR: {filename} could not be parsed\n{err}\n")
-            except KeyboardInterrupt:
-                sys.exit(1)
+files = sys.argv[1:]
 
-else:
-    try:
-        for doc in yaml.safe_load_all(sys.stdin):
-            print(json.dumps(doc))
-    except KeyboardInterrupt:
-        sys.exit(1)
+if len(files) == 0:
+    files.append("/dev/stdin")
+
+try:
+    for filename in files:
+        with open(filename) as f:
+            for doc in yaml.safe_load_all(f):
+                print(json.dumps(doc))
+except yaml.scanner.ScannerError as err:
+    sys.stderr.write(f"ERROR: {filename} could not be parsed\n{err}\n")
+except KeyboardInterrupt:
+    sys.exit(1)
