@@ -7,7 +7,6 @@ from os import getenv
 import github  # PyGithub
 import typer
 import yaml
-from icecream import ic
 
 
 gh = github.Github(login_or_token=getenv("GITHUB_TOKEN"))
