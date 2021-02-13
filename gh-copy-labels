@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+"""Export and import labels from Github repositories."""
+from os import getenv
+
+import github  # PyGithub
+import typer
+import yaml
+from icecream import ic
+
+
+gh = github.Github(login_or_token=getenv("GITHUB_TOKEN"))
+gh.per_page = 100
+app = typer.Typer()
+
+keepers = ("name", "color", "description")
+
+
+@app.command()
+def get_labels(repo: str, filename: str = "labels.yaml"):
+    """Dump labels from the given repo to a YAML file."""
+    repo = gh.get_repo(repo)
+    repo_labels = list(repo.get_labels())
+    labels = []
+    with typer.progressbar(repo_labels) as progress:
+        for label in progress:
+            labels.append({key: label.raw_data[key] for key in keepers})  # wtf is taking this so long?
+    with open("labels.yaml", "w") as f:
+        f.write(yaml.safe_dump(labels, default_flow_style=False))
+        print("Wrote output to labels.yaml")
+
+
+@app.command()
+def apply_labels(repo: str, filename: str = "labels.yaml"):
+    """
+    Apply labels described in the given YAML file to the given repo.
+    """
+    try:
+        with open(filename) as f:
+            labels = yaml.safe_load(f)
+    except FileNotFoundError:
+        typer.echo(f"File {filename} not found!")
+        raise typer.Exit(1)
+
+    repo = gh.get_repo(repo)
+    for label in labels:
+        try:
+            existing_label = repo.get_label(label["name"])
+            existing_label.edit(name=label["name"], color=label["color"], description=label["description"])
+            print(f"Edited label {label}")
+        except github.GithubException as e:
+            if str(e).startswith("404"):
+                repo.create_label(name=label["name"], color=label["color"], description=label["description"])
+                print(f"Created label {label}")
+            else:
+                raise
+
+
+if __name__ == "__main__":
+    app()
