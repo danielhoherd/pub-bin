@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Author: github.com/danielhoherd
+# License: MIT
 usage() {
   cat <<EOF
 Issue a dig query to many public DNS servers consecutively.

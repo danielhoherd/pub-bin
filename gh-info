@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Author: github.com/danielhoherd
+# License: MIT
 """Show a table of info about Github users or orgs."""
 import datetime
 from os import getenv

@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Author: github.com/danielhoherd
+# License: MIT
 """Export and import labels from Github repositories."""
 from os import getenv
 

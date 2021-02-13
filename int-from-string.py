@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Author: github.com/danielhoherd
+# License: MIT
 import hashlib
 
 import typer
