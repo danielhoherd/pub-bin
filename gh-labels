@@ -31,9 +31,7 @@ def get_labels(repo: str, filename: str = "labels.yaml"):
 
 @app.command()
 def apply_labels(repo: str, filename: str = "labels.yaml"):
-    """
-    Apply labels described in the given YAML file to the given repo.
-    """
+    """Apply labels in the given YAML file to the given repo."""
     try:
         with open(filename) as f:
             labels = yaml.safe_load(f)
