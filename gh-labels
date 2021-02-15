@@ -33,14 +33,11 @@ def get_labels(repo: str, filename: str = "labels.yaml", github_token: str = typ
     print(f"Copying labels from {gh_repo.html_url}/labels")
     repo_labels = list(gh_repo.get_labels())
     labels = []
-    with typer.progressbar(repo_labels) as progress:
-        for label in progress:
-            labels.append(
-                {key: label.raw_data[key] if label.raw_data[key] is not None else "" for key in keepers}
-            )  # wtf is taking this so long?
-    with open("labels.yaml", "w") as f:
+    for label in repo_labels:
+        labels.append({key: label._rawData.get(key) if label._rawData.get(key) else "" for key in keepers})
+    with open(filename, "w") as f:
         f.write(yaml.safe_dump(labels, default_flow_style=False))
-        print("Wrote output to labels.yaml")
+        print(f"Wrote output to {filename}")
 
 
 @app.command()
