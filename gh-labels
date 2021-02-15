@@ -1,37 +1,50 @@
 #!/usr/bin/env python3
 # Author: github.com/danielhoherd
 # License: MIT
-"""Export and import labels from Github repositories."""
-from os import getenv
-
+"""Export and import Github repository labels."""
 import github  # PyGithub
 import typer
 import yaml
 
-
-gh = github.Github(login_or_token=getenv("GITHUB_TOKEN"))
-gh.per_page = 100
-app = typer.Typer()
+app = typer.Typer(help=__doc__)
 
 keepers = ("name", "color", "description")
 
 
+def get_repo(repo: str, github_token: str) -> github.Repository.Repository:
+    try:
+        gh = github.Github(login_or_token=github_token)
+        gh.per_page = 100
+        repo = gh.get_repo(repo)
+    except github.GithubException as e:
+        if e.status == 404:
+            typer.echo(f"Repo {repo} not found!")
+            raise typer.Exit(1)
+        else:
+            raise
+
+    return repo
+
+
 @app.command()
-def get_labels(repo: str, filename: str = "labels.yaml"):
+def get_labels(repo: str, filename: str = "labels.yaml", github_token: str = typer.Option(None, envvar="GITHUB_TOKEN")):
     """Dump labels from the given repo to a YAML file."""
-    repo = gh.get_repo(repo)
-    repo_labels = list(repo.get_labels())
+    gh_repo = get_repo(repo, github_token)
+    print(f"Copying labels from {gh_repo.html_url}/labels")
+    repo_labels = list(gh_repo.get_labels())
     labels = []
     with typer.progressbar(repo_labels) as progress:
         for label in progress:
-            labels.append({key: label.raw_data[key] for key in keepers})  # wtf is taking this so long?
+            labels.append(
+                {key: label.raw_data[key] if label.raw_data[key] is not None else "" for key in keepers}
+            )  # wtf is taking this so long?
     with open("labels.yaml", "w") as f:
         f.write(yaml.safe_dump(labels, default_flow_style=False))
         print("Wrote output to labels.yaml")
 
 
 @app.command()
-def apply_labels(repo: str, filename: str = "labels.yaml"):
+def apply_labels(repo: str, filename: str = "labels.yaml", github_token: str = typer.Option(None, envvar="GITHUB_TOKEN")):
     """Apply labels in the given YAML file to the given repo."""
     try:
         with open(filename) as f:
@@ -40,23 +53,20 @@ def apply_labels(repo: str, filename: str = "labels.yaml"):
         typer.echo(f"File {filename} not found!")
         raise typer.Exit(1)
 
-    try:
-        repo = gh.get_repo(repo)
-    except github.GithubException as e:
-        if e.status == "404":
-            typer.echo(f"Repo {repo} not found!")
-            raise typer.Exit(1)
-        else:
-            raise
+    gh_repo = get_repo(repo, github_token)
+
+    print(f"Applying labels to {gh_repo.html_url}/labels")
 
     for label in labels:
+        if label["description"] is None:
+            label["description"] = ""
         try:
-            existing_label = repo.get_label(label["name"])
+            existing_label = gh_repo.get_label(label["name"])
             existing_label.edit(name=label["name"], color=label["color"], description=label["description"])
             print(f"Edited label {label}")
         except github.GithubException as e:
-            if e.status == "404":
-                repo.create_label(name=label["name"], color=label["color"], description=label["description"])
+            if e.status == 404:
+                gh_repo.create_label(name=label["name"], color=label["color"], description=label["description"])
                 print(f"Created label {label}")
             else:
                 raise

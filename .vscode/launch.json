@@ -26,7 +26,7 @@
             "name": "Python: gh-copy-labels",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/gh-copy-labels",
+            "program": "${workspaceFolder}/gh-labels",
             "console": "integratedTerminal",
             "args": [
                 "get-labels", "danielhoherd/docker-geekbench",
