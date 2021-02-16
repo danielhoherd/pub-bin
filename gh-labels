@@ -27,7 +27,11 @@ def get_repo(repo: str, github_token: str) -> github.Repository.Repository:
 
 
 @app.command()
-def get_labels(repo: str, filename: str = "labels.yaml", github_token: str = typer.Option(None, envvar="GITHUB_TOKEN")):
+def get(
+    repo: str,
+    filename: str = typer.Option("labels.yaml", "--filename", "-f"),
+    github_token: str = typer.Option(None, envvar="GITHUB_TOKEN"),
+):
     """Dump labels from the given repo to a YAML file."""
     gh_repo = get_repo(repo, github_token)
     print(f"Copying labels from {gh_repo.html_url}/labels")
@@ -41,7 +45,11 @@ def get_labels(repo: str, filename: str = "labels.yaml", github_token: str = typ
 
 
 @app.command()
-def apply_labels(repo: str, filename: str = "labels.yaml", github_token: str = typer.Option(None, envvar="GITHUB_TOKEN")):
+def apply(
+    repo: str,
+    filename: str = typer.Option("labels.yaml", "--filename", "-f"),
+    github_token: str = typer.Option(None, envvar="GITHUB_TOKEN"),
+):
     """Apply labels in the given YAML file to the given repo."""
     try:
         with open(filename) as f:
