@@ -34,7 +34,7 @@ download_version() {
     armv5*) arch="armv5" ;;
     armv6*) arch="armv6" ;;
     armv7*) arch="armv7" ;;
-    *) echo "ABORT: Unknown architecture '$arch'" ; return ;;
+    *) echo "ABORT: Unknown architecture '$arch'" ; exit 1 ;;
   esac
 
   curl -sSLfo terraform.zip "https://releases.hashicorp.com/terraform/${version}/terraform_${version}_${os,,}_${arch}.zip" || return
