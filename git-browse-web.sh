@@ -94,7 +94,7 @@ fi
 
 if [[ ! "${print_only}" == "true" ]] ; then
   case "${OSTYPE}" in
-    darwin*) open "${web_file_url:-$web_url}" ;;
+    darwin*) open "${web_file_url_sha:-$web_url}" ;;
     linux-gnu) echo "ERROR: cannot handle opening browser in linux." ; exit 1 ;;
     *) echo "ERROR: cannot handle opening browser for OSTYPE '${OSTYPE}'" ; exit 1 ;;
   esac
