@@ -6,20 +6,18 @@ usage() {
   cat <<EOF
 Description: Run a throwaway docker container with optional image and commands.
 
-Usage: ${0##*/} -h | [-x] [docker-image [command]]
+Usage: ${0##*/} -h | [-x] [-i <docker-image>] [command]
 EOF
 }
 
-while getopts :xh option ; do
+while getopts :i:xh option ; do
   case "${option}" in
+    i) export IMAGE="${OPTARG}" ;;
     x) set -x ;;
     h|*) usage ; exit 1 ;;
   esac
 done
 shift $((OPTIND - 1))
-
-readonly IMAGE="$1"
-shift
 
 # shellcheck disable=SC2140
 docker run --rm --interactive --tty --workdir="/docker-share" --mount "type=bind,src=$PWD,dst=/docker-share" "${IMAGE:-quay.io/danielhoherd/uw}" "${@:-bash}"
