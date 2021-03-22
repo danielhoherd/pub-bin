@@ -6,7 +6,6 @@
 # The idea for this was taken from <https://blog.afoolishmanifesto.com/posts/unreliable-cronjobs/>
 import argparse
 import datetime
-import os
 import re
 import sys
 from pathlib import Path
@@ -23,7 +22,7 @@ def get_unix_mtime_of_file(file: str) -> int:
     """Return the mtime of the given file as a unix timestamp. Exit 0 on missing file."""
     file = Path(file)
     try:
-        age = int(os.path.getmtime(file))
+        age = int(file.lstat().st_mtime)
     except FileNotFoundError:
         print(f"File not found: {file}")
         sys.exit(0)
@@ -40,21 +39,27 @@ def parse_timespec(spec: str) -> int:
     return int(num) * int(time_units[unit])
 
 
-def main(file: str, timespec: str) -> None:
+def main(file: str, timespec: str, verbose: bool) -> None:
     """Exit 0 if the referenced file is older than timespec."""
 
     file_time = get_unix_mtime_of_file(file)
     age_limit = parse_timespec(timespec)
     now = int(datetime.datetime.now().strftime("%s"))
+    diff = now - file_time - age_limit
 
-    if now - age_limit > file_time:
+    if diff > 0:
+        if verbose:
+            print(f"{diff} seconds past")
         sys.exit(0)
     else:
+        if verbose:
+            print(f"{-diff} seconds left to go")
         sys.exit(1)
 
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-f", "--file", help="Filename to reference", type=str, required=True)
+parser.add_argument("-v", "--verbose", help="Be verbose", default=False, action="store_true")
 parser.add_argument(
     "-t",
     "--timespec",
@@ -66,4 +71,4 @@ args = parser.parse_args()
 
 if __name__ == "__main__":
     args = parser.parse_args()
-    main(file=args.file, timespec=args.timespec)
+    main(file=args.file, timespec=args.timespec, verbose=args.verbose)
