@@ -23,7 +23,7 @@ while getopts ':i:hxdn:N:' option ; do
   case "${option}"
   in
   x) set -x ;;
-  d) dry_or_interactive=( --dry-run=client -o yaml '--restart=OnFailure' ) ;;
+  d) dry_or_interactive=( '--dry-run=client' -o yaml '--restart=OnFailure' ) ;;
   i) IMAGE="$OPTARG" ;;
   n) extra_args+=( --namespace "$OPTARG" ) ;;
   N) node="$OPTARG" ;;
