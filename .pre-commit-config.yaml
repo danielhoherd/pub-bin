@@ -15,7 +15,7 @@ repos:
     hooks:
       - id: reorder-python-imports
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.10.0
+    rev: v2.11.0
     hooks:
       - id: pyupgrade
         args: ["--py38-plus"]
@@ -51,7 +51,7 @@ repos:
       - id: sort-simple-yaml
       - id: trailing-whitespace
   - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.8.4
+    rev: 3.9.0
     hooks:
       - id: flake8
   - repo: https://github.com/detailyang/pre-commit-shell
@@ -73,7 +73,7 @@ repos:
     hooks:
       - id: yamllint
   - repo: https://github.com/danielhoherd/pre-commit-hooks
-    rev: bd325c947efcba13c03b4f4c93d882f2f83ed6ff
+    rev: 2f2f8150b077398bc79a3df1d0c9bcf339990031
     hooks:
       - id: CVE-2017-18342
       - id: remove-en-dashes
