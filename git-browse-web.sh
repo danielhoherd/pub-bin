@@ -65,17 +65,19 @@ print_github() {
   branch_url="${remote_url_https}/tree/${branch}"
   sha_url="${remote_url_https}/tree/${short_sha}${repo_cwd}"
   web_url="${remote_url_https}/tree/${branch}${repo_cwd}"
+
+  if [ -f "${repo_root}/.circleci/config.yml" ] ; then
+    echo "CircleCI:            https://app.circleci.com/pipelines/github/${remote_url_https#*.com?}?branch=$branch"
+  fi
+
   echo "Branch root:         ${branch_url}"
   echo "sha root:            ${sha_url}"
+
   if [ -n "${file}" ] ; then
     web_file_url_branch="${remote_url_https}/blob/${branch}${repo_cwd}/${file}"
     web_file_url_sha="${remote_url_https}/blob/${short_sha}${repo_cwd}/${file}"  # only use the last 10 chars of the sha
     echo "File url (branch):   ${web_file_url_branch}"
     echo "File url (sha):      ${web_file_url_sha}"
-  fi
-
-  if [ -f "${repo_root}/.circleci/config.yml" ] ; then
-    echo "CircleCI:            https://app.circleci.com/pipelines/github/${remote_url_https#*.com?}?branch=$branch"
   fi
 }
 
