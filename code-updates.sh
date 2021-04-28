@@ -4,7 +4,7 @@
 # Purpose: Iterate code dirs and pull svn and git updates
 
 usage() {
-  echo "Usage:  ${0##*/} [-a] [-x]"
+  echo "Usage:  ${0##*/} [-a] [-x] [zero or more code_workspaces]"
   echo "    -a  Force git gc --aggressive"
   echo "    -p  Number of parallel jobs to run"
   echo "    -x  Enable xtrace"
