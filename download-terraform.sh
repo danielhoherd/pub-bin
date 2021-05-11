@@ -41,10 +41,12 @@ else
   versions=( "${@}" )
 fi
 
-download_version() {
-  dest="${HOME}/bin/terraform-${version}"
+target_dir="${HOME}/bin"
+[ -d "$target_dir" ] || mkdir "$target_dir" || { echo "ERROR: $target_dir is not a dir and we cannot create it." ; exit 1 ; }
 
-  [[ -d "${HOME}/bin" ]] || mkdir "${HOME}/bin"
+download_version() {
+  dest="${target_dir}/terraform-${version}"
+
   [[ -f "${dest}" ]] && { echo "Skipping: ${dest} already exists" ; return ; }
 
   read -r os arch < <(uname -s -m)
@@ -74,7 +76,7 @@ download_version() {
   unzip terraform.zip >/dev/null
   rm -rf terraform.zip
   mv terraform "${dest}"
-  ( cd "${HOME}/bin" && ln -fs "terraform-${version}" "terraform-${version%.*}" )
+  ( cd "${target_dir}" && ln -fs "terraform-${version}" "terraform-${version%.*}" )
   echo "Successfully downloaded ${dest}"
 }
 

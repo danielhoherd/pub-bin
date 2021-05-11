@@ -81,7 +81,8 @@ case "$OSTYPE" in
     echo "ABORT: Unknown platform $OSTYPE." ; exit 1 ;;
 esac
 
-target_dir="$HOME/bin"
+target_dir="${HOME}/bin"
+[ -d "$target_dir" ] || mkdir "$target_dir" || { echo "ERROR: $target_dir is not a dir and we cannot create it." ; exit 1 ; }
 
 get_helm_version() {
   version="$1"
