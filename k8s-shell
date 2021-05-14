@@ -8,6 +8,7 @@ Launches a k8s pod with an optional docker container given.
 
     -h  Print help
     -d  Dry run and print output spec
+    -i  Docker image
     -N  Specify a node
     -n  Namespace
     -x  Enable xtrace
