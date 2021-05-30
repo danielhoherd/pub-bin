@@ -8,4 +8,5 @@
 command -v mr >/dev/null 2>&1 || { echo "ERROR: 'mr' command is missing. See https://myrepos.branchable.com/install" ; exit 2 ; }
 
 find "$@" -maxdepth 1 -mindepth 1 -print0 |
-xargs -0 -n1 mr register
+  sort -z |
+  xargs -0 -n1 mr register

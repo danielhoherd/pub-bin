@@ -72,4 +72,5 @@ if [ "$#" -gt 0 ] ; then
 fi
 
 find "${DIRS[@]}" -mindepth 1 -maxdepth 1 -type d -print0 |
+  sort -z |
   xargs -n1 -P"${PARALLEL}" -0 -I{} bash -c "code_update {}" \;
