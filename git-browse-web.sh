@@ -47,12 +47,14 @@ fi
 
 print_gitlab() {
   branch_url="${remote_url_https}/-/tree/${branch}"
-  sha_url="${remote_url_https}/-/tree/${short_sha}"
+  sha_tree_url="${remote_url_https}/-/tree/${short_sha}"
+  sha_commit_url="${remote_url_https}/-/commit/${sha}"
   web_url="${remote_url_https}/-/tree/${branch}${repo_cwd}"
   echo "CI Pipelines:        ${remote_url_https}/-/pipelines"
   echo "CI Jobs:             ${remote_url_https}/-/jobs"
   echo "Branch root:         ${branch_url}"
-  echo "sha root:            ${sha_url}"
+  echo "sha root:            ${sha_tree_url}"
+  echo "commit:              ${sha_commit_url}"
   if [ -n "${file}" ] ; then
     web_file_url_branch="${remote_url_https}/-/blob/${branch}${repo_cwd}/${file}"
     web_file_url_sha="${remote_url_https}/-/blob/${short_sha}${repo_cwd}/${file}"
@@ -63,7 +65,8 @@ print_gitlab() {
 
 print_github() {
   branch_url="${remote_url_https}/tree/${branch}"
-  sha_url="${remote_url_https}/tree/${short_sha}${repo_cwd}"
+  sha_tree_url="${remote_url_https}/tree/${short_sha}${repo_cwd}"
+  sha_commit_url="${remote_url_https}/commit/${sha}"
   web_url="${remote_url_https}/tree/${branch}${repo_cwd}"
 
   if [ -f "${repo_root}/.circleci/config.yml" ] ; then
@@ -71,7 +74,8 @@ print_github() {
   fi
 
   echo "Branch root:         ${branch_url}"
-  echo "sha root:            ${sha_url}"
+  echo "sha root:            ${sha_tree_url}"
+  echo "commit:              ${sha_commit_url}"
 
   if [ -n "${file}" ] ; then
     web_file_url_branch="${remote_url_https}/blob/${branch}${repo_cwd}/${file}"
