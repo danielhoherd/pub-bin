@@ -30,6 +30,7 @@ shift $((OPTIND - 1))
 file="$1"
 
 branch="$(git rev-parse --abbrev-ref HEAD)"  # bare branch name
+main_branch=$(git ls-remote --symref origin HEAD | awk '$2 ~ /^refs/ { sub(".*/","", $2) ; print $2 }')  # assumes remote 'origin'
 sha="$(git rev-parse HEAD)"  # full hash
 short_sha="${sha::10}"
 repo_root="$(git rev-parse --show-toplevel)"  # absolute path to git root
@@ -50,11 +51,17 @@ print_gitlab() {
   sha_tree_url="${remote_url_https}/-/tree/${short_sha}"
   sha_commit_url="${remote_url_https}/-/commit/${sha}"
   web_url="${remote_url_https}/-/tree/${branch}${repo_cwd}"
+  branch_compare_url="${remote_url_https}/-/compare/${main_branch}...${branch}"
+  sha_compare_url="${remote_url_https}/-/compare/${main_branch}...${sha}"
   echo "CI Pipelines:        ${remote_url_https}/-/pipelines"
   echo "CI Jobs:             ${remote_url_https}/-/jobs"
   echo "Branch root:         ${branch_url}"
   echo "sha root:            ${sha_tree_url}"
   echo "commit:              ${sha_commit_url}"
+  if [ "${branch}" != "${main_branch}" ] ; then
+    echo "Compare branch:      ${branch_compare_url}"
+  fi
+  echo "Compare sha:         ${sha_compare_url}"
   if [ -n "${file}" ] ; then
     web_file_url_branch="${remote_url_https}/-/blob/${branch}${repo_cwd}/${file}"
     web_file_url_sha="${remote_url_https}/-/blob/${short_sha}${repo_cwd}/${file}"
@@ -68,6 +75,8 @@ print_github() {
   sha_tree_url="${remote_url_https}/tree/${short_sha}${repo_cwd}"
   sha_commit_url="${remote_url_https}/commit/${sha}"
   web_url="${remote_url_https}/tree/${branch}${repo_cwd}"
+  branch_compare_url="${remote_url_https}/compare/${main_branch}...${branch}"
+  sha_compare_url="${remote_url_https}/compare/${main_branch}...${sha}"
 
   if [ -f "${repo_root}/.circleci/config.yml" ] ; then
     echo "CircleCI:            https://app.circleci.com/pipelines/github/${remote_url_https#*.com?}?branch=$branch"
@@ -76,6 +85,10 @@ print_github() {
   echo "Branch root:         ${branch_url}"
   echo "sha root:            ${sha_tree_url}"
   echo "commit:              ${sha_commit_url}"
+  if [ "${branch}" != "${main_branch}" ] ; then
+    echo "Compare branch:      ${branch_compare_url}"
+  fi
+  echo "Compare sha:         ${sha_compare_url}"
 
   if [ -n "${file}" ] ; then
     web_file_url_branch="${remote_url_https}/blob/${branch}${repo_cwd}/${file}"
