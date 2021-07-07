@@ -10,7 +10,7 @@ trap "kill 0" SIGINT
 lowest_speed_limit=2M  # per connection
 #max_overall_download_limit=500K  # total download speed
 dl_options=(
-  "--split 5"
+  "--split=5"
   "--continue"
   "--lowest-speed-limit=${lowest_speed_limit:-0}"
   "--max-download-limit=${max_overall_download_limit:-0}"
@@ -22,7 +22,6 @@ dl_options=(
 # - http://mirrors.ubuntu.com/mirrors.txt  # simple list of mirrors
 mirrors=(
   "http://mirror.math.princeton.edu/pub/ubuntu-iso/"
-  "http://mirrors.layeronline.com/ubuntu-releases/"
   "http://mirrors.xtom.com/ubuntu-releases/"
   "http://isos.ubuntu.mirror.constant.com/"
   "http://mirror.cs.unm.edu/releases/"
