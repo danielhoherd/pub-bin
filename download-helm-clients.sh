@@ -6,7 +6,6 @@
 # https://get.helm.sh/helm-v2.11.0-darwin-amd64.tar.gz
 # https://get.helm.sh/helm-v2.11.0-darwin-amd64.tar.gz.sha256
 # https://github.com/helm/helm
-set -e
 
 usage() {
   echo "
@@ -70,6 +69,7 @@ helm_releases=( "${helm2_releases[@]}" "${helm3_releases[@]}" "$@" )
 
 case "${HOSTTYPE}" in
   x86_64) arch=amd64 ;;
+  aarch64) arch=arm64 ;;
   *) echo "ERROR: Unknown architecture, please open an issue: https://github.com/danielhoherd/pub-bin/issues" ; exit 1 ;;
 esac
 
@@ -87,25 +87,30 @@ target_dir="${HOME}/bin"
 
 get_helm_version() {
   version="$1"
-  print-verbose "Downloading helm version ${version}"
   base_filename="helm-v${version}-${platform}-${arch}"
-  [ -f "${target_dir}/helm-${version}" ] && { echo "Skipping: helm-${version} already exists (https://get.helm.sh/${base_filename}.tar.gz)" ; return ; }
-  cd "$(mktemp -d)"
-  wget -q "https://get.helm.sh/${base_filename}.tar.gz"
-  wget -q "https://get.helm.sh/${base_filename}.tar.gz.sha256"
-  sha256=$(sha256sum "${base_filename}.tar.gz" | cut -d ' ' -f 1)
-  grep -q "${sha256}" "${base_filename}.tar.gz.sha256" || { echo "ERROR sha256sum failed for ${base_filename}.tar.gz" ; return ; }
-  tar xf "${base_filename}.tar.gz"
-  mv -n ${platform}-${arch}/helm "${target_dir}/helm-${version}"
-  [ -f "${target_dir}/helm-${version}" ] && echo "${target_dir}/helm-${version} Successfully downloaded (https://get.helm.sh/${base_filename}.tar.gz)" ;
+  target_filename="${target_dir}/helm-${version}"
+  archive_file="${base_filename}.tar.gz"
+  checksum_file="${base_filename}.tar.gz.sha256"
+  archive_url="https://get.helm.sh/${archive_file}"
+  checksum_url="https://get.helm.sh/${checksum_file}"
+  print-verbose "Downloading ${target_filename} from ${archive_url}"
+  [ -f "${target_filename}" ] && { echo "Skipping ${archive_url}, target file already exists: ${target_filename}" ; return ; }
+  cd "$(mktemp -d)" || exit 1
+  curl -fsSLO "$archive_url" || return 1
+  curl -fsSLO "$checksum_url" || return 1
+  sha256=$(sha256sum "${archive_file}" | cut -d ' ' -f 1)
+  grep -q "${sha256}" "${checksum_file}" || { echo "ERROR sha256sum failed for ${archive_file} (${archive_url})" ; return ; }
+  tar xf "${archive_file}"
+  mv -n "${platform}-${arch}/helm" "${target_filename}"
+  [ -f "${target_filename}" ] && echo "${target_filename} successfully downloaded (${archive_url})" ;
 }
 
 for version in "${helm_releases[@]}" ; do
   get_helm_version "$version"
 done
-set -x
 
-cd "$target_dir"
-ln -fs "helm-${helm2_releases[-1]}" helm2
-ln -fs "helm-${helm3_releases[-1]}" helm
-ln -fs "helm-${helm3_releases[-1]}" helm3
+[ -f "${target_dir}/helm-${helm2_releases[-1]}" ] && ln -fsv "${target_dir}/helm-${helm2_releases[-1]}" "${target_dir}/helm2"
+[ -f "${target_dir}/helm-${helm3_releases[-1]}" ] && {
+  ln -fsv "${target_dir}/helm-${helm3_releases[-1]}" "${target_dir}/helm"
+  ln -fsv "${target_dir}/helm-${helm3_releases[-1]}" "${target_dir}/helm3"
+}
