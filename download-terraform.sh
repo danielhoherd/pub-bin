@@ -77,7 +77,7 @@ download_version() {
   unzip terraform.zip >/dev/null
   rm -rf terraform.zip
   mv terraform "${dest}"
-  ( cd "${target_dir}" && ln -fs "terraform-${version}" "terraform-${version%.*}" )
+  ( cd "${target_dir}" && ln -fsv "terraform-${version}" "terraform-${version%.*}" )
   echo "Successfully downloaded ${dest}"
 }
 
