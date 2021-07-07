@@ -48,8 +48,6 @@ target_dir="${HOME}/bin"
 download_version() {
   dest="${target_dir}/terraform-${version}"
 
-  [[ -f "${dest}" ]] && { echo "Skipping: ${dest} already exists" ; return ; }
-
   read -r os arch < <(uname -s -m)
   case $arch in
     x86_64) arch="amd64" ;;
@@ -67,6 +65,8 @@ download_version() {
   [ -n "$VERBOSE" ] && { echo ; echo "Trying to download with os=$os, arch=$arch, version=$version" ; }
 
   URL="https://releases.hashicorp.com/terraform/${version}/terraform_${version}_${os,,}_${arch}.zip"
+
+  [[ -f "${dest}" ]] && { echo "Skipping: ${dest} already exists ($URL)" ; return ; }
 
   if ! curl -sSLf "${extra_args[@]}" -o terraform.zip "$URL" ; then
     echo "Failed to download $URL"
