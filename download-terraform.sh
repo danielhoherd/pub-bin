@@ -66,7 +66,7 @@ download_version() {
 
   URL="https://releases.hashicorp.com/terraform/${version}/terraform_${version}_${os,,}_${arch}.zip"
 
-  [[ -f "${dest}" ]] && { echo "Skipping: ${dest} already exists ($URL)" ; return ; }
+  [[ -f "${dest}" ]] && { echo "Skipping URL ${URL} which already exists at ${dest}" ; return ; }
 
   if ! curl -sSLf "${extra_args[@]}" -o terraform.zip "$URL" ; then
     echo "Failed to download $URL"
@@ -78,7 +78,7 @@ download_version() {
   rm -rf terraform.zip
   mv terraform "${dest}"
   ( cd "${target_dir}" && ln -fsv "terraform-${version}" "terraform-${version%.*}" )
-  echo "Successfully downloaded ${dest}"
+  echo "Successfully downloaded ${dest} from ${URL}"
 }
 
 for version in "${versions[@]}" ; do
