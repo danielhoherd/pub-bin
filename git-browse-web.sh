@@ -78,6 +78,10 @@ print_github() {
   branch_compare_url="${remote_url_https}/compare/${main_branch}...${branch}"
   sha_compare_url="${remote_url_https}/compare/${main_branch}...${sha}"
 
+  if [ -d "${repo_root}/.github/workflows" ] ; then
+    echo "Github Actions:      ${remote_url_https}/actions"
+  fi
+
   if [ -f "${repo_root}/.circleci/config.yml" ] ; then
     echo "CircleCI:            https://app.circleci.com/pipelines/github/${remote_url_https#*.com?}?branch=$branch"
   fi
