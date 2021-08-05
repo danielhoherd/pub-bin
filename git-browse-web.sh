@@ -56,8 +56,8 @@ print_gitlab() {
   echo "CI Pipelines:        ${remote_url_https}/-/pipelines"
   echo "CI Jobs:             ${remote_url_https}/-/jobs"
   echo "Branch root:         ${branch_url}"
-  echo "sha root:            ${sha_tree_url}"
-  echo "commit:              ${sha_commit_url}"
+  echo "SHA root:            ${sha_tree_url}"
+  echo "Commit:              ${sha_commit_url}"
   if [ "${branch}" != "${main_branch}" ] ; then
     echo "Compare branch:      ${branch_compare_url}"
   fi
@@ -87,8 +87,8 @@ print_github() {
   fi
 
   echo "Branch root:         ${branch_url}"
-  echo "sha root:            ${sha_tree_url}"
-  echo "commit:              ${sha_commit_url}"
+  echo "SHA root:            ${sha_tree_url}"
+  echo "Commit:              ${sha_commit_url}"
   if [ "${branch}" != "${main_branch}" ] ; then
     echo "Compare branch:      ${branch_compare_url}"
   fi
