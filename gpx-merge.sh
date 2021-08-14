@@ -23,11 +23,11 @@ export -f check_for_required_commands
 check_for_required_commands gpsbabel
 
 args=();
-for f in "$@" ; do
-    if [ -f "$f" ] || [ -h "$f" ] ; then
-        args+=( "-f" "$f" );
+for file in "$@" ; do
+    if [ -f "$file" ] || [ -h "$file" ] ; then
+        args+=( "-f" "$file" );
     else
-        echo "Skipping $f, it's not a file."
+        echo "Skipping $file, it's not a file."
     fi
 done;
 
