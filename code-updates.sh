@@ -48,7 +48,7 @@ code_update() {
       cd "${repo}" || ( echo "ERROR: cannot cd to ${repo}" ; return 1 ; )
       date "+%F %T%z ${repo}"
       if [ -e .git ] ; then
-        git remote | xargs -n1 -I {} git remote set-head {} -a
+        git remote | xargs -I {} git remote set-head {} -a
         if git config --get remote.origin.url > /dev/null ; then
           git pull -q || echo "$(date '+%F %T%z') Problems with ${PWD}"
           git remote prune origin
@@ -73,4 +73,4 @@ fi
 
 find "${DIRS[@]}" -mindepth 1 -maxdepth 1 -type d -print0 |
   sort -z |
-  xargs -n1 -P"${PARALLEL}" -0 -I{} bash -c "code_update {}" \;
+  xargs -P"${PARALLEL}" -0 -I{} bash -c "code_update {}" \;
