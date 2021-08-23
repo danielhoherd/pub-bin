@@ -15,7 +15,7 @@ repos:
     hooks:
       - id: reorder-python-imports
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.23.3
+    rev: v2.24.0
     hooks:
       - id: pyupgrade
         args: ["--py38-plus"]
@@ -70,11 +70,11 @@ repos:
       - id: remove-tabs
         exclude_types: [makefile, binary]
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.26.2
+    rev: v1.26.3
     hooks:
       - id: yamllint
   - repo: https://github.com/danielhoherd/pre-commit-hooks
-    rev: 2f2f8150b077398bc79a3df1d0c9bcf339990031
+    rev: 3df2cd5fc0bffe63b0a5e0021f9885a223d51600
     hooks:
       - id: CVE-2017-18342
       - id: remove-en-dashes
