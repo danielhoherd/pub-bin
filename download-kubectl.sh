@@ -66,7 +66,9 @@ target_dir="${HOME}/bin"
 get_kubectl_version() {
   version="$1"
   url="https://dl.k8s.io/release/v${version}/bin/${platform}/${arch}/kubectl"
-  target_filename="${target_dir}/kubectl-${version}"
+  target_filename="kubectl-${version%.*}" # trim to just major.minor
+  target_filename="${target_filename/./-}" # replace dots with dashes
+  target_filename="${target_dir}/${target_filename}"
   print-verbose "Downloading ${target_filename} from ${url}"
   [ -f "${target_filename}" ] && { echo "Skipping ${url}, target file already exists: ${target_filename}" ; return ; }
   cd "$(mktemp -d)" || exit 1
