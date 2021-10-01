@@ -51,10 +51,13 @@ nameservers=(
 echo -n "$(gdate --iso-8601=seconds) "
 
 for nameserver in "${nameservers[@]}" ; do
-  if host "${target_host}" "${nameserver}" >/dev/null ; then
-    echo -n .
-  else
-    echo -n F
-  fi
+  (
+    if host "${target_host}" "${nameserver}" >/dev/null 2>/dev/null ; then
+      echo -n .
+    else
+      echo -n F
+    fi
+  ) &
 done
+wait
 echo
