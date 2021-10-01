@@ -4,6 +4,7 @@
 import sys
 import time
 from random import randint
+from shutil import get_terminal_size
 
 import click
 
@@ -17,7 +18,7 @@ tenets = (
     "TST Tenet #7: Every tenet is a guiding principle designed to inspire nobility in action and thought. The spirit of compassion, wisdom, and justice should always prevail over the written or spoken word.",
 )
 
-width = click.get_terminal_size()[0]
+width = get_terminal_size().columns
 wrapped_tenets = [click.wrap_text(tenet, width=width) for tenet in tenets]
 
 # 8200 seconds = 23 hours
