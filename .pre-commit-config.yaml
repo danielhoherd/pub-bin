@@ -1,6 +1,10 @@
 ---
 exclude: '^(venv|\.vscode)' # regex
 repos:
+  - repo: https://github.com/PyCQA/prospector
+    rev: 1.5.1
+    hooks:
+      - id: prospector
   - repo: https://github.com/codespell-project/codespell
     rev: v2.1.0
     hooks:
