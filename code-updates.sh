@@ -31,6 +31,7 @@ trap "kill 0" SIGINT
 if [ $((RANDOM % 500)) -eq 9 ] || [ "${aggressive}" == 'yes' ] ; then
   GC_TYPE='--aggressive'
   date "+%F %T%z 'git gc ${GC_TYPE}' selected"
+  ( set -x ; pre-commit gc ; )
 fi
 
 for host in gitlab.com github.com ; do
