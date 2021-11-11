@@ -84,3 +84,5 @@ download_version() {
 for version in "${versions[@]}" ; do
   download_version "${version}"
 done
+
+ln -fsv "${target_dir}/terraform-${versions[-1]}" "${target_dir}/terraform"
