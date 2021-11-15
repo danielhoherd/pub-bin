@@ -34,7 +34,7 @@ main_branch=$(git ls-remote --symref origin HEAD | awk '$2 ~ /^refs/ { sub(".*/"
 sha="$(git rev-parse HEAD)"  # full hash
 short_sha="${sha::10}"
 repo_root="$(git rev-parse --show-toplevel)"  # absolute path to git root
-repo_cwd="${PWD#${repo_root}}"  # cwd relative to repo_root, with leading slash (eg: /bin) # TODO: fix this to not have leading slash
+repo_cwd="${PWD#"${repo_root}"}"  # cwd relative to repo_root, with leading slash (eg: /bin) # TODO: fix this to not have leading slash
 remote_url_original="$(git remote get-url origin)"  # the remote checkout url (eg: git@github.com:some_org_name/some_repo.git)
 # remote_url_https is the https link to the repo (eg: https://github.com/some_org_name/some_repo)
 if [[ "${remote_url_original}" =~ ^git* ]] ; then
