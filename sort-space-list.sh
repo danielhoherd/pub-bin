@@ -5,7 +5,7 @@
 
 sort_space_list ()
 {
-    for X in ${*:-$(cat /dev/stdin)};
+    for X in "$@";
     do
         echo "${X}";
     done | sort | while read -r line; do
