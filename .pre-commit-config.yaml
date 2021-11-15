@@ -56,11 +56,11 @@ repos:
     hooks:
       - id: flake8
   - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: v0.7.2.1
+    rev: v0.8.0.1
     hooks:
       - id: shellcheck
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.0
+    rev: 1.7.1
     hooks:
       - id: bandit
         args: ["-s", "B101,B311"]
