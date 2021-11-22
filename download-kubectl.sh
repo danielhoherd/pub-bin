@@ -16,7 +16,7 @@ Usage:
     -x    set -o xtrace
 
 See Also:
-    https://github.com/kubernetes/kubectl/releases
+    https://github.com/kubernetes/kubectl/tags
 "
 }
 
