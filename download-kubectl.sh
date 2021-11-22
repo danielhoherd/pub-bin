@@ -17,6 +17,7 @@ Usage:
 
 See Also:
     https://github.com/kubernetes/kubectl/tags
+    curl --silent https://api.github.com/repos/kubernetes/kubectl/tags?per_page=100 | jq -r '.[].name' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]$' | sort -V
 "
 }
 
@@ -39,10 +40,10 @@ shift $((OPTIND - 1))
 kubectl_releases=(
   1.17.17
   1.18.20
-  1.19.15
-  1.20.11
-  1.21.5
-  1.22.2
+  1.19.16
+  1.20.13
+  1.21.7
+  1.22.4
 )
 
 case "${HOSTTYPE}" in
@@ -66,17 +67,19 @@ target_dir="${HOME}/bin"
 get_kubectl_version() {
   version="$1"
   url="https://dl.k8s.io/release/v${version}/bin/${platform}/${arch}/kubectl"
-  target_filename="kubectl-${version%.*}" # trim to just major.minor
+  target_filename="kubectl-${version}"
   target_filename="${target_dir}/${target_filename}"
+  target_filename_trimmed="${target_filename%.*}" # trim to just major.minor
   print-verbose "Downloading ${target_filename} from ${url}"
   [ -f "${target_filename}" ] && { echo "Skipping ${url}, target file already exists: ${target_filename}" ; return ; }
   cd "$(mktemp -d)" || exit 1
   { curl -fsSLo "${target_filename}" "${url}" && chmod +x "${target_filename}" ; } || return 1
   [ -f "${target_filename}" ] && echo "${target_filename} successfully downloaded (${url})" ;
+  ln -fsv "${target_filename}" "${target_filename_trimmed}"
 }
 
 for version in "${kubectl_releases[@]}" ; do
   get_kubectl_version "$version"
 done
 
-ln -fsv "${target_dir}/kubectl-${kubectl_releases[-3]%.*}" "${target_dir}/kubectl"
+ln -fsv "${target_dir}/kubectl-${kubectl_releases[-3]}" "${target_dir}/kubectl"
