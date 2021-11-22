@@ -78,3 +78,5 @@ get_kubectl_version() {
 for version in "${kubectl_releases[@]}" ; do
   get_kubectl_version "$version"
 done
+
+ln -fsv "${target_dir}/kubectl-${kubectl_releases[-3]%.*}" "${target_dir}/kubectl"
