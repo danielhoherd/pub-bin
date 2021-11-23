@@ -18,6 +18,13 @@ Usage:
 See Also:
     https://github.com/kubernetes/kubectl/tags
     curl --silent https://api.github.com/repos/kubernetes/kubectl/tags?per_page=100 | jq -r '.[].name' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]$' | sort -V
+
+Version EOLs:
+    AKS: https://docs.microsoft.com/en-us/azure/aks/supported-kubernetes-versions#aks-kubernetes-release-calendar
+    EKS: https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html#kubernetes-release-calendar
+    GKE: https://cloud.google.com/kubernetes-engine/docs/release-schedule
+    Upstream: https://github.com/kubernetes/website/blob/main/content/en/releases/patch-releases.md
+
 "
 }
 
@@ -38,11 +45,11 @@ done
 shift $((OPTIND - 1))
 
 kubectl_releases=(
-  1.18.20
-  1.19.16
-  1.20.13
-  1.21.7
-  1.22.4
+  1.18.20 # EOL 2021-06-18
+  1.19.16 # EOL 2021-10-28
+  1.20.13 # EOL 2022-02-28
+  1.21.7  # EOL 2022-06-28
+  1.22.4  # EOL 2022-10-28
 )
 
 case "${HOSTTYPE}" in
