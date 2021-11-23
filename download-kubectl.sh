@@ -38,7 +38,6 @@ done
 shift $((OPTIND - 1))
 
 kubectl_releases=(
-  1.17.17
   1.18.20
   1.19.16
   1.20.13
