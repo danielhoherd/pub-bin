@@ -82,4 +82,10 @@ for version in "${kubectl_releases[@]}" ; do
   get_kubectl_version "$version"
 done
 
-ln -fsv "${target_dir}/kubectl-${kubectl_releases[-3]}" "${target_dir}/kubectl"
+# Start with index 3 so we can be within window for latest k8s server to oldest supported cli version
+for index in 3 2 1 ; do
+  target_file="${target_dir}/kubectl-${kubectl_releases[-${index}]}"
+  if [ -f "${target_file}" ] ; then
+    ln -fsv "${target_file}" "${target_dir}/kubectl" && break
+  fi
+done
