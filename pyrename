@@ -1,0 +1,68 @@
+#!/usr/bin/env python
+# Author: github.com/danielhoherd
+# License: MIT
+"""
+Regular expression renaming of files. This was inspired Robin Barker's prename
+tool. It does not handle emoji's, so a modern implementation was needed.
+"""
+import argparse
+import re
+from pathlib import Path
+from sys import exit
+from sys import stderr
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--ignore-case", "-i", action="store_true", help="Ignore case in regex match")
+    parser.add_argument("--dry-run", "-n", action="store_true", help="Dry run (do not actually rename)")
+    parser.add_argument("--verbose", "-v", action="store_true", help="Be verbose", default=False)
+    parser.add_argument("match", help="Regex to match", type=str)
+    parser.add_argument("sub", help="Regex substitution", type=str)
+    parser.add_argument("filenames", nargs="*", help="Files to rename")
+    args = parser.parse_args()
+
+    if args.verbose:
+
+        def vprint(thing):
+            print(thing)
+
+    else:
+
+        def vprint(thing):
+            pass
+
+    def eprint(thing):
+        print(thing, file=stderr)
+
+    for filename in args.filenames:
+        old_name = Path(filename)
+        if not old_name.exists():
+            eprint(f"Error: {old_name} does not exists")
+            continue
+
+        re_flags = re.IGNORECASE if args.ignore_case else 0
+
+        new_name = Path(re.sub(args.match, args.sub, filename, flags=re_flags))
+
+        if old_name == new_name:
+            eprint(f"No changes needed: {new_name}")
+            continue
+        if new_name.exists():
+            eprint(f"Error: {new_name} exists already")
+            continue
+
+        vprint(f"{filename} -> {new_name}")
+
+        if args.dry_run:
+            print(f"Would rename: {filename} -> {new_name}")
+            continue
+
+        old_name.rename(new_name)
+
+
+if __name__ == "__main__":
+    try:
+        exit(main())
+    except KeyboardInterrupt:
+        exit(1)
