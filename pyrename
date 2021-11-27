@@ -22,18 +22,12 @@ def main():
     parser.add_argument("filenames", nargs="*", help="Files to rename")
     args = parser.parse_args()
 
-    if args.verbose:
-
-        def vprint(thing):
-            print(thing)
-
-    else:
-
-        def vprint(thing):
-            pass
-
     def eprint(thing):
         print(thing, file=stderr)
+
+    if len(args.filenames) == 0:
+        eprint("Error: no files given")
+        exit(1)
 
     for filename in args.filenames:
         try:
@@ -47,19 +41,22 @@ def main():
             new_name = Path(re.sub(args.match, args.sub, filename, flags=re_flags))
 
             if old_name == new_name:
-                eprint(f"No changes needed: {new_name}")
+                print(f"No changes needed: {new_name}")
                 continue
+
             if new_name.exists():
                 eprint(f"Error: {new_name} exists already")
                 continue
 
-            vprint(f"{filename} -> {new_name}")
-
             if args.dry_run:
-                print(f"Would rename: {filename} -> {new_name}")
+                eprint(f"Would rename: {filename} -> {new_name}")
                 continue
 
+            if args.verbose:
+                print(f"Renamed: {filename} -> {new_name}")
+
             old_name.rename(new_name)
+
         except (re.error, UnicodeEncodeError, OverflowError) as e:
             eprint(e)
             exit(1)
