@@ -36,29 +36,33 @@ def main():
         print(thing, file=stderr)
 
     for filename in args.filenames:
-        old_name = Path(filename)
-        if not old_name.exists():
-            eprint(f"Error: {old_name} does not exists")
-            continue
+        try:
+            old_name = Path(filename)
+            if not old_name.exists():
+                eprint(f"Error: {old_name} does not exists")
+                continue
 
-        re_flags = re.IGNORECASE if args.ignore_case else 0
+            re_flags = re.IGNORECASE if args.ignore_case else 0
 
-        new_name = Path(re.sub(args.match, args.sub, filename, flags=re_flags))
+            new_name = Path(re.sub(args.match, args.sub, filename, flags=re_flags))
 
-        if old_name == new_name:
-            eprint(f"No changes needed: {new_name}")
-            continue
-        if new_name.exists():
-            eprint(f"Error: {new_name} exists already")
-            continue
+            if old_name == new_name:
+                eprint(f"No changes needed: {new_name}")
+                continue
+            if new_name.exists():
+                eprint(f"Error: {new_name} exists already")
+                continue
 
-        vprint(f"{filename} -> {new_name}")
+            vprint(f"{filename} -> {new_name}")
 
-        if args.dry_run:
-            print(f"Would rename: {filename} -> {new_name}")
-            continue
+            if args.dry_run:
+                print(f"Would rename: {filename} -> {new_name}")
+                continue
 
-        old_name.rename(new_name)
+            old_name.rename(new_name)
+        except (re.error, UnicodeEncodeError, OverflowError) as e:
+            eprint(e)
+            exit(1)
 
 
 if __name__ == "__main__":
