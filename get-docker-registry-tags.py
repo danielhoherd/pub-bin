@@ -2,12 +2,28 @@
 # License: MIT
 # Author: github.com/danielhoherd
 # Purpose: Return the latest image:tag for the given image, or optionally print a list of recent tags for the image.
+from sys import stderr
+
 import requests
 import typer
 from packaging import version
 
 
 def main(image: str, list_tags: bool = typer.Option(False, help="Print a list of recent tags")):
+    """
+    Return the latest image:tag for the given image, or optionally print a list of recent tags for the image.
+
+    You need to provide the bare image name that would be used in the docker pull command.
+    """
+
+    if ":" in image:
+        try:
+            image, tag = image.split(":")
+            print(f'Stripped tag "{tag}" from input, continuing with "{image}"', file=stderr)
+        except ValueError:
+            print(f'Input error: "{image}" does not look like a docker image name', file=stderr)
+            raise SystemExit(1)
+
     tags = get_tags_for_image(image)
 
     if list_tags:
@@ -20,6 +36,7 @@ def main(image: str, list_tags: bool = typer.Option(False, help="Print a list of
 
 def get_tags_for_image(image):
     """Return a sorted list of semver tags for the given image."""
+
     if image.startswith("quay.io"):
         tags = get_tags_for_image_quay_io(image)
     else:
