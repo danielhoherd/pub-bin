@@ -2,6 +2,7 @@
 # License: MIT
 # Author: github.com/danielhoherd
 # Purpose: Return the latest image:tag for the given image, or optionally print a list of recent tags for the image.
+from distutils.version import LooseVersion
 from sys import stderr
 
 import requests
@@ -27,10 +28,10 @@ def main(image: str, list_tags: bool = typer.Option(False, help="Print a list of
     tags = get_tags_for_image(image)
 
     if list_tags:
-        for tag in sorted(tags):
+        for tag in sorted(tags, key=LooseVersion):
             print(tag)
     else:
-        newest = max(tags)
+        newest = max(tags, key=LooseVersion)
         print(f"{image}:{newest}")
 
 
