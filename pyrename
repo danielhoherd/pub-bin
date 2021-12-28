@@ -8,8 +8,7 @@ tool. It does not handle emoji's, so a modern implementation was needed.
 import argparse
 import re
 from pathlib import Path
-from sys import exit
-from sys import stderr
+from sys import exit, stderr
 
 
 def main():
