@@ -17,7 +17,7 @@ Usage:
 
 See Also:
     https://github.com/kubernetes/kubectl/tags
-    curl --silent https://api.github.com/repos/kubernetes/kubectl/tags?per_page=100 | jq -r '.[].name' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]$' | sort -V
+    curl --silent https://api.github.com/repos/kubernetes/kubectl/tags?per_page=100 | jq -r '.[].name' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V
 
 Version EOLs:
     AKS: https://docs.microsoft.com/en-us/azure/aks/supported-kubernetes-versions#aks-kubernetes-release-calendar
@@ -45,9 +45,9 @@ done
 shift $((OPTIND - 1))
 
 kubectl_releases=(
-  1.21.8  # EOL 2022-06-28
-  1.22.5  # EOL 2022-10-28
-  1.23.1  # EOL 2023-02-28
+  1.21.11
+  1.22.8
+  1.23.5
 )
 
 case "${HOSTTYPE}" in
