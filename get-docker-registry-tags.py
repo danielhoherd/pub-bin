@@ -38,12 +38,7 @@ def main(image: str, list_tags: bool = typer.Option(False, help="Print a list of
 def get_tags_for_image(image):
     """Return a list of semver tags for the given image."""
 
-    if image.startswith("quay.io"):
-        tags = get_tags_for_image_quay_io(image)
-    else:
-        tags = get_tags_for_image_docker_io(image)
-
-    return tags
+    return get_tags_for_image_quay_io(image) if image.startswith("quay.io") else get_tags_for_image_docker_io(image)
 
 
 def get_tags_for_image_docker_io(image):
