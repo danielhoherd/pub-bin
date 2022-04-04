@@ -21,9 +21,9 @@ def main(image: str, list_tags: bool = typer.Option(False, help="Print a list of
         try:
             image, tag = image.split(":")
             print(f'Stripped tag "{tag}" from input, continuing with "{image}"', file=stderr)
-        except ValueError:
+        except ValueError as e:
             print(f'Input error: "{image}" does not look like a docker image name', file=stderr)
-            raise SystemExit(1)
+            raise SystemExit(1) from e
 
     tags = get_tags_for_image(image)
 
