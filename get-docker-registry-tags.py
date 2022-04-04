@@ -49,18 +49,22 @@ def get_tags_for_image(image):
 def get_tags_for_image_docker_io(image):
     """Return a list of tags for docker hub image."""
     data = requests.get(f"https://index.docker.io/v1/repositories/{image.removeprefix('docker.io/')}/tags").json()
+    if isinstance(data, str):
+        raise SystemExit(f"ERROR: {data}")
     tags = {x["name"] for x in data if version.parse(x["name"]).release}
     if not tags:
-        raise SystemExit(f"No semver tags for image '{image}'")
+        raise SystemExit(f"ERROR: No semver tags for image '{image}'")
     return tags
 
 
 def get_tags_for_image_quay_io(image):
     """Return a list of tags for quay.io image."""
     data = requests.get(f"https://quay.io/api/v1/repository/{image.removeprefix('quay.io/')}/tag?limit=100").json()
+    if not (200 <= data["status"] < 300):
+        raise SystemExit("ERROR: {status} {detail}".format(**data))
     tags = {x["name"] for x in data["tags"] if version.parse(x["name"]).release}
     if not tags:
-        raise SystemExit(f"No semver tags for image '{image}'")
+        raise SystemExit(f"ERROR: No semver tags for image '{image}'")
     return tags
 
 
