@@ -16,6 +16,8 @@ Download several versions of terraform into ~/bin
     -x  Enable xtrace
 
 ${0##*/} [-x] [version_number ... version_number]
+
+See also: https://github.com/tfutils/tfenv
 EOF
 }
 
@@ -86,3 +88,5 @@ for version in "${versions[@]}" ; do
 done
 
 ln -fsv "${target_dir}/terraform-${versions[-1]}" "${target_dir}/terraform"
+
+echo "You should consider using https://github.com/tfutils/tfenv" >&2
