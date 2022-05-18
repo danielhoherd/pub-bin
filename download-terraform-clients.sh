@@ -39,6 +39,7 @@ if [[ -z "${*}" ]] ; then
     "0.15.5"  # 2021-06-02
     "1.0.11"  # 2021-11-10
     "1.1.9"   # 2022-04-20
+    "1.2.0"   # 2022-05-18
   )
 else
   versions=( "${@}" )
@@ -89,4 +90,4 @@ done
 
 ln -fsv "${target_dir}/terraform-${versions[-1]}" "${target_dir}/terraform"
 
-echo "You should consider using https://github.com/tfutils/tfenv" >&2
+echo -e "\nNOTICE: You should consider using https://github.com/tfutils/tfenv\n" >&2
