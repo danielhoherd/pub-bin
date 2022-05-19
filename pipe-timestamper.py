@@ -25,7 +25,7 @@ def timestamp_lines(show_delta: bool = typer.Option(None, help="Show the time de
         raise SystemExit(1)
     else:
         for line in stdin:
-            line = line.strip()
+            line = line.strip("\n")
             new = pendulum.now()
             delta = (new - old).in_words()
             if show_delta:
