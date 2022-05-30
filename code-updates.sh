@@ -28,7 +28,7 @@ export GIT_SSH_COMMAND="ssh -o ConnectTimeout=5"
 
 trap "kill 0" SIGINT
 
-if [ $((RANDOM % 500)) -eq 9 ] || [ "${aggressive}" == 'yes' ] ; then
+if [[ $((RANDOM % 500)) -eq 9 ]] || [[ "${aggressive}" == 'yes' ]] ; then
   GC_TYPE='--aggressive'
   date "+%F %T%z 'git gc ${GC_TYPE}' selected"
   ( set -x ; pre-commit gc ; )
@@ -45,20 +45,20 @@ code_update() {
   echo "$(
     exec 2>&1
     repo=$1
-    if [ -d "${repo}" ] ; then
+    if [[ -d "${repo}" ]] ; then
       cd "${repo}" || ( echo "ERROR: cannot cd to ${repo}" ; return 1 ; )
       date "+%F %T%z ${repo}"
-      if [ -e .git ] ; then
+      if [[ -e .git ]] ; then
         git remote | xargs -I {} git remote set-head {} -a
         if git config --get remote.origin.url > /dev/null ; then
           git pull -q || echo "$(date '+%F %T%z') Problems with ${PWD}"
           git remote prune origin
           git gc "${GC_TYPE}"
-          if [ -f .pre-commit-config.yaml ] ; then pre-commit install --install-hooks >/dev/null ; fi
+          if [[ -f .pre-commit-config.yaml ]] ; then pre-commit install --install-hooks >/dev/null ; fi
         else
           date "+%F %T%z Skipping $repo, remote origin is not working: $?"
         fi
-      elif [ -e .svn ] ; then
+      elif [[ -e .svn ]] ; then
         svn up
       fi
     fi
@@ -68,7 +68,7 @@ code_update() {
 export -f code_update
 
 DIRS="${HOME}/code"
-if [ "$#" -gt 0 ] ; then
+if [[ "$#" -gt 0 ]] ; then
   DIRS=( "$@" )
 fi
 

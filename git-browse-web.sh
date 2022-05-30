@@ -58,11 +58,11 @@ print_gitlab() {
   echo "Branch root:         ${branch_url}"
   echo "SHA root:            ${sha_tree_url}"
   echo "Commit:              ${sha_commit_url}"
-  if [ "${branch}" != "${main_branch}" ] ; then
+  if [[ "${branch}" != "${main_branch}" ]] ; then
     echo "Compare branch:      ${branch_compare_url}"
   fi
   echo "Compare sha:         ${sha_compare_url}"
-  if [ -n "${file}" ] ; then
+  if [[ -n "${file}" ]] ; then
     web_file_url_branch="${remote_url_https}/-/blob/${branch}${repo_cwd}/${file}"
     web_file_url_sha="${remote_url_https}/-/blob/${short_sha}${repo_cwd}/${file}"
     echo "File url (branch):   ${web_file_url_branch}"
@@ -78,23 +78,23 @@ print_github() {
   branch_compare_url="${remote_url_https}/compare/${main_branch}...${branch}"
   sha_compare_url="${remote_url_https}/compare/${main_branch}...${sha}"
 
-  if [ -d "${repo_root}/.github/workflows" ] ; then
+  if [[ -d "${repo_root}/.github/workflows" ]] ; then
     echo "Github Actions:      ${remote_url_https}/actions"
   fi
 
-  if [ -f "${repo_root}/.circleci/config.yml" ] ; then
+  if [[ -f "${repo_root}/.circleci/config.yml" ]] ; then
     echo "CircleCI:            https://app.circleci.com/pipelines/github/${remote_url_https#*.com?}?branch=$branch"
   fi
 
   echo "Branch root:         ${branch_url}"
   echo "SHA root:            ${sha_tree_url}"
   echo "Commit:              ${sha_commit_url}"
-  if [ "${branch}" != "${main_branch}" ] ; then
+  if [[ "${branch}" != "${main_branch}" ]] ; then
     echo "Compare branch:      ${branch_compare_url}"
   fi
   echo "Compare sha:         ${sha_compare_url}"
 
-  if [ -n "${file}" ] ; then
+  if [[ -n "${file}" ]] ; then
     web_file_url_branch="${remote_url_https}/blob/${branch}${repo_cwd}/${file}"
     web_file_url_sha="${remote_url_https}/blob/${short_sha}${repo_cwd}/${file}"  # only use the last 10 chars of the sha
     echo "File url (branch):   ${web_file_url_branch}"
@@ -111,7 +111,7 @@ else
   exit 1
 fi
 
-if [ ! "${branch_url}" == "${web_url}" ] ; then
+if [[ ! "${branch_url}" == "${web_url}" ]] ; then
   echo "Current branch dir:  $web_url"
 fi
 

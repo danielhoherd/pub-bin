@@ -27,8 +27,8 @@ See Also:
 }
 
 print-verbose() {
-  [ "${#@}" == 0 ] && return 1
-  [ -n "${VERBOSE}" ] || return 0
+  [[ "${#@}" == 0 ]] && return 1
+  [[ -n "${VERBOSE}" ]] || return 0
   printf '\e[0;35m%s\e[00m\n' "$(date "+%F %T%z") VERBOSE: $*"
 }
 
@@ -52,7 +52,7 @@ while getopts ':hsvVx' option ; do
 done
 shift $((OPTIND - 1))
 
-if [ -z "${SKIP_DEFAULTS}" ] ; then
+if [[ -z "${SKIP_DEFAULTS}" ]] ; then
   helm2_releases=(
     2.17.0 # 2020-10-26
   )
@@ -82,7 +82,7 @@ case "$OSTYPE" in
 esac
 
 target_dir="${HOME}/bin"
-[ -d "$target_dir" ] || mkdir "$target_dir" || { echo "ERROR: $target_dir is not a dir and we cannot create it." ; exit 1 ; }
+[[ -d "$target_dir" ]] || mkdir "$target_dir" || { echo "ERROR: $target_dir is not a dir and we cannot create it." ; exit 1 ; }
 
 get_helm_version() {
   version="$1"
@@ -93,7 +93,7 @@ get_helm_version() {
   archive_url="https://get.helm.sh/${archive_file}"
   checksum_url="https://get.helm.sh/${checksum_file}"
   print-verbose "Downloading ${target_filename} from ${archive_url}"
-  [ -f "${target_filename}" ] && { echo "Skipping ${archive_url}, target file already exists: ${target_filename}" ; return ; }
+  [[ -f "${target_filename}" ]] && { echo "Skipping ${archive_url}, target file already exists: ${target_filename}" ; return ; }
   cd "$(mktemp -d)" || exit 1
   curl -fsSLO "$archive_url" || return 1
   curl -fsSLO "$checksum_url" || return 1
@@ -101,15 +101,15 @@ get_helm_version() {
   grep -q "${sha256}" "${checksum_file}" || { echo "ERROR sha256sum failed for ${archive_file} (${archive_url})" ; return ; }
   tar xf "${archive_file}"
   mv -n "${platform}-${arch}/helm" "${target_filename}"
-  [ -f "${target_filename}" ] && echo "${target_filename} successfully downloaded (${archive_url})" ;
+  [[ -f "${target_filename}" ]] && echo "${target_filename} successfully downloaded (${archive_url})" ;
 }
 
 for version in "${helm_releases[@]}" ; do
   get_helm_version "$version"
 done
 
-[ -f "${target_dir}/helm-${helm2_releases[-1]}" ] && ln -fsv "${target_dir}/helm-${helm2_releases[-1]}" "${target_dir}/helm2"
-[ -f "${target_dir}/helm-${helm3_releases[-1]}" ] && {
+[[ -f "${target_dir}/helm-${helm2_releases[-1]}" ]] && ln -fsv "${target_dir}/helm-${helm2_releases[-1]}" "${target_dir}/helm2"
+[[ -f "${target_dir}/helm-${helm3_releases[-1]}" ]] && {
   ln -fsv "${target_dir}/helm-${helm3_releases[-1]}" "${target_dir}/helm"
   ln -fsv "${target_dir}/helm-${helm3_releases[-1]}" "${target_dir}/helm3"
 }

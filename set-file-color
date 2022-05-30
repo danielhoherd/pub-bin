@@ -11,7 +11,7 @@ usage() {
     exit
 }
 
-[ $# -eq 2 ] || usage
+[[ $# -eq 2 ]] || usage
 
 file="$1"
 test -L "$1" && file="$(readlink "$1")"

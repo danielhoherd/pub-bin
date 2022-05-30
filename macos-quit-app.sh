@@ -12,6 +12,6 @@ ${0##*/} <app to quit>
 EOF
 }
 
-[ "${#@}" -eq 0 ] && { usage ; exit 1 ; }
+[[ "${#@}" -eq 0 ]] && { usage ; exit 1 ; }
 
 osascript -e "tell application \"System Events\" to quit process $1"

@@ -35,7 +35,7 @@ shift $((OPTIND - 1))
 
 epochtime="$(date +%s)"
 
-if [ -n "$node" ] ; then
+if [[ -n "$node" ]] ; then
   extra_args+=( '--overrides={ "spec": { "nodeSelector": { "kubernetes.io/hostname": "'"$node"'" } } }'  )
 fi
 

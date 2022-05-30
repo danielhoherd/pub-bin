@@ -10,7 +10,7 @@ check_for_required_commands() {
     command -v "${command}" >/dev/null 2>&1 || missing_commands+=( "${command}" )
   done
 
-  if [ "${#missing_commands[@]}" -gt 0 ] ; then
+  if [[ "${#missing_commands[@]}" -gt 0 ]] ; then
     date "+%F %T%z ABORT: missing commands: ${missing_commands[*]}"
     exit 1
   fi

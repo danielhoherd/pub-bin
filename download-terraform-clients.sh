@@ -46,7 +46,7 @@ else
 fi
 
 target_dir="${HOME}/bin"
-[ -d "$target_dir" ] || mkdir "$target_dir" || { echo "ERROR: $target_dir is not a dir and we cannot create it." ; exit 1 ; }
+[[ -d "$target_dir" ]] || mkdir "$target_dir" || { echo "ERROR: $target_dir is not a dir and we cannot create it." ; exit 1 ; }
 
 download_version() {
   dest="${target_dir}/terraform-${version}"
@@ -65,7 +65,7 @@ download_version() {
     *) echo "ABORT: Unknown architecture '$arch'" ; exit 1 ;;
   esac
 
-  [ -n "$VERBOSE" ] && { echo ; echo "Trying to download with os=$os, arch=$arch, version=$version" ; }
+  [[ -n "$VERBOSE" ]] && { echo ; echo "Trying to download with os=$os, arch=$arch, version=$version" ; }
 
   URL="https://releases.hashicorp.com/terraform/${version}/terraform_${version}_${os,,}_${arch}.zip"
 

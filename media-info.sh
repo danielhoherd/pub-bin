@@ -17,7 +17,7 @@ while getopts ':hv' option ; do
 done
 shift $((OPTIND - 1))
 
-if [ -z "${exiftool_args[*]}" ] ; then
+if [[ -z "${exiftool_args[*]}" ]] ; then
   exiftool_args+=(
     '-BitDepth'
     '-BitsPerSample'

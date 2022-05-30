@@ -29,7 +29,7 @@ Verbs:
 EOF
 }
 
-if [ $# -lt 1 ] ; then
+if [[ $# -lt 1 ]] ; then
   script_usage ;
   exit ;
 fi
@@ -105,7 +105,7 @@ case "$1" in
   ;;
 
   rate )
-    if [ $# -ne 2 ] ; then
+    if [[ $# -ne 2 ]] ; then
       rating=$(osascript -e "${get_rating}")
       echo "$(( rating / 20 ))"
     else

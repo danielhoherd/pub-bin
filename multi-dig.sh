@@ -17,7 +17,7 @@ args=( "-n1" )
 
 [[ "$1" == "-v" ]] && { args+=( "-t" ) ; shift ; }
 
-[ "${#@}" -gt 0 ] || { usage ; exit 1 ; }
+[[ "${#@}" -gt 0 ]] || { usage ; exit 1 ; }
 
 dns_servers=(
   # Cloudflare

@@ -30,7 +30,7 @@ while getopts ':hxp:' option ; do
 done
 shift "$((OPTIND - 1))"
 
-[ "${#@}" -eq 1 ] || {
+[[ "${#@}" -eq 1 ]] || {
   usage
   exit 1
 }

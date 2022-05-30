@@ -8,7 +8,7 @@
 #   While we're at it, make a mode that prints out how many times a src has queried
 #   Make a -c count mode that works in tcpdump
 
-if [ "$(id -u)" != "0" ]; then
+if [[ "$(id -u)" != "0" ]] ; then
     echo "ERROR: This script must be run with root privileges"
     exit 1
 fi

@@ -8,7 +8,7 @@ check_for_required_commands() {
     command -v "${command}" >/dev/null 2>&1 || missing_commands+=( "${command}" )
   done
 
-  if [ "${#missing_commands[@]}" -gt 0 ] ; then
+  if [[ "${#missing_commands[@]}" -gt 0 ]] ; then
     date "+%F %T%z ${0##*/} ABORT: missing commands: ${missing_commands[*]}"
     exit 1
   fi
@@ -24,7 +24,7 @@ if [[ "${OSTYPE}" =~ ^darwin ]] ; then
     # shellcheck disable=SC2163
     export -f "${cmd}"
   done
-  if [ "${error:-0}" -gt 0 ] ; then echo "Please install the missing commands." ; exit 1 ; fi ;
+  if [[ "${error:-0}" -gt 0 ]] ; then echo "Please install the missing commands." ; exit 1 ; fi ;
 elif [[ "${OSTYPE}" =~ ^linux ]] ; then
   : # nothing to be done
 else

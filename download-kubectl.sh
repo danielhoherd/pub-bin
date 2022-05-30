@@ -29,8 +29,8 @@ Version EOLs:
 }
 
 print-verbose() {
-  [ "${#@}" == 0 ] && return 1
-  [ -n "${VERBOSE}" ] || return 0
+  [[ "${#@}" == 0 ]] && return 1
+  [[ -n "${VERBOSE}" ]] || return 0
   printf '\e[0;35m%s\e[00m\n' "$(date "+%F %T%z") VERBOSE: $*"
 }
 
@@ -66,7 +66,7 @@ case "$OSTYPE" in
 esac
 
 target_dir="${HOME}/bin"
-[ -d "$target_dir" ] || mkdir "$target_dir" || { echo "ERROR: $target_dir is not a dir and we cannot create it." ; exit 1 ; }
+[[ -d "$target_dir" ]] || mkdir "$target_dir" || { echo "ERROR: $target_dir is not a dir and we cannot create it." ; exit 1 ; }
 
 get_kubectl_version() {
   version="$1"
@@ -75,10 +75,10 @@ get_kubectl_version() {
   target_filename="${target_dir}/${target_filename}"
   target_filename_trimmed="${target_filename%.*}" # trim to just major.minor
   print-verbose "Downloading ${target_filename} from ${url}"
-  [ -f "${target_filename}" ] && { echo "Skipping ${url}, target file already exists: ${target_filename}" ; return ; }
+  [[ -f "${target_filename}" ]] && { echo "Skipping ${url}, target file already exists: ${target_filename}" ; return ; }
   cd "$(mktemp -d)" || exit 1
   { curl -fsSLo "${target_filename}" "${url}" && chmod +x "${target_filename}" ; } || return 1
-  [ -f "${target_filename}" ] && echo "${target_filename} successfully downloaded (${url})" ;
+  [[ -f "${target_filename}" ]] && echo "${target_filename} successfully downloaded (${url})" ;
   ln -fsv "${target_filename}" "${target_filename_trimmed}"
 }
 
@@ -89,7 +89,7 @@ done
 # Start with index 3 so we can be within window for latest k8s server to oldest supported cli version
 for index in 3 2 1 ; do
   target_file="${target_dir}/kubectl-${kubectl_releases[-${index}]}"
-  if [ -f "${target_file}" ] ; then
+  if [[ -f "${target_file}" ]] ; then
     ln -fsv "${target_file}" "${target_dir}/kubectl" && break
   fi
 done

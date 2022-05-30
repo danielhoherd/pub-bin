@@ -20,7 +20,7 @@ Usage:
 EOF
 }
 
-if [ "$#" -ne 1 ] || [[ "$1" =~ ^[^a-zA-Z0-9] ]] ; then
+if [[ "$#" -ne 1 ]] || [[ "$1" =~ ^[^a-zA-Z0-9] ]] ; then
   usage
   exit 1
 fi

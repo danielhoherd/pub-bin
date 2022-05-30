@@ -16,11 +16,11 @@
 #       git config --global alias.co-default '!'"git checkout \$(git branch -r | awk -F/ '/HEAD/ {print \$NF}')"
 
 
-if [ "${#@}" -gt 0 ] ; then
+if [[ "${#@}" -gt 0 ]] ; then
   remotes=( "${@}" )
 else
   # In 2020, macOS 10.15 still has bash 3.2.57, which was released in 2014 🙄
-  if [ "${BASH_VERSINFO[0]}" -lt 4 ] ; then
+  if [[ "${BASH_VERSINFO[0]}" -lt 4 ]] ; then
     remotes=()
     while IFS='' read -r line ; do
       remotes+=("$line")

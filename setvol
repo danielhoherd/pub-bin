@@ -15,7 +15,7 @@ function script_usage {
 }
 
 ## Check for one argument. If none, output current volume.
-if [ $# -ne 1 ] ; then
+if [[ $# -ne 1 ]] ; then
     osascript -e "get output volume of (get volume settings)" ;
     exit ;
 fi
