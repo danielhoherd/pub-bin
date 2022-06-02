@@ -89,5 +89,3 @@ for version in "${versions[@]}" ; do
 done
 
 ln -fsv "${target_dir}/terraform-${versions[-1]}" "${target_dir}/terraform"
-
-echo -e "\nNOTICE: You should consider using https://github.com/tfutils/tfenv\n" >&2
