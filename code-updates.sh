@@ -24,7 +24,7 @@ done
 shift $((OPTIND - 1))
 
 export GC_TYPE='--auto'
-export GIT_SSH_COMMAND="ssh -o ConnectTimeout=5"
+export GIT_SSH_COMMAND="ssh -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no -o KbdInteractiveDevices=no"
 
 trap "kill 0" SIGINT
 
