@@ -16,8 +16,8 @@ app = typer.Typer(help=__doc__)
 def commentator(
     input: list[str] = typer.Argument(..., help="Input text"),
     right_side: bool = typer.Option(False, help="Whether or not to show the right-hand-side border"),
-    delimiter: str = typer.Option("#", help="Character or string to use for border"),
-    width: int = typer.Option(75, help="Width of the final padded line"),
+    delimiter: str = typer.Option("#", "--delimiter", "-d", help="Character or string to use for border"),
+    width: int = typer.Option(75, "--width", "-w", help="Width of the final padded line"),
 ):
     """Generate a block of text inside of a border, for example to use as a template header."""
 
