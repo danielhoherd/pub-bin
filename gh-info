@@ -9,8 +9,8 @@ import datetime
 from os import getenv
 from sys import exit
 
-import arrow
 import github  # PyGithub
+import pendulum
 import typer
 from cachier import cachier
 from dateutil import tz
@@ -19,7 +19,7 @@ from rich.console import Console
 from rich.table import Table
 
 console = Console()
-TZ = tz.gettz("US/Pacific")
+TZ = tz.gettz()
 
 gh = github.Github(login_or_token=getenv("GITHUB_TOKEN"))
 gh.per_page = 100
@@ -73,7 +73,7 @@ def print_repo_table(title: str, repos: list) -> bool:
     for index, repo in enumerate(repos):
         table.add_row(
             str(index + 1),
-            arrow.get(repo.pushed_at, TZ).format("YYYY-MM-DD"),
+            pendulum.instance(repo.pushed_at, tz=TZ).strftime("%F"),
             repo.name,
             repo.html_url,
             repo.homepage,
