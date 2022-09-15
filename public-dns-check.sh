@@ -48,7 +48,7 @@ nameservers=(
   208.67.222.222
 )
 
-echo -n "$(gdate --iso-8601=seconds) "
+echo -n "$(date '+%FT%T%z') "
 
 for nameserver in "${nameservers[@]}" ; do
   (
