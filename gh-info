@@ -3,7 +3,8 @@
 # License: MIT
 """Show a table of info about Github users or orgs.
 
-"export GITHUB_TOKEN=foo" to authenticate for higher API rate limit. https://github.com/settings/tokens
+"export GITHUB_TOKEN=foo" to authenticate for higher API rate limit.
+https://github.com/settings/tokens
 """
 import datetime
 from os import getenv

@@ -19,7 +19,8 @@ def commentator(
     delimiter: str = typer.Option("#", "--delimiter", "-d", help="Character or string to use for border"),
     width: int = typer.Option(75, "--width", "-w", help="Width of the final padded line"),
 ):
-    """Generate a block of text inside of a border, for example to use as a template header."""
+    """Generate a block of text inside of a border, for example to use as a
+    template header."""
 
     if width < len(delimiter) * 4:  # just a rough minimum because this is an edge case
         raise SystemExit("ERROR: delimiter is too wide relative to width")

@@ -10,9 +10,7 @@ app = typer.Typer()
 
 
 def timestamp_lines(dir: str = typer.Option("left", help="Direction to rotate. Can be: left, right, diag")):
-    """
-    Rotate a matrix left or right.
-    """
+    """Rotate a matrix left or right."""
 
     if stdin.isatty():
         print(f"Description: {__doc__}")

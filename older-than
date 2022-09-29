@@ -19,7 +19,10 @@ time_units = {
 
 
 def get_unix_mtime_of_file(file: str) -> int:
-    """Return the mtime of the given file as a unix timestamp. Exit 0 on missing file."""
+    """Return the mtime of the given file as a unix timestamp.
+
+    Exit 0 on missing file.
+    """
     file = Path(file)
     try:
         age = int(file.lstat().st_mtime)

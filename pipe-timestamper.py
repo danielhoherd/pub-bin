@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 # Author: github.com/danielhoherd
 # License: MIT
-"""Takes a stream from stdin and prefixes it with the timestamp it was read and the delta from the previous line. Most useful for slow streams."""
+"""Takes a stream from stdin and prefixes it with the timestamp it was read and
+the delta from the previous line.
+
+Most useful for slow streams.
+"""
 
 from sys import argv, stdin
 
@@ -12,9 +16,10 @@ app = typer.Typer()
 
 
 def timestamp_lines(show_delta: bool = typer.Option(None, help="Show the time delta between each line.")):
-    """
-    Takes a stream from stdin and prefixes it with the timestamp it was read and
-    the delta from the previous line. Most useful for slow streams.
+    """Takes a stream from stdin and prefixes it with the timestamp it was read
+    and the delta from the previous line.
+
+    Most useful for slow streams.
     """
 
     old = pendulum.now()

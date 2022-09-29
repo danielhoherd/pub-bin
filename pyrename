@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # Author: github.com/danielhoherd
 # License: MIT
-"""
-Regular expression renaming of files. This was inspired Robin Barker's prename
-tool. It does not handle emoji's, so a modern implementation was needed.
+"""Regular expression renaming of files.
+
+This was inspired Robin Barker's prename tool. It does not handle
+emoji's, so a modern implementation was needed.
 """
 import argparse
 import re

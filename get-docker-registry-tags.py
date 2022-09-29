@@ -11,10 +11,11 @@ from packaging import version
 
 
 def main(image: str, list_tags: bool = typer.Option(False, help="Print a list of recent tags")):
-    """
-    Return the latest image:tag for the given image, or optionally print a list of recent tags for the image.
+    """Return the latest image:tag for the given image, or optionally print a
+    list of recent tags for the image.
 
-    You need to provide the bare image name that would be used in the docker pull command.
+    You need to provide the bare image name that would be used in the
+    docker pull command.
     """
 
     if ":" in image:
