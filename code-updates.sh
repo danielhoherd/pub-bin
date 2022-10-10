@@ -49,6 +49,7 @@ code_update() {
       cd "${repo}" || ( echo "ERROR: cannot cd to ${repo}" ; return 1 ; )
       date "+%F %T%z ${repo}"
       if [[ -e .git ]] ; then
+        rm -f .git/hooks/*.sample
         git remote | xargs -I {} git remote set-head {} -a
         if git config --get remote.origin.url > /dev/null ; then
           git pull -q || echo "$(date '+%F %T%z') Problems with ${PWD}"
