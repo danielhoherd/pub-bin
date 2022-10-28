@@ -32,7 +32,7 @@ except json.decoder.JSONDecodeError:
     print(ret.stdout.decode())
     raise SystemExit(0)
 
-table = Table(title=cmd, show_lines=True)
+table = Table(title=cmd, border_style="gray23", show_lines=True)
 table.add_column("Revision")
 table.add_column("Updated")
 table.add_column("Age")
