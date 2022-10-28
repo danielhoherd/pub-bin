@@ -37,10 +37,14 @@ pyyaml==6.0
 requests==2.28.1
     # via pygithub
 rich==12.6.0
+    # via deprecated
+
+# The following packages are considered to be unsafe in a requirements file:
+setuptools==59.8.0
     # via -r requirements.in
 urllib3==1.26.12
     # via requests
 watchdog==2.1.9
     # via cachier
 wrapt==1.14.1
-    # via deprecated
+    # via -r requirements.in
