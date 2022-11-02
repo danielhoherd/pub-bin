@@ -34,7 +34,9 @@ def parse_quota(item):
     }
 
 
-def main(file: str, sort_by: str = "namespace"):
+def main(
+    file: str, sort_by: str = "namespace", reverse: bool = typer.Option(False, "--reverse", "-r", help="Reverse the sort order")
+):
     """Show a table of useful data from a kubernetes resourcequota json.
 
     Example
@@ -62,7 +64,12 @@ def main(file: str, sort_by: str = "namespace"):
     table.add_column("memory_utilization", justify="right")
     table.add_column("memory_free", justify="right")
 
-    for row in sorted(output_data, key=itemgetter(sort_by)):
+    if reverse:
+        output_data = sorted(output_data, key=itemgetter(sort_by))[::-1]
+    else:
+        output_data = sorted(output_data, key=itemgetter(sort_by))
+
+    for row in output_data:
         table.add_row(
             row["namespace"],
             f'{row["cpu_used"]:.2f}',
