@@ -30,7 +30,7 @@ portalocker==2.6.0
     # via cachier
 pycparser==2.21
     # via cffi
-pygithub==1.56
+pygithub==1.57
     # via -r requirements.in
 pygments==2.13.0
     # via rich
@@ -54,9 +54,9 @@ setuptools==59.8.0
     # via -r requirements.in
 six==1.16.0
     # via python-dateutil
-typer==0.6.1
+typer==0.7.0
     # via -r requirements.in
-urllib3==1.26.12
+urllib3==1.26.13
     # via requests
 watchdog==2.1.9
     # via cachier
