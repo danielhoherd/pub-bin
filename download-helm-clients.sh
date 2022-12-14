@@ -53,9 +53,6 @@ done
 shift $((OPTIND - 1))
 
 if [[ -z "${SKIP_DEFAULTS}" ]] ; then
-  helm2_releases=(
-    2.17.0 # 2020-10-26
-  )
   helm3_releases=(
     3.7.2  # 2021-12-08
     3.8.2  # 2022-04-13
@@ -64,7 +61,7 @@ if [[ -z "${SKIP_DEFAULTS}" ]] ; then
   )
 fi
 
-helm_releases=( "${helm2_releases[@]}" "${helm3_releases[@]}" "$@" )
+helm_releases=( "${helm3_releases[@]}" "$@" )
 
 case "${HOSTTYPE}" in
   x86_64) arch=amd64 ;;
@@ -108,7 +105,6 @@ for version in "${helm_releases[@]}" ; do
   get_helm_version "$version"
 done
 
-[[ -f "${target_dir}/helm-${helm2_releases[-1]}" ]] && ln -fsv "${target_dir}/helm-${helm2_releases[-1]}" "${target_dir}/helm2"
 [[ -f "${target_dir}/helm-${helm3_releases[-1]}" ]] && {
   ln -fsv "${target_dir}/helm-${helm3_releases[-1]}" "${target_dir}/helm"
   ln -fsv "${target_dir}/helm-${helm3_releases[-1]}" "${target_dir}/helm3"
