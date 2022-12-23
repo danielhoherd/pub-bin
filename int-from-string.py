@@ -5,8 +5,6 @@ import hashlib
 
 import typer
 
-app = typer.Typer()
-
 
 def int_for_string(input_string: str, sha: bool = False):
     """This script takes an alphanumeric string input and deterministically
@@ -15,8 +13,7 @@ def int_for_string(input_string: str, sha: bool = False):
     By default, the text converts the string from base-36 to decimal,
     which gives output that varies in length based on the input length.
     Optionally it can hash the input before conversion, which gives a
-    somewhat more fixed length output, though it does vary between 68
-    and 69 characters.
+    somewhat more fixed length output, though it does still vary.
     """
     if sha:
         hash_object = hashlib.new("SHA224")
