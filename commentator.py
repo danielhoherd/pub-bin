@@ -10,8 +10,6 @@ import textwrap
 
 import typer
 
-app = typer.Typer(help=__doc__)
-
 
 def commentator(
     input: list[str] = typer.Argument(..., help="Input text"),

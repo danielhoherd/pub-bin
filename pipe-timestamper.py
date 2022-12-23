@@ -12,8 +12,6 @@ from sys import argv, stdin
 import pendulum
 import typer
 
-app = typer.Typer()
-
 
 def timestamp_lines(show_delta: bool = typer.Option(None, help="Show the time delta between each line.")):
     """Takes a stream from stdin and prefixes it with the timestamp it was read

@@ -10,8 +10,6 @@ import pendulum
 import typer
 from rich import print
 
-app = typer.Typer(pretty_exceptions_enable=False)
-
 
 def validate_date(value: str):
     try:

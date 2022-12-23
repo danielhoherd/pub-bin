@@ -14,8 +14,6 @@ from rich import box
 from rich.console import Console
 from rich.table import Table
 
-app = typer.Typer(rich_markup_mode="markdown")
-
 
 def parse_quota(item):
     status = item["status"]
