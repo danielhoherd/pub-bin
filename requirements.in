@@ -4,5 +4,5 @@ pendulum
 PyGithub
 PyYAML
 rich
-setuptools<60.0.0 # workaround for debian bug https://github.com/pypa/setuptools/issues/3278
+setuptools<66.0.0 # workaround for debian bug https://github.com/pypa/setuptools/issues/3278
 typer
