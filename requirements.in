@@ -3,5 +3,5 @@ humanize
 pendulum
 PyGithub
 PyYAML
-rich
+rich<13.0.0
 typer

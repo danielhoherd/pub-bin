@@ -46,7 +46,7 @@ pyyaml==6.0
     # via -r requirements.in
 requests==2.28.2
     # via pygithub
-rich==13.0.1
+rich==12.6.0
     # via -r requirements.in
 six==1.16.0
     # via python-dateutil
