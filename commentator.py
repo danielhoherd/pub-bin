@@ -5,7 +5,6 @@
 # - Handle line breaks on input (seems hard if we use textwrap)
 # - Handle stdin (typer doesn't handle defaults for nargs)
 
-import sys
 import textwrap
 
 import typer

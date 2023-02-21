@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Takes a space delimited matrix on stdin and rotates or flips it."""
 
-from pprint import pprint as pp
 from sys import argv, stdin
 
 import typer

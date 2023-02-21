@@ -4,7 +4,6 @@
 # Purpose: Validate and decode UUIDs
 import datetime
 import sys
-import time
 import uuid
 
 if len(sys.argv) == 1:

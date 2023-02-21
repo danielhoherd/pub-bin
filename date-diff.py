@@ -3,8 +3,6 @@
 # License: MIT
 # Purpose: Show the difference between two dates in several human readable forms.
 
-import sys
-from datetime import datetime
 
 import pendulum
 import typer

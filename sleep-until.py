@@ -15,9 +15,6 @@ from time import sleep
 import pendulum
 import typer
 from pendulum.parsing.exceptions import ParserError
-from rich.progress import (
-    track,  # https://typer.tiangolo.com/tutorial/progressbar/#progress-bar
-)
 
 app = typer.Typer(help=__doc__)
 
