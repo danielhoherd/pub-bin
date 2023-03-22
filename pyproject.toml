@@ -1,5 +1,8 @@
-# https://github.com/psf/black#configuration-format
+# https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html
 # https://www.python.org/dev/peps/pep-0518/#file-format
 [tool.black]
+exclude = '(venv|.vscode)'
+include = '\.pyi?$'
 line-length = 132
-exclude = '(venv)'
+#skip-string-normalization = true
+target-version = ['py310']
