@@ -35,5 +35,5 @@ shift "$((OPTIND - 1))"
   exit 1
 }
 
-openssl s_client -connect "${1}:${port:-443}" < /dev/null 2>/dev/null |
+openssl s_client -connect "${1}:${port:-443}" -servername "$1" < /dev/null 2>/dev/null |
   openssl x509 -startdate -enddate -noout
