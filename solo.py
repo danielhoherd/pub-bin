@@ -9,18 +9,18 @@ This is essentially a port of the solo.pl script by Timothy Kay."""
 import typer
 import socket
 import subprocess
-from typing import List, Optional
 
 app = typer.Typer(help=__doc__)
 
 
-def main(command: Optional[List[str]] = typer.Argument(None), port: int = 13579):
+def main(command: list[str], port: int = 13579):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind(("127.0.0.1", port))
     subprocess.call(command)
 
 
 if __name__ == "__main__":
+    main.__doc__ = __doc__
     try:
         typer.run(main)
     except OSError as e:
