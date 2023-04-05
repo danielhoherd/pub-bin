@@ -10,8 +10,6 @@ import typer
 import socket
 import subprocess
 
-app = typer.Typer(help=__doc__)
-
 
 def main(command: list[str], port: int = 13579):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
