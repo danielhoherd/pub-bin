@@ -44,12 +44,14 @@ def lookup_host_in_nameserver(host, nameserver):
 
 
 @app.command()
-def main(host: str = typer.Argument(..., help="Host to check")):
+def main(hosts: list[str] = typer.Argument(..., help="Host to check")):
     now = datetime.datetime.now(local_timezone).strftime("%FT%T%z")
-    print(f"{now} {host}", end=" ")
-    for nameserver in nameservers:
-        print(lookup_host_in_nameserver(host, nameserver), end="", flush=True)
-    print("")
+    host_column_length = max(len(host) for host in hosts)
+    for host in hosts:
+        print(f"{now} {host:>{host_column_length}}", end=" ")
+        for nameserver in nameservers:
+            print(lookup_host_in_nameserver(host, nameserver), end="", flush=True)
+        print("")
 
 
 if __name__ == "__main__":
