@@ -36,7 +36,7 @@ def lookup_host_in_nameserver(host, nameserver):
     resolver.nameservers = [nameserver]
     try:
         resolver.resolve(host, lifetime=2.0)
-        return "."
+        return "•"
     except dns.resolver.NXDOMAIN:
         return "x"
     except dns.resolver.LifetimeTimeout:
