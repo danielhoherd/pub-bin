@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+# Author: github.com/danielhoherd
+# License: MIT
+"""
+Print a horizontal line across the terminal.
+"""
+
+import argparse
+from colorama import Fore, Style
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("-w", "--width", type=int, default=80)
+    parser.add_argument("-c", "--char", default="-", help="Character or string")
+    parser.add_argument("-C", "--color", default="white", help="Colorama compatible color name")
+    args = parser.parse_args()
+
+    color = getattr(Fore, args.color.upper(), Fore.WHITE)
+    print(color + (args.char * args.width)[: args.width] + Style.RESET_ALL)
+
+
+if __name__ == "__main__":
+    main()
