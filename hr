@@ -12,8 +12,8 @@ from colorama import Fore, Style
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("-w", "--width", type=int, default=80)
-    parser.add_argument("-t", "--text", default="-", help="Separator text")
     parser.add_argument("-c", "--color", default="white", help="Colorama compatible color name")
+    parser.add_argument("text", nargs="?", default="-", help="Separator text (default: '-')")
     args = parser.parse_args()
 
     color = getattr(Fore, args.color.upper(), Fore.WHITE)
