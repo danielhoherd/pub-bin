@@ -28,8 +28,8 @@ except pendulum.tz.zoneinfo.exceptions.InvalidTimezone:
 def format_deployment(item):
     """Reformat the deployment with an age field and a corrected timestamp field."""
     name, namespace, revision, updated, status, chart, app_version = (str(x) for x in item.values())
-    updated = pendulum.from_format(updated.rsplit(".")[0] + updated.split()[-2], "YYYY-MM-DD HH:mm:ssZZ").strftime("%FT%T%z")
-    age = (pendulum.now() - pendulum.parse(updated)).in_words()
+    updated = pendulum.from_format(updated.rsplit(".")[0] + updated.split()[-2], "YYYY-MM-DD HH:mm:ssZZ").strftime("%FT%H:%M%z")
+    age = (pendulum.now().replace(second=0) - pendulum.parse(updated)).in_words()
     return [name, namespace, revision, updated, age, status, chart, app_version]
 
 
