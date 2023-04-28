@@ -26,24 +26,11 @@ except pendulum.tz.zoneinfo.exceptions.InvalidTimezone:
 
 
 def format_deployment(item):
+    """Reformat the deployment with an age field and a corrected timestamp field."""
     name, namespace, revision, updated, status, chart, app_version = (str(x) for x in item.values())
     updated = pendulum.from_format(updated.rsplit(".")[0] + updated.split()[-2], "YYYY-MM-DD HH:mm:ssZZ").strftime("%FT%T%z")
     age = (pendulum.now() - pendulum.parse(updated)).in_words()
     return [name, namespace, revision, updated, age, status, chart, app_version]
-
-
-cmd = f'helm list {" ".join(sys.argv[1:])} -o json'
-ret = subprocess.run(cmd.split(), capture_output=True)
-if ret.returncode != 0:
-    print(ret.stderr.decode())
-    raise SystemExit(1)
-
-try:
-    data = json.loads(ret.stdout)
-except json.decoder.JSONDecodeError:
-    # This is only known to happen with 'helm-history.py --help'
-    print(ret.stdout.decode())
-    raise SystemExit(0)
 
 
 def print_as_table(data):
@@ -53,4 +40,22 @@ def print_as_table(data):
     print(tabulate(table, headers=headers))
 
 
-print_as_table(data)
+def main():
+    cmd = f'helm list {" ".join(sys.argv[1:])} -o json'
+    ret = subprocess.run(cmd.split(), capture_output=True)
+    if ret.returncode != 0:
+        print(ret.stderr.decode())
+        raise SystemExit(1)
+
+    try:
+        data = json.loads(ret.stdout)
+    except json.decoder.JSONDecodeError as e:
+        # This is only known to happen with 'helm-history.py --help'
+        print(ret.stdout.decode())
+        raise SystemExit(0) from e
+
+    print_as_table(data)
+
+
+if __name__ == "__main__":
+    main()
