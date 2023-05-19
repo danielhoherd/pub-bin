@@ -6,3 +6,4 @@ PyGithub
 PyYAML
 rich<13.0.0
 typer
+urllib3<2.0.0 # temp workaround for conflict
