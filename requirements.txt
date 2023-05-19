@@ -6,7 +6,7 @@
 #
 cachier==2.1.1
     # via -r requirements.in
-certifi==2022.12.7
+certifi==2023.5.7
     # via requests
 cffi==1.15.1
     # via
@@ -36,11 +36,11 @@ portalocker==2.7.0
     # via cachier
 pycparser==2.21
     # via cffi
-pygithub==1.58.1
+pygithub==1.58.2
     # via -r requirements.in
-pygments==2.15.0
+pygments==2.15.1
     # via rich
-pyjwt[crypto]==2.6.0
+pyjwt[crypto]==2.7.0
     # via pygithub
 pynacl==1.5.0
     # via pygithub
@@ -50,19 +50,21 @@ pytzdata==2020.1
     # via pendulum
 pyyaml==6.0
     # via -r requirements.in
-requests==2.28.2
+requests==2.30.0
     # via pygithub
 rich==12.6.0
     # via deprecated
 
 # The following packages are considered to be unsafe in a requirements file:
-setuptools==67.6.1
+setuptools==67.7.2
     # via -r requirements.in
 six==1.16.0
     # via python-dateutil
-typer==0.7.0
+typer==0.9.0
     # via -r requirements.in
-urllib3==1.26.15
+typing-extensions==4.5.0
+    # via typer
+urllib3==2.0.2
     # via requests
 watchdog==3.0.0
     # via cachier
