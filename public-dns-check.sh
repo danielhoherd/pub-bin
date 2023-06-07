@@ -17,6 +17,9 @@ Example:
 
 Usage:
   ${0##*/} <target_host>
+
+See Also:
+  https://www.whatsmydns.net
 EOF
 }
 

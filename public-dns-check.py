@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 # Author: github.com/danielhoherd
 # License: MIT
-"""Check a hostname against a list of known public DNS resolvers and return a single-character result status."""
+"""Check a hostname against a list of known public DNS resolvers and return a single-character result status.
+
+See also: https://www.whatsmydns.net"""
 
 import dns.resolver
 import typer
 import datetime
 
-app = typer.Typer(pretty_exceptions_enable=False)
+app = typer.Typer(pretty_exceptions_enable=False, help=__doc__)
 
 local_timezone = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo
 
@@ -55,4 +57,5 @@ def main(hosts: list[str] = typer.Argument(..., help="Host to check")):
 
 
 if __name__ == "__main__":
+    main.__doc__ = __doc__
     app()
