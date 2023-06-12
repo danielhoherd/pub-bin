@@ -4,7 +4,6 @@
 """Sleep until the next interval or until the given date."""
 
 # TODO:
-# - Support an interval offset (eg: every 3 hours but offset by 30 minutes)
 # - Support conversational input (eg: date '5 minutes 30 seconds')
 
 import os
@@ -34,14 +33,19 @@ except pendulum.tz.zoneinfo.exceptions.InvalidTimezone as e:
 
 
 @app.command()
-def interval(interval: int, verbose: bool = typer.Option(False, "-v", "--verbose")):
+def interval(interval: int, offset: int = 0, verbose: bool = typer.Option(False, "-v", "--verbose")):
     """Sleep until the next interval."""
     try:
         now = pendulum.now()
-        sleep_time = interval - float(now.strftime("%s.%f")) % interval
+        sleep_time = (offset % interval) - (float(now.strftime("%s.%f")) % interval)
+        while sleep_time < 0:
+            sleep_time += interval
         delta = pendulum.now().add(seconds=sleep_time) - pendulum.now()
         if verbose:
-            print(f'{now.strftime("%FT%T.%f")} sleep for {sleep_time} seconds ({delta.in_words()})', file=sys.stderr)
+            print(
+                f'{now.strftime("%FT%T.%f")} sleep for {sleep_time:.5f} seconds ({delta.in_words()}) ending at {delta.end.isoformat(timespec="seconds")}',
+                file=sys.stderr,
+            )
         sleep(sleep_time)
     except KeyboardInterrupt as e:
         print("")
