@@ -7,7 +7,6 @@
 
 sudo chown -R "${USER}" "$(brew --prefix)"/{bin,share} && \
 ( set -x ;
-  git -C "$(brew --repo homebrew/core)" reset --hard origin/master
   brew doctor ;
   brew update ;
   brew upgrade ;
