@@ -27,7 +27,7 @@ def send_notification(key, application, event, description, priority):
         "description": description,
     }
 
-    response = requests.post("https://api.prowlapp.com/publicapi/add", data=data)
+    response = requests.post("https://api.prowlapp.com/publicapi/add", data=data, timeout=30)
 
     if response.status_code != 200:
         exit(response.status_code)

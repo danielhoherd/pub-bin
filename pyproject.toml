@@ -6,3 +6,7 @@ include = '\.pyi?$'
 line-length = 132
 #skip-string-normalization = true
 target-version = ['py310']
+
+[tool.ruff]
+select = ["E", "F", "Q", "S"]
+ignore = ["S311", "S603"]

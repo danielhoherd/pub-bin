@@ -44,7 +44,7 @@ def get_tags_for_image(image):
 
 def get_tags_for_image_docker_io(image):
     """Return a list of tags for docker hub image."""
-    data = requests.get(f"https://index.docker.io/v1/repositories/{image.removeprefix('docker.io/')}/tags").json()
+    data = requests.get(f"https://index.docker.io/v1/repositories/{image.removeprefix('docker.io/')}/tags", timeout=30).json()
     if isinstance(data, str):
         raise SystemExit(f"ERROR: {data}")
     tags = {x["name"] for x in data if version.parse(x["name"]).release}
@@ -55,7 +55,7 @@ def get_tags_for_image_docker_io(image):
 
 def get_tags_for_image_quay_io(image):
     """Return a list of tags for quay.io image."""
-    resp = requests.get(f"https://quay.io/api/v1/repository/{image.removeprefix('quay.io/')}/tag?limit=100")
+    resp = requests.get(f"https://quay.io/api/v1/repository/{image.removeprefix('quay.io/')}/tag?limit=100", timeout=30)
     data = resp.json()
     if not (200 <= resp.status_code < 300):
         raise SystemExit("ERROR: {status} {detail}".format(**data))
