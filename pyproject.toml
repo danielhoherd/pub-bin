@@ -8,5 +8,6 @@ line-length = 132
 target-version = ['py310']
 
 [tool.ruff]
+fixable = ["ALL"]
 select = ["E", "F", "Q", "S"]
-ignore = ["S311", "S603"]
+ignore = ["E501", "S311", "S603"]
