@@ -22,12 +22,17 @@ def date_diff(
     start: str = typer.Argument(None, callback=validate_date),
     end: str = typer.Argument(default=pendulum.now().to_iso8601_string(), callback=validate_date),
 ):
+    """Show the difference between two iso8601 timestamps. If only one is given, the current time is used for the other."""
+
     delta = end - start
+    future_past = "in the past" if delta.total_seconds() > 0 else "in the future"
+    if delta.total_seconds() < 0:
+        delta = start - end
     print(f"Total seconds: {int(delta.total_seconds()):,d}")
     print(f"Total minutes: {int(delta.total_minutes()):,d}")
     print(f"Total hours: {int(delta.total_hours()):,d}")
     print(f"Total days: {int(delta.total_days()):,d}")
-    print(delta.in_words())
+    print(f"{delta.in_words()} {future_past}")
 
 
 if __name__ == "__main__":
