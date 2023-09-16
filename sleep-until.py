@@ -43,7 +43,7 @@ def interval(interval: int, offset: int = 0, verbose: bool = typer.Option(False,
         delta = pendulum.now().add(seconds=sleep_time) - pendulum.now()
         if verbose:
             print(
-                f'{now.strftime("%FT%T.%f")} sleep for {sleep_time:.5f} seconds ({delta.in_words()}) ending at {delta.end.isoformat(timespec="seconds")}',
+                f'{now.strftime("%FT%T.%f%z")} sleep for {sleep_time:.5f} seconds ({delta.in_words()}) ending at {delta.end.isoformat(timespec="seconds")}',
                 file=sys.stderr,
             )
         sleep(sleep_time)
@@ -55,18 +55,18 @@ def interval(interval: int, offset: int = 0, verbose: bool = typer.Option(False,
 @app.command()
 def date(date: str, verbose: bool = typer.Option(False, "-v", "--verbose")):
     """Sleep until the given date."""
-    now = datetime.now()
+    now = datetime.now(tz=tz)
     try:
         future_date = pendulum.parse(date, tz=tz)
     except ParserError:
         parser_error_exit()
-    delta = future_date - pendulum.now()
+    delta = future_date - pendulum.now(tz=tz)
     if delta.invert:
         print(f"ERROR: date {date} has already passed!")
         raise SystemExit(2)
     sleep_time = float(f"{delta.seconds}.{delta.microseconds}")
     if verbose:
-        print(f'{now.strftime("%FT%T.%f")} sleep for {sleep_time} seconds ({delta.in_words()})', file=sys.stderr)
+        print(f'{now.strftime("%FT%T.%f%z")} sleep for {sleep_time} seconds ({delta.in_words()})', file=sys.stderr)
     sleep(sleep_time)
 
 
