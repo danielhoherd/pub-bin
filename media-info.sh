@@ -19,9 +19,10 @@ shift $((OPTIND - 1))
 
 if [[ -z "${exiftool_args[*]}" ]] ; then
   exiftool_args+=(
+    '-FileSize'
+    '-Duration'
     '-BitDepth'
     '-BitsPerSample'
-    '-Duration'
     '-ImageSize'
     '-ImageHeight'
     '-ImageWidth'
@@ -33,6 +34,7 @@ if [[ -z "${exiftool_args[*]}" ]] ; then
     '-Country'
     '-State'
     '-City'
+    '-AvgBitRate'
   )
 fi
 
