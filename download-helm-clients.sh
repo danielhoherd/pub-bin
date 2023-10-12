@@ -53,8 +53,8 @@ done
 shift $((OPTIND - 1))
 
 if [[ -z "${SKIP_DEFAULTS}" ]] ; then
+  # https://helm.sh/docs/topics/version_skew/
   helm3_releases=(
-    3.10.3 # 2022-12-14
     3.11.3 # 2023-04-12
     3.12.3 # 2023-08-11
     3.13.1 # 2023-10-12
