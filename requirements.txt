@@ -8,11 +8,11 @@ cachier==2.2.1
     # via -r requirements.in
 certifi==2023.7.22
     # via requests
-cffi==1.15.1
+cffi==1.16.0
     # via
     #   cryptography
     #   pynacl
-charset-normalizer==3.2.0
+charset-normalizer==3.3.0
     # via requests
 click==8.1.7
     # via typer
@@ -36,7 +36,7 @@ portalocker==2.8.2
     # via cachier
 pycparser==2.21
     # via cffi
-pygithub==1.59.1
+pygithub==2.1.1
     # via -r requirements.in
 pygments==2.16.1
     # via rich
@@ -45,7 +45,9 @@ pyjwt[crypto]==2.8.0
 pynacl==1.5.0
     # via pygithub
 python-dateutil==2.8.2
-    # via pendulum
+    # via
+    #   pendulum
+    #   pygithub
 pytzdata==2020.1
     # via pendulum
 pyyaml==6.0.1
@@ -65,10 +67,13 @@ tabulate==0.9.0
 typer==0.9.0
     # via -r requirements.in
 typing-extensions==4.8.0
-    # via typer
-urllib3==1.26.16
+    # via
+    #   pygithub
+    #   typer
+urllib3==1.26.18
     # via
     #   -r requirements.in
+    #   pygithub
     #   requests
 watchdog==3.0.0
     # via cachier
