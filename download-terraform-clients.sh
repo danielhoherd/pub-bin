@@ -36,7 +36,7 @@ if [[ -z "${*}" ]] ; then
   # https://endoflife.date/terraform
   versions=(
     "1.5.7"   # 2023-09-07
-    "1.6.2"   # 2023-10-18
+    "1.6.3"   # 2023-11-01
   )
 else
   versions=( "${@}" )
