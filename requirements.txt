@@ -12,13 +12,13 @@ cffi==1.16.0
     # via
     #   cryptography
     #   pynacl
-charset-normalizer==3.3.0
+charset-normalizer==3.3.2
     # via requests
 click==8.1.7
     # via typer
 commonmark==0.9.1
     # via rich
-cryptography==41.0.4
+cryptography==41.0.5
     # via pyjwt
 deprecated==1.2.14
     # via pygithub
@@ -41,7 +41,9 @@ pygithub==2.1.1
 pygments==2.16.1
     # via rich
 pyjwt[crypto]==2.8.0
-    # via pygithub
+    # via
+    #   pygithub
+    #   pyjwt
 pynacl==1.5.0
     # via pygithub
 python-dateutil==2.8.2
