@@ -23,6 +23,7 @@ Usage:
 
 See Also:
     https://github.com/helm/helm/releases
+    https://helm.sh/docs/topics/version_skew
 "
 }
 
