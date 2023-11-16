@@ -23,6 +23,7 @@ if [[ -z "${exiftool_args[*]}" ]] ; then
     '-Duration'
     '-BitDepth'
     '-BitsPerSample'
+    '-CompressorName'
     '-ImageSize'
     '-ImageHeight'
     '-ImageWidth'
