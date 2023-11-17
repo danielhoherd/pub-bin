@@ -79,5 +79,5 @@ urllib3==1.26.18
     #   requests
 watchdog==3.0.0
     # via cachier
-wrapt==1.15.0
+wrapt==1.16.0
     # via cachier
