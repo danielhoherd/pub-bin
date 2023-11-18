@@ -20,4 +20,4 @@ done
 shift $((OPTIND - 1))
 
 # shellcheck disable=SC2140
-docker run --rm --interactive --tty --workdir="/docker-share" --mount "type=bind,src=$PWD,dst=/docker-share" "${IMAGE:-quay.io/danielhoherd/uw}" "${@:-bash}"
+docker run --rm --interactive --tty --workdir="/docker-share" --mount "type=bind,src=$PWD,dst=/docker-share" "${IMAGE:-quay.io/danielhoherd/dw}" "${@:-bash}"
