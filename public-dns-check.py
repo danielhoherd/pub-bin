@@ -46,13 +46,24 @@ def lookup_host_in_nameserver(host, nameserver):
 
 
 @app.command()
-def main(hosts: list[str] = typer.Argument(..., help="Host to check")):
+def main(
+    hosts: list[str] = typer.Argument(..., help="Host to check"),
+    verbose: bool = typer.Option(False, "--verbose", "-v", help="Verbose mode"),
+):
     now = datetime.datetime.now(local_timezone).strftime("%FT%T%z")
     host_column_length = max(len(host) for host in hosts)
     for host in hosts:
         print(f"{now} {host:>{host_column_length}}", end=" ")
+        failures = []
         for nameserver in nameservers:
+            res = lookup_host_in_nameserver(host, nameserver)
+            if res == "x":
+                failures.append(nameserver)
             print(lookup_host_in_nameserver(host, nameserver), end="", flush=True)
+        if verbose:
+            for failure in failures:
+                print(f"\n  {host} failed on {failure}", end="")
+
         print("")
 
 
