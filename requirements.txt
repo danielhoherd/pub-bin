@@ -6,7 +6,7 @@
 #
 cachier==2.2.1
     # via -r requirements.in
-certifi==2023.7.22
+certifi==2023.11.17
     # via requests
 cffi==1.16.0
     # via
@@ -24,9 +24,9 @@ deprecated==1.2.14
     # via pygithub
 dnspython==2.4.2
     # via -r requirements.in
-humanize==4.8.0
+humanize==4.9.0
     # via -r requirements.in
-idna==3.4
+idna==3.6
     # via requests
 pathtools==0.1.2
     # via cachier
@@ -38,7 +38,7 @@ pycparser==2.21
     # via cffi
 pygithub==2.1.1
     # via -r requirements.in
-pygments==2.16.1
+pygments==2.17.2
     # via rich
 pyjwt[crypto]==2.8.0
     # via
@@ -60,7 +60,7 @@ rich==12.6.0
     # via deprecated
 
 # The following packages are considered to be unsafe in a requirements file:
-setuptools==68.2.2
+setuptools==69.0.2
     # via -r requirements.in
 six==1.16.0
     # via python-dateutil
