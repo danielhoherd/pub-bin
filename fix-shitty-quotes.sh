@@ -6,7 +6,7 @@
 
 if [[ "${#@}" -lt 1 ]] ; then
     echo "Replaces shitty quotes with normal quotes in all given files"
-    echo "example: grep -rl '[“”’]' | xargs ${0##*/}"
+    echo "example: grep -rl '[“”’]' | xargs -r ${0##*/}"
     exit 1
 fi
 

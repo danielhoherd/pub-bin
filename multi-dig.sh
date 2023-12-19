@@ -41,4 +41,4 @@ dns_servers=(
   64.6.65.6
 )
 
-echo "${dns_servers[@]}" | xargs "${args[@]}" -I {} dig "${@}" {}
+echo "${dns_servers[@]}" | xargs -r "${args[@]}" -I {} dig "${@}" {}

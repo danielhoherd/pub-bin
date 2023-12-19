@@ -50,7 +50,7 @@ code_update() {
       date "+%F %T%z ${repo}"
       if [[ -e .git ]] ; then
         rm -f .git/hooks/*.sample
-        git remote | xargs -I {} git remote set-head {} -a
+        git remote | xargs -r -I {} git remote set-head {} -a
         if git config --get remote.origin.url > /dev/null ; then
           git pull -q || echo "$(date '+%F %T%z') Problems with ${PWD}"
           git remote prune origin
@@ -75,4 +75,4 @@ fi
 
 find "${DIRS[@]}" -mindepth 1 -maxdepth 1 -type d -print0 |
   sort -z |
-  xargs -P"${PARALLEL}" -0 -I{} bash -c "code_update {}" \;
+  xargs -r -P"${PARALLEL}" -0 -I{} bash -c "code_update {}" \;

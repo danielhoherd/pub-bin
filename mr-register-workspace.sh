@@ -9,4 +9,4 @@ command -v mr >/dev/null 2>&1 || { echo "ERROR: 'mr' command is missing. See htt
 
 find "$@" -maxdepth 1 -mindepth 1 -print0 |
   sort -z |
-  xargs -0 -n1 mr register
+  xargs -r -0 -n1 mr register
