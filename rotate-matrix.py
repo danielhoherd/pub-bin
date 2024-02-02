@@ -16,17 +16,17 @@ def timestamp_lines(dir: str = typer.Option("left", help="Direction to rotate. C
     else:
         matrix = [line.split() for line in stdin]
 
-        if dir == "left":
-            rotated = list(zip(*matrix))[::-1]
-        elif dir == "right":
-            rotated = list(zip(*matrix[::-1]))
-        elif dir == "diag":
-            rotated = list(zip(*matrix))
-        else:
-            raise SystemExit("ERROR: --dir must be one of: left, right, diag")
+        match dir:
+            case "left":
+                rotated = list(zip(*matrix))[::-1]
+            case "right":
+                rotated = list(zip(*matrix[::-1]))
+            case "diag":
+                rotated = list(zip(*matrix))
+            case _:
+                raise SystemExit("ERROR: --dir must be one of: left, right, diag")
 
-        for line in rotated:
-            print(" ".join(line))
+        print("\n".join(" ".join(line) for line in rotated))
 
 
 if __name__ == "__main__":
