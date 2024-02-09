@@ -5,7 +5,7 @@ set -eo pipefail
 
 if [[ $# -lt 1 ]] ; then
     cat <<EOF
-Clone a git repo and check out all of its branches into workingtrees named after the branch.
+Clone a git repo and check out all of its branches into worktrees named after the branch.
 
 Usage:
 
