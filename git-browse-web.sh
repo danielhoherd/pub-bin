@@ -28,6 +28,9 @@ done
 shift $((OPTIND - 1))
 
 file="$1"
+if ! [[ -e "$file" ]] ; then
+  echo "WARNING: given file does not exist: $file" 1>&2
+fi
 
 branch="$(git rev-parse --abbrev-ref HEAD)"  # bare branch name
 main_branch=$(git ls-remote --symref origin HEAD | awk '$2 ~ /^refs/ { sub(".*/","", $2) ; print $2 }')  # assumes remote 'origin'
@@ -62,7 +65,7 @@ print_gitlab() {
     echo "Compare branch:      ${branch_compare_url}"
   fi
   echo "Compare sha:         ${sha_compare_url}"
-  if [[ -n "${file}" ]] ; then
+  if [[ -n "${file}" ]] && [[ -e "${file}" ]] ; then
     web_file_url_branch="${remote_url_https}/-/blob/${branch}${repo_cwd}/${file}"
     web_file_url_sha="${remote_url_https}/-/blob/${short_sha}${repo_cwd}/${file}"
     echo "File url (branch):   ${web_file_url_branch}"
@@ -94,7 +97,7 @@ print_github() {
   fi
   echo "Compare sha:         ${sha_compare_url}"
 
-  if [[ -n "${file}" ]] ; then
+  if [[ -n "${file}" ]] && [[ -e "${file}" ]] ; then
     web_file_url_branch="${remote_url_https}/blob/${branch}${repo_cwd}/${file}"
     web_file_url_sha="${remote_url_https}/blob/${short_sha}${repo_cwd}/${file}"  # only use the last 10 chars of the sha
     echo "File url (branch):   ${web_file_url_branch}"
