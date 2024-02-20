@@ -28,7 +28,7 @@ done
 shift $((OPTIND - 1))
 
 file="$1"
-if ! [[ -e "$file" ]] ; then
+if [[ -n "${file}" ]] && ! [[ -e "$file" ]] ; then
   echo "WARNING: given file does not exist: $file" 1>&2
 fi
 
