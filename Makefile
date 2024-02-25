@@ -10,5 +10,5 @@ install-hooks: ## Install git hooks.
 
 .PHONY: update-requirements
 update-requirements: ## Update all requirements.txt files
-	pip-compile --resolver=backtracking --quiet --allow-unsafe --upgrade requirements.in
+	uv pip compile --resolver=backtracking --quiet --allow-unsafe --upgrade requirements.in
 	-pre-commit run requirements-txt-fixer --all-files --show-diff-on-failure
