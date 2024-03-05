@@ -9,6 +9,7 @@ Launches a k8s pod with an optional docker container given.
     -h  Print help
     -d  Dry run and print output spec
     -i  Docker image
+    -l  Labels to add as k1=v1,k2=v2
     -N  Specify a node
     -n  Namespace
     -x  Enable xtrace
@@ -20,12 +21,13 @@ EOF
 extra_args=()
 dry_or_interactive=( -t -i --rm '--restart=Never' )
 
-while getopts ':i:hxdn:N:' option ; do
+while getopts ':i:hl:xdn:N:' option ; do
   case "${option}"
   in
   x) set -x ;;
   d) dry_or_interactive=( '--dry-run=client' -o yaml '--restart=OnFailure' ) ;;
   i) IMAGE="$OPTARG" ;;
+  l) extra_args+=( --labels "$OPTARG" ) ;;
   n) extra_args+=( --namespace "$OPTARG" ) ;;
   N) node="$OPTARG" ;;
   h|*) usage ; exit 1 ;
