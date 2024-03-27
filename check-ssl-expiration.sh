@@ -16,7 +16,7 @@ EOF
 for cmd in dig openssl ; do
   command -v "$cmd" >/dev/null || {
     echo "ERROR: this script requires the '$cmd' command."
-    errors+=1
+    (( errors += 1 ))
   }
 done
 [[ "$errors" -gt 0 ]] && exit 1

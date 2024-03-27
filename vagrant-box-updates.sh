@@ -18,7 +18,7 @@ check_for_required_commands xargs vagrant awk date head
 
 if [[ "${OSTYPE}" =~ ^darwin ]] ; then
   for cmd in awk date head sed sort ; do
-    command -v "g${cmd}" > /dev/null || { echo "Command missing: 'g${cmd}'" ; error+=1 ; }
+    command -v "g${cmd}" > /dev/null || { echo "Command missing: 'g${cmd}'" ; (( error += 1 )) ; }
     # Evil eval because you can't create a function with a variable for a name
     eval "function ${cmd}() { "g${cmd}" \"\$@\" ; }"
     # shellcheck disable=SC2163
