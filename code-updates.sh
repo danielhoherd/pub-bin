@@ -30,7 +30,7 @@ trap "kill 0" SIGINT
 
 if [[ $((RANDOM % 500)) -eq 9 ]] || [[ "${aggressive}" == 'yes' ]] ; then
   GC_TYPE='--aggressive'
-  date "+%F %T%z 'git gc ${GC_TYPE}' selected"
+  date "+%FT%T%z 'git gc ${GC_TYPE}' selected"
   ( set -x ; pre-commit gc ; )
 fi
 
@@ -47,17 +47,17 @@ code_update() {
     repo=$1
     if [[ -d "${repo}" ]] ; then
       cd "${repo}" || ( echo "ERROR: cannot cd to ${repo}" ; return 1 ; )
-      date "+%F %T%z ${repo}"
+      date "+%FT%T%z ${repo}"
       if [[ -e .git ]] ; then
         rm -f .git/hooks/*.sample
         git remote | xargs -r -I {} git remote set-head {} -a
         if git config --get remote.origin.url > /dev/null ; then
-          git pull -q || echo "$(date '+%F %T%z') Problems with ${PWD}"
+          git pull -q || echo "$(date '+%FT%T%z') Problems with ${PWD}"
           git remote prune origin
           git gc "${GC_TYPE}"
           if [[ -f .pre-commit-config.yaml ]] ; then pre-commit install --install-hooks >/dev/null ; fi
         else
-          date "+%F %T%z Skipping $repo, remote origin is not working: $?"
+          date "+%FT%T%z Skipping $repo, remote origin is not working: $?"
         fi
       elif [[ -e .svn ]] ; then
         svn up

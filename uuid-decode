@@ -16,7 +16,7 @@ for UUID in sys.argv[1:]:
 
         if data["version"] == 1:
             data["timestamp"] = datetime.datetime.utcfromtimestamp((uuid.uuid1().time - 0x01B21DD213814000) * 100 / 1e9).strftime(
-                "%F %T"
+                "%FT%T"
             )
         data["int"] = this_uuid.int
         data["hex"] = this_uuid.hex

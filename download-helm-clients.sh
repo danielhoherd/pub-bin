@@ -30,7 +30,7 @@ See Also:
 print-verbose() {
   [[ "${#@}" == 0 ]] && return 1
   [[ -n "${VERBOSE}" ]] || return 0
-  printf '\e[0;35m%s\e[00m\n' "$(date "+%F %T%z") VERBOSE: $*"
+  printf '\e[0;35m%s\e[00m\n' "$(date "+%FT%T%z") VERBOSE: $*"
 }
 
 show_recent_helm_versions() {

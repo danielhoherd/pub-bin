@@ -11,7 +11,7 @@ check_for_required_commands() {
   done
 
   if [[ "${#missing_commands[@]}" -gt 0 ]] ; then
-    date "+%F %T%z ABORT: missing commands: ${missing_commands[*]}"
+    date "+%FT%T%z ABORT: missing commands: ${missing_commands[*]}"
     exit 1
   fi
 }

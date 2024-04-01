@@ -9,7 +9,7 @@ check_for_required_commands() {
   done
 
   if [[ "${#missing_commands[@]}" -gt 0 ]] ; then
-    date "+%F %T%z ${0##*/} ABORT: missing commands: ${missing_commands[*]}"
+    date "+%FT%T%z ${0##*/} ABORT: missing commands: ${missing_commands[*]}"
     exit 1
   fi
 }
@@ -32,14 +32,14 @@ else
   exit 1
 fi
 
-date "+%F %T%z Pulling new versions of all existing Vagrant boxes"
+date "+%FT%T%z Pulling new versions of all existing Vagrant boxes"
 vagrant box outdated --machine-readable --global |
   awk -F, '$4 == "warn" {print $5}' |
   awk -F"'" '{print $2}' |
   sort -u |
   xargs -r -n1 vagrant box update --box
 
-date "+%F %T%z Deleting old versions of each existing Vagrant box, keeping only the latest"
+date "+%FT%T%z Deleting old versions of each existing Vagrant box, keeping only the latest"
 vagrant box list |
 while read -r box _ ; do
   vagrant box list |

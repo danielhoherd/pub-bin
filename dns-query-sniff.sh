@@ -21,5 +21,5 @@ tcpdump -l -n -e dst port 53 |
 awk '$14 == "A?" {print $10,$15 ; fflush("/dev/stdout") ;}' |
 while read -r src domain ; do
     src=${src%.*}
-    date "+%F %T%z $src requesting $domain" ;
+    date "+%FT%T%z $src requesting $domain" ;
 done
