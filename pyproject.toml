@@ -7,7 +7,10 @@ line-length = 132
 #skip-string-normalization = true
 target-version = ['py310']
 
-[tool.ruff]
+[tool.ruff.lint]
 fixable = ["ALL"]
-select = ["E", "F", "Q", "S"]
+select = ["C", "E", "F", "Q", "S"]
 ignore = ["E501", "S311", "S603"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
