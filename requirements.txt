@@ -4,7 +4,7 @@
 #
 #    pip-compile --allow-unsafe requirements.in
 #
-cachier==2.3.0
+cachier==3.0.0
     # via -r requirements.in
 certifi==2024.2.2
     # via requests
@@ -15,7 +15,7 @@ cffi==1.16.0
 charset-normalizer==3.3.2
     # via requests
 click==8.1.7
-    # via typer
+    # via typer-slim
 commonmark==0.9.1
     # via rich
 cryptography==42.0.5
@@ -32,9 +32,9 @@ pendulum==3.0.0
     # via -r requirements.in
 portalocker==2.8.2
     # via cachier
-pycparser==2.21
+pycparser==2.22
     # via cffi
-pygithub==2.2.0
+pygithub==2.3.0
     # via -r requirements.in
 pygments==2.17.2
     # via rich
@@ -42,7 +42,7 @@ pyjwt[crypto]==2.8.0
     # via pygithub
 pynacl==1.5.0
     # via pygithub
-python-dateutil==2.8.2
+python-dateutil==2.9.0.post0
     # via
     #   pendulum
     #   time-machine
@@ -54,20 +54,30 @@ rich==12.6.0
     # via deprecated
 
 # The following packages are considered to be unsafe in a requirements file:
-setuptools==69.1.1
-    # via -r requirements.in
+setuptools==69.2.0
+    # via
+    #   -r requirements.in
+    #   typer-slim
+shellingham==1.5.4
+    # via typer-slim
 six==1.16.0
     # via python-dateutil
 tabulate==0.9.0
     # via -r requirements.in
-time-machine==2.13.0
+time-machine==2.14.1
     # via pendulum
-typer==0.9.0
+typer==0.12.0
     # via -r requirements.in
+typer-cli==0.12.0
+    # via typer
+typer-slim[standard]==0.12.0
+    # via
+    #   typer
+    #   typer-cli
 typing-extensions==4.10.0
     # via
     #   pygithub
-    #   typer
+    #   typer-slim
 tzdata==2024.1
     # via pendulum
 urllib3==2.2.1
