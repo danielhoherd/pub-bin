@@ -1,6 +1,7 @@
 *.autosave
 *.bak
 *.crt
+*.csv
 *.gz
 *.key
 *.log
