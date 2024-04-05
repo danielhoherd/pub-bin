@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Takes a space delimited matrix on stdin and rotates or flips it."""
+# Author: github.com/danielhoherd
+# License: MIT
+"""Take a space delimited matrix on stdin and rotate or flip it diagonally."""
 
 from sys import argv, stdin
 
