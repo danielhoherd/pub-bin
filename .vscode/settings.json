@@ -1,7 +1,0 @@
-{
-    "python.pythonPath": "/usr/local/opt/python/libexec/bin/python",
-    "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter"
-    },
-    "python.formatting.provider": "none"
-}
