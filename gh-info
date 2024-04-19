@@ -33,22 +33,25 @@ def hash_org(args, kwargs):
 
 
 def hash_repo(args, kwargs):
-    return args[0].url
+    try:
+        return args[0].url
+    except IndexError:
+        return None
 
 
 @cachier(stale_after=datetime.timedelta(days=1), hash_params=hash_org)
 def get_all_repos_for_org(org: github.Organization.Organization) -> list:
-    return sorted((repo for repo in org.get_repos()), key=lambda x: x.pushed_at)
+    return sorted(org.get_repos(), key=lambda x: x.pushed_at)
 
 
 @cachier(stale_after=datetime.timedelta(days=1))
 def get_all_repos_for_user(user: github.NamedUser.NamedUser) -> list:
-    return sorted((repo for repo in user.get_repos()), key=lambda x: x.pushed_at)
+    return sorted(user.get_repos(), key=lambda x: x.pushed_at)
 
 
 @cachier(stale_after=datetime.timedelta(days=1))
 def get_all_starred_repos_for_user(user: github.NamedUser.NamedUser) -> list:
-    return sorted((repo for repo in user.get_starred()), key=lambda x: x.pushed_at)
+    return sorted(user.get_starred(), key=lambda x: x.pushed_at)
 
 
 @cachier(stale_after=datetime.timedelta(days=30), hash_params=hash_repo)
