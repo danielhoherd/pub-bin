@@ -30,12 +30,12 @@ def format_deployment(item):
     name, namespace, revision, updated, status, chart, app_version = (str(x) for x in item.values())
     updated = pendulum.from_format(updated.rsplit(".")[0] + updated.split()[-2], "YYYY-MM-DD HH:mm:ssZZ").strftime("%FT%H:%M%z")
     age = (pendulum.now().replace(second=0) - pendulum.parse(updated)).in_words()
-    return [name, namespace, revision, updated, age, status, chart, app_version]
+    return [namespace, name, revision, updated, age, status, chart, app_version]
 
 
 def print_as_table(data):
     """Print the data as a table."""
-    headers = ["name", "namespace", "revision", "updated", "age", "status", "chart", "app_version"]
+    headers = ["namespace", "name", "revision", "updated", "age", "status", "chart", "app_version"]
     table = sorted([format_deployment(item) for item in data], key=lambda x: x[3])
     print(tabulate(table, headers=headers))
 
