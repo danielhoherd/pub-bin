@@ -9,6 +9,6 @@
 set -xe
 
 sudo sed -i '' -E 's/^#?ClientAliveInterval [0-9]+/ClientAliveInterval 120/ ; s/^#?ClientAliveCountMax [0-9]+/ClientAliveCountMax 5/ ;' /etc/ssh/sshd_config
-sudo launchctl stop com.openssh.sshd
-sudo launchctl start com.openssh.sshd
+sudo launchctl unload /System/Library/LaunchDaemons/ssh.plist
+sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist
 sudo pkill sshd
