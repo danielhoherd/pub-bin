@@ -8,7 +8,7 @@ from sys import argv, stdin
 import typer
 
 
-def timestamp_lines(dir: str = typer.Option("left", help="Direction to rotate. Can be: left, right, diag")):
+def rotate_matrix(dir: str = typer.Option("left", help="Direction to rotate. Can be: left, right, diag")):
     """Rotate a matrix left or right."""
 
     if stdin.isatty():
@@ -32,4 +32,4 @@ def timestamp_lines(dir: str = typer.Option("left", help="Direction to rotate. C
 
 
 if __name__ == "__main__":
-    typer.run(timestamp_lines)
+    typer.run(rotate_matrix)
