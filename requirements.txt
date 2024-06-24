@@ -30,7 +30,7 @@ idna==3.7
     # via requests
 pendulum==3.0.0
     # via -r requirements.in
-portalocker==2.8.2
+portalocker==2.10.0
     # via cachier
 pycparser==2.22
     # via cffi
@@ -54,7 +54,7 @@ rich==12.6.0
     # via deprecated
 
 # The following packages are considered to be unsafe in a requirements file:
-setuptools==70.0.0
+setuptools==70.1.0
     # via
     #   -r requirements.in
     #   typer
@@ -74,7 +74,7 @@ typing-extensions==4.12.2
     #   typer
 tzdata==2024.1
     # via pendulum
-urllib3==2.2.1
+urllib3==2.2.2
     # via
     #   pygithub
     #   requests
