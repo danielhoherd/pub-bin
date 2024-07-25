@@ -52,6 +52,12 @@ target_dir="${HOME}/bin"
 download_version() {
   dest="${target_dir}/terraform-${version}"
 
+  tempdir="$(mktemp -d)"
+  if ! cd "$tempdir" ; then
+    echo "ERROR: unable to cd to tempdir $tempdir"
+    exit 1
+  fi
+
   read -r os arch < <(uname -s -m)
   case $arch in
     x86_64) arch="amd64" ;;
@@ -77,9 +83,8 @@ download_version() {
     return
   fi
 
-
   unzip terraform.zip >/dev/null
-  rm -rf terraform.zip
+  rm -f terraform.zip LICENSE.txt
   mv terraform "${dest}"
   ( cd "${target_dir}" && ln -fsv "terraform-${version}" "terraform-${version%.*}" )
   echo "Successfully downloaded ${dest} from ${URL}"
