@@ -13,7 +13,7 @@ def timestamp_lines(separator: str = typer.Option(" ", "--separator", "-s"), fil
     """
 
     if file:
-        data = open(file, "r")
+        data = open(file)
     else:
         if stdin.isatty():
             print("ERROR: no data piped in and no file specified!", file=stderr)

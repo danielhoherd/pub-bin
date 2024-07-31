@@ -13,7 +13,7 @@ app = typer.Typer()
 def trim_null_empty_columns(input_file: str, output_file: str = "output.csv"):
     """Trim null and empty columns from a CSV file."""
     # Read the CSV file and store its contents
-    with open(input_file, "r", newline="", encoding="utf-8") as csvfile:
+    with open(input_file, newline="", encoding="utf-8") as csvfile:
         reader = csv.reader(csvfile)
         data = list(reader)
 

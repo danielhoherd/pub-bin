@@ -9,7 +9,7 @@ target-version = ['py310']
 
 [tool.ruff.lint]
 fixable = ["ALL"]
-select = ["C", "E", "F", "Q", "S"]
+select = ["C", "E", "F", "Q", "S", "UP"]
 ignore = ["E501", "S311", "S603"]
 
 [tool.ruff.lint.mccabe]
