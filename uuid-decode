@@ -25,6 +25,6 @@ for UUID in sys.argv[1:]:
         for key, value in sorted(data.items()):
             print(f"    {key}: {value}")
 
-    except ValueError:
+    except ValueError:  # noqa: PERF203
         print(f"There is something wrong with the given data: {UUID}")
         continue

@@ -33,7 +33,7 @@ def add_item_to_row(item):
 
 
 cmd = f'helm history {" ".join(sys.argv[1:])}'
-ret = subprocess.run(cmd.split() + ["-o", "json"], capture_output=True)
+ret = subprocess.run([*cmd.split(), "-o", "json"], capture_output=True)
 if ret.returncode != 0:
     print(ret.stderr.decode())
     raise SystemExit(1)

@@ -9,8 +9,23 @@ target-version = ['py310']
 
 [tool.ruff.lint]
 fixable = ["ALL"]
-select = ["C", "E", "F", "Q", "S", "UP"]
-ignore = ["E501", "S311", "S603"]
 
-[tool.ruff.lint.mccabe]
-max-complexity = 10
+# https://docs.astral.sh/ruff/rules/
+select = [
+  "ASYNC",
+  "C",
+  "E",
+  "F",
+  "FURB",
+  "PERF",
+  "Q",
+  "RUF",
+  "S",
+  "UP",
+  "W",
+]
+ignore = [
+  "E501",
+  "S311",
+  "S603",
+]
