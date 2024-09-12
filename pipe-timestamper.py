@@ -26,16 +26,15 @@ def timestamp_lines(show_delta: bool = typer.Option(None, help="Show the time de
         print(f"Description: {__doc__}")
         print(f"Usage: <some_command> | {argv[0]}")
         raise SystemExit(1)
-    else:
-        for line in stdin:
-            line = line.strip("\n")
-            new = pendulum.now()
-            delta = (new - old).in_words()
-            if show_delta:
-                print(f"{new.to_iso8601_string()} ({delta}) {line}")
-            else:
-                print(f"{new.to_iso8601_string()} {line}")
-            old = new
+    for line in stdin:
+        line = line.strip("\n")
+        new = pendulum.now()
+        delta = (new - old).in_words()
+        if show_delta:
+            print(f"{new.to_iso8601_string()} ({delta}) {line}")
+        else:
+            print(f"{new.to_iso8601_string()} {line}")
+        old = new
 
 
 if __name__ == "__main__":

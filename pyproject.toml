@@ -1,5 +1,6 @@
-# https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html
 # https://www.python.org/dev/peps/pep-0518/#file-format
+
+# https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html
 [tool.black]
 exclude = '(venv|.vscode)'
 include = '\.pyi?$'
@@ -13,18 +14,22 @@ fixable = ["ALL"]
 # https://docs.astral.sh/ruff/rules/
 select = [
   "ASYNC",
+  "BLE",
   "C",
   "E",
   "F",
+  "FLY",
   "FURB",
   "I",
   "N",
   "PERF",
   "Q",
+  "R",
   "RUF",
   "S",
   "UP",
   "W",
+  "YTT",
 ]
 ignore = [
   "E501",
