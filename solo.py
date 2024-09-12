@@ -6,9 +6,10 @@ on localhost for the duration of the running command.
 
 This is essentially a port of the solo.pl script by Timothy Kay."""
 
-import typer
 import socket
 import subprocess
+
+import typer
 
 
 def main(command: list[str], port: int = 13579):

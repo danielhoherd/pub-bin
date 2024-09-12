@@ -5,9 +5,10 @@
 
 See also: https://www.whatsmydns.net"""
 
+import datetime
+
 import dns.resolver
 import typer
-import datetime
 
 app = typer.Typer(pretty_exceptions_enable=False, help=__doc__)
 

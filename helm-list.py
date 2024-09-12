@@ -8,9 +8,9 @@ import json
 import os
 import subprocess
 import sys
-from tabulate import tabulate
 
 import pendulum
+from tabulate import tabulate
 
 if len(sys.argv) < 2:
     print(subprocess.check_output("helm list --help".split()).decode())

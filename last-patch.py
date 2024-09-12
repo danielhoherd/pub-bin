@@ -4,6 +4,7 @@
 """Print only the last patch version for each major.minor. Expects semver versions as stdin with optional v prefix."""
 
 import sys
+
 import semver
 
 

@@ -4,6 +4,7 @@
 """Trim empty columns from a csv file and write the result to a new file."""
 
 import csv
+
 import typer
 
 app = typer.Typer()

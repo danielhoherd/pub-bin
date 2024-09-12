@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Author: github.com/danielhoherd
 # License: MIT
-from sys import stdin, stderr
+from sys import stderr, stdin
 
 import pendulum
 import typer

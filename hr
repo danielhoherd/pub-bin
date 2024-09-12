@@ -6,6 +6,7 @@ Print a horizontal line across the terminal.
 """
 
 import argparse
+
 from colorama import Fore, Style
 
 
