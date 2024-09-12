@@ -14,6 +14,7 @@ fixable = ["ALL"]
 # https://docs.astral.sh/ruff/rules/
 select = [
   "ASYNC",
+  "ARG",
   "BLE",
   "C",
   "E",
@@ -23,16 +24,21 @@ select = [
   "I",
   "N",
   "PERF",
+  "PGH",
+  "PL",
   "Q",
   "R",
   "RUF",
   "S",
+  "TID",
   "UP",
   "W",
   "YTT",
 ]
 ignore = [
   "E501",
+  "PLR2004",
+  "PLW2901",
   "S311",
   "S603",
 ]

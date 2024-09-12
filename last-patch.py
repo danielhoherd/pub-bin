@@ -15,11 +15,8 @@ def find_newest_versions(versions):
         version_stripped = version.lstrip("v") if has_v_prefix else version  # Remove 'v' if present
         parsed_version = semver.VersionInfo.parse(version_stripped)
         major_minor = f"{parsed_version.major}.{parsed_version.minor}"
-        if major_minor not in newest_versions:
+        if major_minor not in newest_versions or parsed_version > newest_versions[major_minor]:
             newest_versions[major_minor] = parsed_version
-        else:
-            if parsed_version > newest_versions[major_minor]:
-                newest_versions[major_minor] = parsed_version
 
     return newest_versions.values()
 

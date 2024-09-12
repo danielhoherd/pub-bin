@@ -28,11 +28,11 @@ gh.per_page = 100
 app = typer.Typer(help=__doc__)
 
 
-def hash_org(args, kwargs):
+def hash_org(args):
     return args[0].name
 
 
-def hash_repo(args, kwargs):
+def hash_repo(args):
     try:
         return args[0].url
     except IndexError:
