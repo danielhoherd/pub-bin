@@ -57,11 +57,11 @@ def get_all_starred_repos_for_user(user: github.NamedUser.NamedUser) -> list:
 @cachier(stale_after=datetime.timedelta(days=30), hash_params=hash_repo)
 def get_license_for_repo(repo):
     try:
-        LICENSE = repo.get_license()
-        license = LICENSE.license.name
+        license = repo.get_license()
+        return license.license.name
     except github.GithubException:
-        license = ""
-    return license
+        pass
+    return ""
 
 
 def print_repo_table(title: str, repos: list) -> bool:

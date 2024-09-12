@@ -18,6 +18,7 @@ select = [
   "F",
   "FURB",
   "I",
+  "N",
   "PERF",
   "Q",
   "RUF",
