@@ -3,12 +3,19 @@
 # License: MIT
 """Take a space delimited matrix on stdin and rotate or flip it diagonally."""
 
+from enum import Enum
 from sys import argv, stdin
 
 import typer
 
 
-def rotate_matrix(dir: str = typer.Option("left", help="Direction to rotate. Can be: left, right, diag")):
+class Direction(str, Enum):
+    left = "left"
+    right = "right"
+    diag = "diag"
+
+
+def rotate_matrix(direction: Direction = typer.Option(Direction.left, "--direction", "-d", help="Direction to rotate.")):
     """Rotate a matrix left or right."""
 
     if stdin.isatty():
@@ -18,7 +25,7 @@ def rotate_matrix(dir: str = typer.Option("left", help="Direction to rotate. Can
     else:
         matrix = [line.split() for line in stdin]
 
-        match dir:
+        match direction:
             case "left":
                 rotated = list(zip(*matrix))[::-1]
             case "right":
@@ -26,7 +33,7 @@ def rotate_matrix(dir: str = typer.Option("left", help="Direction to rotate. Can
             case "diag":
                 rotated = list(zip(*matrix))
             case _:
-                raise SystemExit("ERROR: --dir must be one of: left, right, diag")
+                raise SystemExit(1)
 
         print("\n".join(" ".join(line) for line in rotated))
 
