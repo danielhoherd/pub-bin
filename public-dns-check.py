@@ -64,7 +64,7 @@ def main(
             for failure in failures:
                 print(f"\n  {host} failed on {failure}", end="")
 
-        print("")
+        print()
 
 
 if __name__ == "__main__":

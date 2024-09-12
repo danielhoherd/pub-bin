@@ -47,7 +47,7 @@ def interval(interval: int, offset: int = 0, verbose: bool = typer.Option(False,
             )
         sleep(sleep_time)
     except KeyboardInterrupt as e:
-        print("")
+        print()
         raise SystemExit(1) from e
 
 
