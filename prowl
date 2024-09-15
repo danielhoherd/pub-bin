@@ -3,7 +3,8 @@
 # License: MIT
 """Send a notification via the Prowlapp.com notification service."""
 import platform
-from sys import exit, stdin
+import select
+import sys
 
 import click
 import requests
@@ -23,9 +24,23 @@ def send_notification(key, application, event, description, priority):
     Use - to read from stdin."""
 
     if description == tuple("-"):
-        desc = "".join(list(stdin.readlines()))
+        # select.select() takes no keyword arguments 😭
+        if select.select(
+            [
+                sys.stdin,  # rlist
+            ],
+            [],  # wlist
+            [],  # xlist
+            2.0,  # timeout
+        )[0]:
+            desc = "".join(list(sys.stdin.readlines()))
+        else:
+            desc = ""
     else:
         desc = " ".join(description)
+
+    if not desc:
+        raise SystemExit("ERROR: No description provided.")
 
     data = {
         "apikey": key,
@@ -38,7 +53,7 @@ def send_notification(key, application, event, description, priority):
     response = requests.post("https://api.prowlapp.com/publicapi/add", data=data, timeout=30)
 
     if response.status_code != 200:
-        exit(response.status_code)
+        raise SystemExit(response.status_code)
 
 
 if __name__ == "__main__":
