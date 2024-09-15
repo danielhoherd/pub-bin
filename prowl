@@ -3,7 +3,7 @@
 # License: MIT
 """Send a notification via the Prowlapp.com notification service."""
 import platform
-from sys import exit
+from sys import exit, stdin
 
 import click
 import requests
@@ -16,15 +16,23 @@ app = platform.node()
 @click.option("--application", "-a", default=app, help="An application identifier.", show_default=True)
 @click.option("--event", "-e", help="An optional name for the event.")
 @click.option("--priority", "-p", default=0, help="Priority of the event. (asc pri 0±2)", show_default=True)
-@click.argument("description")
+@click.argument("description", nargs=-1, required=True)
 def send_notification(key, application, event, description, priority):
-    """Send a notification via the Prowlapp.com notification service."""
+    """Send a notification via the Prowlapp.com notification service.
+
+    Use - to read from stdin."""
+
+    if description == tuple("-"):
+        desc = "".join(list(stdin.readlines()))
+    else:
+        desc = " ".join(description)
+
     data = {
         "apikey": key,
         "priority": priority,
         "application": application,
         "event": event,
-        "description": description,
+        "description": desc,
     }
 
     response = requests.post("https://api.prowlapp.com/publicapi/add", data=data, timeout=30)
