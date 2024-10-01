@@ -37,7 +37,7 @@ main_branch=$(git ls-remote --symref origin HEAD | awk '$2 ~ /^refs/ { sub(".*/"
 sha="$(git rev-parse HEAD)"  # full hash
 short_sha="${sha::10}"
 repo_root="$(git rev-parse --show-toplevel)"  # absolute path to git root
-repo_cwd="${PWD#"${repo_root}"/}"  # cwd relative to repo_root
+repo_cwd="${PWD#"${repo_root}"}"  # cwd relative to repo_root, with leading slash (eg: /bin) # TODO: fix this to not have leading slash
 remote_url_original="$(git remote get-url origin)"  # the remote checkout url (eg: git@github.com:some_org_name/some_repo.git)
 # remote_url_https is the https link to the repo (eg: https://github.com/some_org_name/some_repo)
 if [[ "${remote_url_original}" =~ ^git* ]] ; then
@@ -53,7 +53,7 @@ print_gitlab() {
   branch_url="${remote_url_https}/-/tree/${branch}"
   sha_tree_url="${remote_url_https}/-/tree/${short_sha}"
   sha_commit_url="${remote_url_https}/-/commit/${sha}"
-  web_url="${remote_url_https}/-/tree/${branch}/${repo_cwd}"
+  web_url="${remote_url_https}/-/tree/${branch}${repo_cwd}"
   branch_compare_url="${remote_url_https}/-/compare/${main_branch}...${branch}"
   sha_compare_url="${remote_url_https}/-/compare/${main_branch}...${sha}"
   echo "CI Pipelines:        ${remote_url_https}/-/pipelines"
@@ -66,8 +66,8 @@ print_gitlab() {
   fi
   echo "Compare sha:         ${sha_compare_url}"
   if [[ -n "${file}" ]] && [[ -e "${file}" ]] ; then
-    web_file_url_branch="${remote_url_https}/-/blob/${branch}/${repo_cwd}/${file}"
-    web_file_url_sha="${remote_url_https}/-/blob/${short_sha}/${repo_cwd}/${file}"
+    web_file_url_branch="${remote_url_https}/-/blob/${branch}${repo_cwd}/${file}"
+    web_file_url_sha="${remote_url_https}/-/blob/${short_sha}${repo_cwd}/${file}"
     echo "File url (branch):   ${web_file_url_branch}"
     echo "File url (sha):      ${web_file_url_sha}"
   fi
@@ -75,9 +75,9 @@ print_gitlab() {
 
 print_github() {
   branch_url="${remote_url_https}/tree/${branch}"
-  sha_tree_url="${remote_url_https}/tree/${short_sha}/${repo_cwd}"
+  sha_tree_url="${remote_url_https}/tree/${short_sha}${repo_cwd}"
   sha_commit_url="${remote_url_https}/commit/${sha}"
-  web_url="${remote_url_https}/tree/${branch}/${repo_cwd}"
+  web_url="${remote_url_https}/tree/${branch}${repo_cwd}"
   branch_compare_url="${remote_url_https}/compare/${main_branch}...${branch}"
   sha_compare_url="${remote_url_https}/compare/${main_branch}...${sha}"
 
@@ -98,8 +98,8 @@ print_github() {
   echo "Compare sha:         ${sha_compare_url}"
 
   if [[ -n "${file}" ]] && [[ -e "${file}" ]] ; then
-    web_file_url_branch="${remote_url_https}/blob/${branch}/${repo_cwd}/${file}"
-    web_file_url_sha="${remote_url_https}/blob/${short_sha}/${repo_cwd}/${file}"  # only use the last 10 chars of the sha
+    web_file_url_branch="${remote_url_https}/blob/${branch}${repo_cwd}/${file}"
+    web_file_url_sha="${remote_url_https}/blob/${short_sha}${repo_cwd}/${file}"  # only use the last 10 chars of the sha
     echo "File url (branch):   ${web_file_url_branch}"
     echo "File url (sha):      ${web_file_url_sha}"
   fi
