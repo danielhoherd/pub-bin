@@ -12,7 +12,7 @@ import typer
 
 app = typer.Typer(pretty_exceptions_enable=False, help=__doc__)
 
-local_timezone = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo
+local_timezone = datetime.datetime.now(datetime.UTC).astimezone().tzinfo
 
 nameservers = [
     "1.1.1.1",
