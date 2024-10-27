@@ -10,6 +10,16 @@ case $(uname -o) in
       [[ -n "$IP" ]] && echo "$IF $IP"
     done | sort
     ;;
+  GNU/Linux)
+    if ! command -v ip &>/dev/null ; then
+      echo "ip command not found. Please install iproute2."
+      exit 1
+    fi
+    for IF in /sys/class/net/* ; do
+      ip -4 addr show "${IF##*/}" |
+      awk -v IF="${IF##*/}" '/inet / {sub("/.*", "", $2) ; printf "%s %s\n", IF, $2}'
+    done
+    ;;
   *)
     echo "Unsupported"
     exit 1
