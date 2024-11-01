@@ -3,7 +3,6 @@
 # License: MIT
 """Output `helm list` with iso-8601 timestamp formatting. The output is sorted by the last deploy datetime."""
 
-
 import json
 import os
 import subprocess
