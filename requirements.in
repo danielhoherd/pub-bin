@@ -1,4 +1,5 @@
 cachier
+colorama
 dnspython
 humanize
 pendulum
