@@ -14,7 +14,11 @@ import pendulum
 import typer
 from pendulum.parsing.exceptions import ParserError
 
-app = typer.Typer(help=__doc__)
+app = typer.Typer(
+    help=__doc__,
+    no_args_is_help=True,
+    pretty_exceptions_enable=False,
+)
 
 
 def parser_error_exit():

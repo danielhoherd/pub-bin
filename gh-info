@@ -6,6 +6,7 @@
 "export GITHUB_TOKEN=foo" to authenticate for higher API rate limit.
 https://github.com/settings/tokens
 """
+
 import datetime
 from os import getenv
 from sys import exit
@@ -25,7 +26,11 @@ TZ = tz.gettz()
 gh = github.Github(login_or_token=getenv("GITHUB_TOKEN"))
 gh.per_page = 100
 
-app = typer.Typer(help=__doc__)
+app = typer.Typer(
+    help=__doc__,
+    no_args_is_help=True,
+    pretty_exceptions_enable=False,
+)
 
 
 def hash_org(args):
