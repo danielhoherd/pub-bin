@@ -22,6 +22,7 @@ class DestinationType(str, Enum):
 
 def convert_to_python(data: str):
     """Convert from a dotted notation string to json."""
+    data = data.removeprefix(".").removesuffix(".")
     if "." in data:
         key, _, value = data.partition(".")
         return {key: convert_to_python(value)}
