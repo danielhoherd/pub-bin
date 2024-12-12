@@ -74,4 +74,7 @@ def date(date: str, verbose: bool = typer.Option(False, "-v", "--verbose")):
 
 
 if __name__ == "__main__":
-    app()
+    try:
+        app()
+    except KeyboardInterrupt:
+        raise SystemExit(1)
