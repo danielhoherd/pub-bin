@@ -28,13 +28,13 @@ idna==3.10
     # via requests
 pendulum==3.0.0
     # via -r requirements.in
-portalocker==3.0.0
+portalocker==3.1.1
     # via cachier
 pycparser==2.22
     # via cffi
 pygithub==2.5.0
     # via -r requirements.in
-pygments==2.18.0
+pygments==2.19.0
     # via rich
 pyjwt==2.10.1
     # via pygithub
