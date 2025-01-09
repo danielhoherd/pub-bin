@@ -41,4 +41,4 @@ if [[ -n "$node" ]] ; then
   extra_args+=( '--overrides={ "spec": { "nodeSelector": { "kubernetes.io/hostname": "'"$node"'" } } }'  )
 fi
 
-kubectl run --rm "${extra_args[@]}" "${dry_or_interactive[@]}" "${USER//./-}-test-${epochtime}" --image="${IMAGE:-quay.io/danielhoherd/dw}" "${@:-bash}"
+kubectl run --rm "${extra_args[@]}" "${dry_or_interactive[@]}" "${USER//./-}-test-${epochtime}" --image="${IMAGE:-quay.io/danielhoherd/lw:debian}" "${@:-bash}"
