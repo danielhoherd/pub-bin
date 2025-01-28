@@ -2,6 +2,7 @@
 # Author: github.com/danielhoherd
 # License: MIT
 """Export and import Github repository labels."""
+
 import github  # PyGithub
 import typer
 import yaml

@@ -32,7 +32,7 @@ def add_item_to_row(item):
     table.add_row(revision, updated, age, status, chart, app_version, description)
 
 
-cmd = f'helm history {" ".join(sys.argv[1:])}'
+cmd = f"helm history {' '.join(sys.argv[1:])}"
 ret = subprocess.run([*cmd.split(), "-o", "json"], capture_output=True, check=False)
 if ret.returncode != 0:
     print(ret.stderr.decode())

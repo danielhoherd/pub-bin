@@ -70,13 +70,13 @@ def main(
     for row in output_data:
         table.add_row(
             row["namespace"],
-            f'{row["cpu_used"]:.2f}',
-            f'{row["cpu_limit"]:.2f}',
-            f'{row["cpu_utilization"] * 100 :.1f}%',
-            f'{row["cpu_free"]:.2f}',
+            f"{row['cpu_used']:.2f}",
+            f"{row['cpu_limit']:.2f}",
+            f"{row['cpu_utilization'] * 100:.1f}%",
+            f"{row['cpu_free']:.2f}",
             naturalsize(row["memory_used"]),
             naturalsize(row["memory_limit"]),
-            f'{row["memory_utilization"] * 100:.1f} %',
+            f"{row['memory_utilization'] * 100:.1f} %",
             naturalsize(row["memory_free"]),
         )
 

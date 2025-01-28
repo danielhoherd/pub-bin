@@ -6,6 +6,7 @@
 This was inspired Robin Barker's prename tool. It does not handle
 emoji's, so a modern implementation was needed.
 """
+
 import argparse
 import re
 from pathlib import Path

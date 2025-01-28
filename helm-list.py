@@ -40,7 +40,7 @@ def print_as_table(data):
 
 
 def main():
-    cmd = f'helm list {" ".join(sys.argv[1:])} -o json'
+    cmd = f"helm list {' '.join(sys.argv[1:])} -o json"
     ret = subprocess.run(cmd.split(), capture_output=True, check=False)
     if ret.returncode != 0:
         print(ret.stderr.decode())

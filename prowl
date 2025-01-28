@@ -2,6 +2,7 @@
 # Author: github.com/danielhoherd
 # License: MIT
 """Send a notification via the Prowlapp.com notification service."""
+
 import platform
 import select
 import sys
