@@ -2,7 +2,7 @@
 #    uv pip compile requirements.in -o requirements.txt
 cachier==3.1.2
     # via -r requirements.in
-certifi==2024.12.14
+certifi==2025.1.31
     # via requests
 cffi==1.17.1
     # via
@@ -18,7 +18,7 @@ commonmark==0.9.1
     # via rich
 cryptography==44.0.0
     # via pyjwt
-deprecated==1.2.15
+deprecated==1.2.18
     # via pygithub
 dnspython==2.7.0
     # via -r requirements.in
@@ -34,7 +34,7 @@ pycparser==2.22
     # via cffi
 pygithub==2.5.0
     # via -r requirements.in
-pygments==2.19.0
+pygments==2.19.1
     # via rich
 pyjwt==2.10.1
     # via pygithub
@@ -66,7 +66,7 @@ typing-extensions==4.12.2
     # via
     #   pygithub
     #   typer
-tzdata==2024.2
+tzdata==2025.1
     # via pendulum
 urllib3==2.3.0
     # via
@@ -74,5 +74,5 @@ urllib3==2.3.0
     #   requests
 watchdog==6.0.0
     # via cachier
-wrapt==1.17.0
+wrapt==1.17.2
     # via deprecated
