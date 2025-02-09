@@ -2,7 +2,6 @@ cachier
 colorama
 dnspython
 pendulum
-PyGithub
 PyYAML
 tabulate
 typer

@@ -1,13 +1,22 @@
 #!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">3.11"
+# dependencies = [
+#   "PyGithub",
+#   "typer",
+#   "yaml",
+# ]
+# ///
 # Author: github.com/danielhoherd
 # License: MIT
 """Export and import Github repository labels."""
 
-import github  # PyGithub
+import github
 import typer
 import yaml
 
-app = typer.Typer(help=__doc__)
+app = typer.Typer(help=__doc__, invoke_without_command=True)
 
 keepers = ("name", "color", "description")
 
@@ -18,12 +27,25 @@ def get_repo(repo: str, github_token: str) -> github.Repository.Repository:
         gh.per_page = 100
         repo = gh.get_repo(repo)
     except github.GithubException as e:
+        if e.status == 403:
+            typer.echo(f"Repo {repo} not found or you do not have access!")
+            typer.echo("Maybe check that your GITHUB_TOKEN has access token: https://github.com/settings/tokens")
+            raise typer.Exit(1)
         if e.status == 404:
             typer.echo(f"Repo {repo} not found!")
             raise typer.Exit(1)
         raise
 
     return repo
+
+
+@app.callback()
+def main(ctx: typer.Context):
+    """Show help if not command is given."""
+    if ctx.invoked_subcommand is None:
+        typer.echo("No command provided. Showing help text:")
+        typer.echo(ctx.get_help())
+        raise typer.Exit()
 
 
 @app.command()
