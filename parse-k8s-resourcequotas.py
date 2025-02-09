@@ -1,6 +1,16 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">3.11"
+# dependencies = [
+#   "kubernetes",
+#   "humanize",
+#   "rich",
+#   "typer",
+# ]
+# ///
 # Author: github.com/danielhoherd
 # License: MIT
+"""Show a table of useful data from a kubernetes resourcequota json."""
 
 import json
 from operator import itemgetter
