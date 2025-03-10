@@ -35,7 +35,6 @@ shift $((OPTIND - 1))
 if [[ -z "${*}" ]] ; then
   # https://endoflife.date/terraform
   versions=(
-    "1.7.5"   # 2024-03-13
     "1.8.5"   # 2024-06-05
     "1.9.8"   # 2024-10-16
     "1.10.5"  # 2025-01-22
