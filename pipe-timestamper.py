@@ -20,6 +20,7 @@ def timestamp_lines(show_delta: bool = typer.Option(None, help="Show the time de
     Most useful for slow streams.
     """
 
+    date_section_len = 0
     old = pendulum.now()
 
     if stdin.isatty():
@@ -31,9 +32,11 @@ def timestamp_lines(show_delta: bool = typer.Option(None, help="Show the time de
         new = pendulum.now()
         delta = (new - old).in_words()
         if show_delta:
-            print(f"{new.to_iso8601_string()} ({delta}) {line}")
+            date_section = f"{new.to_iso8601_string()} ({delta})"
         else:
-            print(f"{new.to_iso8601_string()} {line}")
+            date_section = f"{new.to_iso8601_string()}"
+        date_section_len = max(date_section_len, len(date_section))
+        print(f"{date_section:<{date_section_len}} {line}")
         old = new
 
 
