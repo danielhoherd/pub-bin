@@ -10,8 +10,7 @@ import subprocess
 import sys
 
 import pendulum
-from rich.console import Console
-from rich.table import Table
+from tabulate import tabulate
 
 try:
     if TZ := os.getenv("TZ"):
@@ -25,11 +24,19 @@ except pendulum.tz.zoneinfo.exceptions.InvalidTimezone:
     raise SystemExit(1)
 
 
-def add_item_to_row(item):
+def format_deployment(item):
+    """Reformat the deployment with an age field and a corrected timestamp field."""
     revision, updated, status, chart, app_version, description = (str(x) for x in item.values())
-    updated = pendulum.parse(updated).in_tz(tz).strftime("%FT%T%z")
-    age = (pendulum.now() - pendulum.parse(updated)).in_words()
-    table.add_row(revision, updated, age, status, chart, app_version, description)
+    updated = pendulum.parse(updated).replace(microsecond=0)
+    age = (pendulum.now().replace(microsecond=0) - updated).in_words()
+    return [revision, updated.strftime("%FT%H:%M:%S%z"), age, status, chart, app_version, description]
+
+
+def print_as_table(data):
+    """Print the data as a table."""
+    headers = ["Revision", "Updated", "Age", "Status", "Chart", "App Version", "Description"]
+    table = sorted([format_deployment(item) for item in data], key=lambda x: int(x[0]))
+    print(tabulate(table, headers=headers))
 
 
 cmd = f"helm history {' '.join(sys.argv[1:])}"
@@ -40,22 +47,9 @@ if ret.returncode != 0:
 
 try:
     data = json.loads(ret.stdout)
-except json.decoder.JSONDecodeError:
+except json.decoder.JSONDecodeError as e:
     # This is only known to happen with 'helm-history.py --help'
     print(ret.stdout.decode())
-    raise SystemExit(0)
+    raise SystemExit(0) from e
 
-table = Table(title=cmd, border_style="gray23", show_lines=True)
-table.add_column("Revision")
-table.add_column("Updated")
-table.add_column("Age")
-table.add_column("Status")
-table.add_column("Chart")
-table.add_column("App Version")
-table.add_column("Description")
-
-for item in data:
-    add_item_to_row(item)
-
-console = Console()
-console.print(table)
+print_as_table(data)
