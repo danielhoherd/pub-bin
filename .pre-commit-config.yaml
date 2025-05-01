@@ -64,10 +64,10 @@ repos:
     rev: 37614dad793bbbdea699c63c8b341ce1e2bf855a
     hooks:
       - id: CVE-2017-18342
+      - id: forbid-whitespace-in-filenames
       - id: remove-unicode-left-to-right-mark
       - id: remove-unicode-zero-width-non-breaking-spaces
       - id: remove-unicode-zero-width-space
       - id: replace-en-dashes
       - id: replace-greek-question-mark
       - id: replace-unicode-non-breaking-spaces
-      - id: forbid-whitespace-in-filenames
