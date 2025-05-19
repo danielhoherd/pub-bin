@@ -18,7 +18,7 @@ Usage:
     -h    Show this help text
     -s    Skip downloading default list, only download given versions
     -v    Enable verbose mode
-    -V    Show recent helm versions
+    -V    Show the last patch release for recent major.minor versions
     -x    set -o xtrace
 
 See Also:
@@ -35,10 +35,13 @@ print-verbose() {
 
 show_recent_helm_versions() {
   curl -s https://api.github.com/repos/helm/helm/releases |
-    jq -r -c '.[] | .tag_name + " " + .created_at' |
+    jq -r -c '.[] | "  /" + .tag_name + "/# " + .created_at' |
     grep -vE 'alpha|beta|rc' |
-    column -t |
-    sort
+    sed 's/v//' |
+    sort -br |
+    column -t -s/ |
+    awk -F. '!seen[$1,$2]++' |
+    sort -b
 }
 
 while getopts ':hsvVx' option ; do
@@ -56,10 +59,10 @@ shift $((OPTIND - 1))
 if [[ -z "${SKIP_DEFAULTS}" ]] ; then
   # https://helm.sh/docs/topics/version_skew/#helm
   helm3_releases=(
-    3.15.4 # 2024-08-14
-    3.16.4 # 2024-12-16
-    3.17.3 # 2025-04-09
-    3.18.0 # 2025-05-19
+    3.15.4  # 2024-08-14T14:34:39Z
+    3.16.4  # 2024-12-16T18:35:51Z
+    3.17.3  # 2025-04-09T17:44:16Z
+    3.18.0  # 2025-05-19T17:35:49Z
   )
 fi
 
