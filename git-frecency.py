@@ -106,16 +106,18 @@ def show_authors(paths, include_zero=False):
     # Prepare table header
     print(f"{'Score':>10}  {'Author':<25}  E-mail")
     print("-" * 55)
-    for a, score in sorted(frecencys, key=lambda x: -x[1]):
+    for author, score in sorted(frecencys, key=lambda x: -x[1]):
         if include_zero or score > 0:
             # Split "Name <email>"
-            if "<" in a and ">" in a:
-                name, email = a.split("<", 1)
+            if "<" in author and ">" in author:
+                name, email = author.split("<", 1)
                 email = email.strip(">")
                 name = name.strip()
             else:
-                name = a
+                name = author
                 email = ""
+            if len(name) > 25:
+                name = f"{name[:24]}…"
             score_str = f"{score:g}"
             print(f"{score_str:>10}  {name:<25}  {email}")
 
