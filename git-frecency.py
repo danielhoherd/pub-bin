@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# AUthor: github.com/danielhoherd (and GH copilog GPT-4.1)
+# Author: github.com/danielhoherd (and GH Copilot GPT-4.1)
 # License: MIT
 # Original inspiration: https://slack.engineering/a-faster-smarter-quick-switcher
 """Show frecency scores for git files and authors."""
@@ -8,7 +8,7 @@ import argparse
 import signal
 import subprocess
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
@@ -53,48 +53,68 @@ def parse_log_authors(log):
     return authors
 
 
-def compute_frecency(timestamps, now=None, freq_weight=1.0, rec_weight=1.0):
+def recency_weight(ts):
+    """Assigns a weight based on how recent the timestamp is."""
+    dt = datetime.fromtimestamp(ts)
+    now_dt = datetime.now()
+    delta = now_dt - dt
+
+    match True:
+        case _ if delta <= timedelta(hours=4):
+            return 10
+        case _ if delta <= timedelta(hours=24):
+            return 8
+        case _ if delta <= timedelta(hours=72):  # 3 days
+            return 6
+        case _ if delta <= timedelta(hours=168):  # 7 days
+            return 4
+        case _ if dt > now_dt - timedelta(days=90):
+            return 1
+        case _:
+            return 0
+
+
+def compute_frecency(timestamps):
+    """Sum the decay weights for all timestamps."""
     if not timestamps:
         return 0
-    now = now or int(datetime.now().timestamp())
-    freq = len(timestamps)
-    rec = max(1 / (now - ts + 1) for ts in timestamps)
-    return int(freq_weight * freq + rec_weight * rec)
+    return sum(recency_weight(ts) for ts in timestamps)
 
 
-def show_files(path):
+def show_files(path, include_zero=False):
     log = run_git_log(path)
     files = parse_log_files(log)
     files = {k: v for k, v in files.items() if Path(k).exists()}
-    now = int(datetime.now().timestamp())
-    frecencys = [(f, compute_frecency(ts, now=now)) for f, ts in files.items()]
+    frecencys = [(f, compute_frecency(ts)) for f, ts in files.items()]
     for f, score in sorted(frecencys, key=lambda x: -x[1]):
-        print(f"{score}\t{f}")
+        if include_zero or score > 0:
+            print(f"{score}\t{f}")
 
 
-def show_authors(path):
+def show_authors(path, include_zero=False):
     log = run_git_log(path)
     authors = parse_log_authors(log)
-    now = int(datetime.now().timestamp())
-    frecencys = [(a, compute_frecency(ts, now=now)) for a, ts in authors.items()]
+    frecencys = [(a, compute_frecency(ts)) for a, ts in authors.items()]
     # Prepare table header
     print(f"{'Score':>10}  {'Author':<25}  E-mail")
     print("-" * 55)
     for a, score in sorted(frecencys, key=lambda x: -x[1]):
-        # Split "Name <email>"
-        if "<" in a and ">" in a:
-            name, email = a.split("<", 1)
-            email = email.strip(">")
-            name = name.strip()
-        else:
-            name = a
-            email = ""
-        score_str = f"{score:g}"
-        print(f"{score_str:>10}  {name:<25}  {email}")
+        if include_zero or score > 0:
+            # Split "Name <email>"
+            if "<" in a and ">" in a:
+                name, email = a.split("<", 1)
+                email = email.strip(">")
+                name = name.strip()
+            else:
+                name = a
+                email = ""
+            score_str = f"{score:g}"
+            print(f"{score_str:>10}  {name:<25}  {email}")
 
 
 def main():
     parser = argparse.ArgumentParser(description="Git frecency tool")
+    parser.add_argument("--include-zero", action="store_true", help="Include files/authors with zero frecency score")
     subparsers = parser.add_subparsers(dest="command")
 
     files_parser = subparsers.add_parser("files", help="Show frecency-sorted files")
@@ -105,9 +125,9 @@ def main():
 
     args = parser.parse_args()
     if args.command == "files":
-        show_files(args.path)
+        show_files(args.path, include_zero=args.include_zero)
     elif args.command == "authors":
-        show_authors(args.path)
+        show_authors(args.path, include_zero=args.include_zero)
     else:
         parser.print_help()
 
