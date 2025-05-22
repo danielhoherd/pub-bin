@@ -5,9 +5,12 @@
 """Show frecency scores for git files and authors."""
 
 import argparse
+import signal
 import subprocess
 from collections import defaultdict
 from datetime import datetime
+
+signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 
 def run_git_log(path):
@@ -108,4 +111,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except (KeyboardInterrupt, BrokenPipeError):
+        pass
