@@ -14,8 +14,9 @@ from pathlib import Path
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 
-def run_git_log(path):
-    cmd = ["git", "log", "--pretty=format:%at|%an <%ae>", "--name-only", "--", path]
+def run_git_log(paths):
+    """Run git log on the given paths and return the output."""
+    cmd = ["git", "log", "--pretty=format:%at|%an <%ae>", "--name-only", "--", *paths]
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     out, err = p.communicate()
     if p.returncode != 0:
@@ -24,7 +25,10 @@ def run_git_log(path):
 
 
 def parse_log_files(log):
-    # Returns {file: [timestamps]}
+    """Parse the git log output and return a dictionary of files and their timestamps.
+
+    The return dict is structured as {file: [timestamps]}.
+    """
     files = defaultdict(list)
     lines = log.strip().split("\n")
     current_time = None
@@ -38,7 +42,9 @@ def parse_log_files(log):
 
 
 def parse_log_authors(log):
-    # Returns {author: [timestamps]}
+    """Parse the git log output and return a dictionary of authors and their timestamps.
+    The return dict is structured as {author: [timestamps]}.
+    """
     authors = defaultdict(list)
     lines = log.strip().split("\n")
     current_time = None
@@ -54,7 +60,7 @@ def parse_log_authors(log):
 
 
 def recency_weight(ts):
-    """Assigns a weight based on how recent the timestamp is."""
+    """Assign a weight based on how recent the timestamp is."""
     dt = datetime.fromtimestamp(ts)
     now_dt = datetime.now()
     delta = now_dt - dt
@@ -81,8 +87,9 @@ def compute_frecency(timestamps):
     return sum(recency_weight(ts) for ts in timestamps)
 
 
-def show_files(path, include_zero=False):
-    log = run_git_log(path)
+def show_files(paths, include_zero=False):
+    """Show frecency-sorted files."""
+    log = run_git_log(paths)
     files = parse_log_files(log)
     files = {k: v for k, v in files.items() if Path(k).exists()}
     frecencys = [(f, compute_frecency(ts)) for f, ts in files.items()]
@@ -91,8 +98,9 @@ def show_files(path, include_zero=False):
             print(f"{score}\t{f}")
 
 
-def show_authors(path, include_zero=False):
-    log = run_git_log(path)
+def show_authors(paths, include_zero=False):
+    """Show frecency-sorted authors."""
+    log = run_git_log(paths)
     authors = parse_log_authors(log)
     frecencys = [(a, compute_frecency(ts)) for a, ts in authors.items()]
     # Prepare table header
@@ -118,18 +126,20 @@ def main():
     subparsers = parser.add_subparsers(dest="command")
 
     files_parser = subparsers.add_parser("files", help="Show frecency-sorted files")
-    files_parser.add_argument("path", help="Directory or file to analyze")
+    files_parser.add_argument("paths", nargs="*", default=["."], help="Directories or files to analyze (default: .)")
 
     authors_parser = subparsers.add_parser("authors", help="Show frecency-sorted authors")
-    authors_parser.add_argument("path", help="Directory or file to analyze")
+    authors_parser.add_argument("paths", nargs="*", default=["."], help="Directories or files to analyze (default: .)")
 
     args = parser.parse_args()
-    if args.command == "files":
-        show_files(args.path, include_zero=args.include_zero)
-    elif args.command == "authors":
-        show_authors(args.path, include_zero=args.include_zero)
-    else:
-        parser.print_help()
+
+    match args.command:
+        case "files":
+            show_files(args.paths, include_zero=args.include_zero)
+        case "authors":
+            show_authors(args.paths, include_zero=args.include_zero)
+        case _:
+            parser.print_help()
 
 
 if __name__ == "__main__":
