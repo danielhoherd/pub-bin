@@ -9,6 +9,7 @@ import signal
 import subprocess
 from collections import defaultdict
 from datetime import datetime
+from pathlib import Path
 
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
@@ -64,6 +65,7 @@ def compute_frecency(timestamps, now=None, freq_weight=1.0, rec_weight=1.0):
 def show_files(path):
     log = run_git_log(path)
     files = parse_log_files(log)
+    files = {k: v for k, v in files.items() if Path(k).exists()}
     now = int(datetime.now().timestamp())
     frecencys = [(f, compute_frecency(ts, now=now)) for f, ts in files.items()]
     for f, score in sorted(frecencys, key=lambda x: -x[1]):
