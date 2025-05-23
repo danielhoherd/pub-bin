@@ -21,8 +21,8 @@ from pathlib import Path
 import whisper
 
 
-def transcribe_file(model, movie_path):
-    result = model.transcribe(str(movie_path))
+def transcribe_file(model, file_path):
+    result = model.transcribe(str(file_path))
     return result["text"] if isinstance(result, dict) and "text" in result else result
 
 
@@ -53,15 +53,15 @@ def main():
         print(f"Error loading model '{args.model}': {e}", file=sys.stderr)
         sys.exit(1)
 
-    for movie in args.files:
-        print(f"Transcribing: {movie}")
+    for file in args.files:
+        print(f"Transcribing: {file}")
         try:
-            text = transcribe_file(model, movie)
-            output_path = get_output_path(movie)
+            text = transcribe_file(model, file)
+            output_path = get_output_path(file)
             output_path.write_text(text, encoding="utf-8")
             print(f"Transcription written to: {output_path}")
         except Exception as e:  # noqa: BLE001
-            print(f"Failed to transcribe {movie}: {e}", file=sys.stderr)
+            print(f"Failed to transcribe {file}: {e}", file=sys.stderr)
 
 
 if __name__ == "__main__":
