@@ -9,6 +9,9 @@
 # License: MIT
 """Transcribe media files file using OpenAI's Whisper model.
 
+This script transcribes audio and video files using the Whisper model from
+OpenAI, and creates a .txt file next to the source media file.
+
 See https://github.com/openai/whisper for more information."""
 
 import argparse
