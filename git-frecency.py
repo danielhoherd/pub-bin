@@ -11,6 +11,11 @@ from collections import defaultdict
 from datetime import datetime, timedelta
 from pathlib import Path
 
+git_root_dir = next(iter([x for x in Path("fake-subdir").resolve().parents if (x / ".git").is_dir()]), None)
+
+if not git_root_dir:
+    raise SystemExit(f"This tool runs in a git repository, and your current working directory {Path.cwd()} is not one.")
+
 signal.signal(signal.SIGPIPE, signal.SIG_DFL)
 
 
@@ -91,7 +96,7 @@ def show_files(paths, include_zero=False):
     """Show frecency-sorted files."""
     log = run_git_log(paths)
     files = parse_log_files(log)
-    files = {k: v for k, v in files.items() if Path(k).exists()}
+    files = {k: v for k, v in files.items() if (git_root_dir / k).exists()}
     frecencys = [(f, compute_frecency(ts)) for f, ts in files.items()]
     for f, score in sorted(frecencys, key=lambda x: -x[1]):
         if include_zero or score > 0:
