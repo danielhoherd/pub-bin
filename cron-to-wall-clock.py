@@ -9,7 +9,7 @@
 # License: MIT
 """Show scheduled cron job entries as wall clock times.
 
-Usage: crontab -l | cron-to-wall-clock.py [--since ISO8601] [--job-run-count N]
+Usage: crontab -l | cron-to-wall-clock.py [--start ISO8601] [--job-run-count N]
 """
 
 import argparse
@@ -26,7 +26,7 @@ if sys.stdin.isatty():
 def parse_args():
     parser = argparse.ArgumentParser(description="Show scheduled cron job run times as wall clock times.")
     parser.add_argument(
-        "--since",
+        "--start",
         help="Start time for calculations, in ISO8601 format (e.g., 2025-06-05T10:00:00 or 2025-06-05T10:00:00-04:00). Defaults to now.",
         default=None,
     )
@@ -39,14 +39,14 @@ def parse_args():
 def main():
     args = parse_args()
     # Python 3.13+: datetime.now().astimezone() is always timezone aware and local
-    if args.since:
+    if args.start:
         try:
-            start_time = datetime.fromisoformat(args.since)
+            start_time = datetime.fromisoformat(args.start)
             if start_time.tzinfo is None:
                 # Assign system local timezone if not provided
                 start_time = start_time.astimezone()
         except ValueError as e:
-            print(f"Invalid --since value: {args.since} ({e})", file=sys.stderr)
+            print(f"Invalid --start value: {args.start} ({e})", file=sys.stderr)
             sys.exit(1)
     else:
         start_time = datetime.now().astimezone()
