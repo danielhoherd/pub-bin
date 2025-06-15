@@ -2,7 +2,7 @@
 #    uv pip compile requirements.in -o requirements.txt
 cachier==3.1.2
     # via -r requirements.in
-click==8.1.8
+click==8.2.1
     # via typer
 colorama==0.4.6
     # via -r requirements.in
@@ -14,7 +14,7 @@ mdurl==0.1.2
     # via markdown-it-py
 pendulum==3.1.0
     # via -r requirements.in
-portalocker==3.1.1
+portalocker==3.2.0
     # via cachier
 pygments==2.19.1
     # via rich
@@ -30,9 +30,9 @@ six==1.17.0
     # via python-dateutil
 tabulate==0.9.0
     # via -r requirements.in
-typer==0.15.3
+typer==0.16.0
     # via -r requirements.in
-typing-extensions==4.13.2
+typing-extensions==4.14.0
     # via typer
 tzdata==2025.2
     # via pendulum
