@@ -7,6 +7,7 @@ To enable tracking, create a crontab that runs this script with no args every mi
 """
 
 import argparse
+import contextlib
 import os
 import sqlite3
 import subprocess
@@ -46,14 +47,12 @@ def check_for_zoom_meeting():
 
     The current implementation Uses lsof to find UDP connections related to zoom.us.
     """
-    try:
+    with contextlib.suppress(subprocess.CalledProcessError):
         cmd = ["lsof", "-i", "4UDP"]
-        result = subprocess.run(cmd, stdout=subprocess.PIPE, text=True, check=True)
+        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, check=True)
         for line in result.stdout.splitlines():
             if "zoom.us:" in line:
                 return 1  # Found a connection
-    except subprocess.CalledProcessError:
-        pass
     return 0  # No connection found
 
 
