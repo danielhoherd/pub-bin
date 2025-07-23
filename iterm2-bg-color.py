@@ -33,7 +33,7 @@ def random_vibrant_color(low, high):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="iTerm2 CLI utilities")
+    parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("color", nargs="?", help="Background color in hex format, e.g. #1e1e1e")
     parser.add_argument("--random", action="store_true", help="Set a random vibrant background color")
     parser.add_argument("--low", type=int, default=2, help="Lower bound (inclusive) for lightness (0-100, default: 2)")
