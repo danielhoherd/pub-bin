@@ -4,6 +4,7 @@
 """Change the background color of an iTerm2 terminal window."""
 
 import argparse
+import colorsys
 import random
 import re
 import sys
@@ -19,35 +20,36 @@ def hex_to_rgb(hex_color):
 
 def set_iterm2_bg(hex_color):
     r, g, b = hex_to_rgb(hex_color)
-    # Print the escape code for iTerm2 to set the background color
     print(f"\033]11;rgb:{r}/{g}/{b}\a", end="")
 
 
-def random_color(low=8, high=24):
-    """Generate a random hex color where each component is in [low, high]."""
-    return "#{:02x}{:02x}{:02x}".format(*(random.randint(low, high) for _ in range(3)))
+def random_vibrant_color(low, high):
+    """Generate a random vibrant hex color, with lightness in [low, high]%."""
+    h = random.random()  # Random hue [0, 1]
+    l = random.uniform(low / 100.0, high / 100.0)  # noqa: E741
+    s = random.uniform(0.8, 1.0)  # High saturation for vibrance
+    r, g, b = colorsys.hls_to_rgb(h, l, s)
+    return f"#{int(r * 255):02x}{int(g * 255):02x}{int(b * 255):02x}"
 
 
 def main():
     parser = argparse.ArgumentParser(description="iTerm2 CLI utilities")
     parser.add_argument("color", nargs="?", help="Background color in hex format, e.g. #1e1e1e")
-    parser.add_argument("--random", action="store_true", help="Set a random background color")
-    parser.add_argument("--low", type=int, default=8, help="Lower bound (inclusive) for random RGB components (0-255, default: 8)")
-    parser.add_argument(
-        "--high", type=int, default=24, help="Upper bound (inclusive) for random RGB components (0-255, default: 24)"
-    )
+    parser.add_argument("--random", action="store_true", help="Set a random vibrant background color")
+    parser.add_argument("--low", type=int, default=2, help="Lower bound (inclusive) for lightness (0-100, default: 2)")
+    parser.add_argument("--high", type=int, default=5, help="Upper bound (inclusive) for lightness (0-100, default: 5)")
 
     args = parser.parse_args()
 
-    # Validate --low and --high
+    # Validate --low and --high for lightness
     if args.random:
-        if not (0 <= args.low <= 255):
-            parser.error("--low must be between 0 and 255")
-        if not (0 <= args.high <= 255):
-            parser.error("--high must be between 0 and 255")
+        if not (0 <= args.low <= 100):
+            parser.error("--low must be between 0 and 100")
+        if not (0 <= args.high <= 100):
+            parser.error("--high must be between 0 and 100")
         if args.low > args.high:
             parser.error("--low cannot be greater than --high")
-        color = random_color(args.low, args.high)
+        color = random_vibrant_color(args.low, args.high)
     elif args.color:
         color = args.color
     else:
