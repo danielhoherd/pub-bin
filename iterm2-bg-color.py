@@ -41,8 +41,9 @@ def main():
 
     args = parser.parse_args()
 
-    # Validate --low and --high for lightness
     if args.random:
+        if args.color:
+            parser.error("You cannot specify a color when using --random")
         if not (0 <= args.low <= 100):
             parser.error("--low must be between 0 and 100")
         if not (0 <= args.high <= 100):
