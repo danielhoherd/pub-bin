@@ -12,9 +12,9 @@ repos:
       - id: prettier
         args: ["--print-width=135"]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.11.7"
+    rev: "v0.12.7"
     hooks:
-      - id: ruff
+      - id: ruff-check
         args:
           - "--fix"
           # - "--unsafe-fixes"
@@ -57,7 +57,7 @@ repos:
       - id: remove-tabs
         exclude_types: [makefile, binary]
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.37.0
+    rev: v1.37.1
     hooks:
       - id: yamllint
   - repo: https://github.com/danielhoherd/pre-commit-hooks
