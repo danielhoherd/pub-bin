@@ -53,7 +53,7 @@ def break_json_lines(s, maxlen):
 
 
 def main():
-    import argparse
+    import argparse  # noqa: PLC0415
 
     parser = argparse.ArgumentParser(description="Output minified JSON with line breaks at N chars, only after allowed characters.")
     parser.add_argument("input", nargs="?", type=argparse.FileType("r"), default=sys.stdin, help="Input JSON file (or stdin).")
