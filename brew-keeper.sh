@@ -5,7 +5,8 @@
 
 [[ "${OSTYPE}" =~ ^darwin ]]|| { echo "ABORT: This is meant for OS X." ; exit 1 ; }
 
-sudo chown -R "${USER}" "$(brew --prefix)"/{bin,share} && \
+find "$(brew --prefix)"/{bin,share} ! -user "$USER" -print0 |
+  xargs -0 -r sudo chown "$USER" && \
 ( set -x ;
   brew doctor ;
   brew update ;
