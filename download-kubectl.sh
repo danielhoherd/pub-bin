@@ -17,7 +17,7 @@ Usage:
 
 See Also:
     https://github.com/kubernetes/kubectl/tags
-    curl --silent https://api.github.com/repos/kubernetes/kubectl/tags?per_page=100 | jq -r '.[].name' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V
+    curl --silent https://api.github.com/repos/kubernetes/kubectl/tags?per_page=100 | jq -r '.[].name' | sort -Vr | awk -F. '!seen[\$1,\$2]++'
 
 Version EOLs:
     AKS: https://docs.microsoft.com/en-us/azure/aks/supported-kubernetes-versions#aks-kubernetes-release-calendar
@@ -36,20 +36,19 @@ print-verbose() {
 
 while getopts ':hvx' option ; do
   case "${option}" in
-    h) usage ; exit 0 ;;
+    h) usage "$@" ; exit 0 ;;
     v) VERBOSE=1 ;;
     x) set -x ;;
-    *) echo "ERROR: Unknown option: -${OPTARG}" ; usage ; exit 1 ;;
+    *) echo "ERROR: Unknown option: -${OPTARG}" ; usage "$@" ; exit 1 ;;
   esac
 done
 shift $((OPTIND - 1))
 
 kubectl_releases=(
-  1.29.15
-  1.30.13
-  1.31.9
-  1.32.5
-  1.33.1
+  1.30.14
+  1.31.11
+  1.32.7
+  1.33.3
 )
 
 case "${HOSTTYPE}" in
