@@ -8,7 +8,7 @@ colorama==0.4.6
     # via -r requirements.in
 dnspython==2.7.0
     # via -r requirements.in
-markdown-it-py==3.0.0
+markdown-it-py==4.0.0
     # via rich
 mdurl==0.1.2
     # via markdown-it-py
@@ -22,7 +22,7 @@ python-dateutil==2.9.0.post0
     # via pendulum
 pyyaml==6.0.2
     # via -r requirements.in
-rich==14.0.0
+rich==14.1.0
     # via typer
 shellingham==1.5.4
     # via typer
@@ -30,7 +30,7 @@ six==1.17.0
     # via python-dateutil
 tabulate==0.9.0
     # via -r requirements.in
-typer==0.16.0
+typer==0.16.1
     # via -r requirements.in
 typing-extensions==4.14.1
     # via typer
