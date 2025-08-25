@@ -8,7 +8,7 @@ import typer
 
 
 def timestamp_lines(separator: str = typer.Option(" ", "--separator", "-s"), file: str = typer.Argument(None)):
-    """Takes a stream from stdin where the first token is a datestamp and inserts the time delta
+    """Take a stream from stdin where the first token is a datestamp and insert the time delta
     between the previous timestamp and the current one.
     """
 
@@ -26,7 +26,7 @@ def timestamp_lines(separator: str = typer.Option(" ", "--separator", "-s"), fil
         datestamp = line.split()[0]
         new = pendulum.parse(datestamp)
         if not old:
-            old = new
+            old = pendulum.now()
         delta = (new - old).in_words()
         print(f"{new.to_iso8601_string()}{separator}({delta}){separator}{line.removeprefix(datestamp)}")
         old = new
