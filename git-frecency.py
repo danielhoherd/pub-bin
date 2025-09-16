@@ -133,10 +133,10 @@ def main():
     subparsers = parser.add_subparsers(dest="command")
 
     files_parser = subparsers.add_parser("files", help="Show frecency-sorted files")
-    files_parser.add_argument("paths", nargs="*", default=["."], help="Directories or files to analyze (default: .)")
+    files_parser.add_argument("paths", nargs="*", default=["."], help="Directories or files to analyze (default: %(default)s)")
 
     authors_parser = subparsers.add_parser("authors", help="Show frecency-sorted authors")
-    authors_parser.add_argument("paths", nargs="*", default=["."], help="Directories or files to analyze (default: .)")
+    authors_parser.add_argument("paths", nargs="*", default=["."], help="Directories or files to analyze (default: %(default)s)")
 
     args = parser.parse_args()
 

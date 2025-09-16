@@ -68,7 +68,7 @@ def main():
     parser.add_argument(
         "--model",
         default="base",
-        help="Whisper model to use (default: base)",
+        help="Whisper model to use (default: %(default)s)",
     )
     parser.add_argument(
         "--srt",

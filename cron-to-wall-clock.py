@@ -18,10 +18,6 @@ from datetime import datetime
 
 from croniter import croniter
 
-if sys.stdin.isatty():
-    print("ERROR: This script expects crontabs as an input, EG: 'crontab -l | cron-to-wall-clock.py'", file=sys.stderr)
-    sys.exit(1)
-
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Show scheduled cron job run times as wall clock times.")
@@ -31,13 +27,18 @@ def parse_args():
         default=None,
     )
     parser.add_argument(
-        "--job-run-count", "-n", type=int, default=1, help="Number of upcoming runs to show per job entry (default: 1)."
+        "--job-run-count", "-n", type=int, default=1, help="Number of upcoming runs to show per job entry (default: %(default)s)."
     )
     return parser.parse_args()
 
 
-def main():
+def main():  # noqa: C901
     args = parse_args()
+
+    if sys.stdin.isatty():
+        print("ERROR: This script expects crontabs as an input, EG: 'crontab -l | cron-to-wall-clock.py'", file=sys.stderr)
+        sys.exit(1)
+
     # Python 3.13+: datetime.now().astimezone() is always timezone aware and local
     if args.start:
         try:

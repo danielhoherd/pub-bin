@@ -57,7 +57,7 @@ def main():
 
     parser = argparse.ArgumentParser(description="Output minified JSON with line breaks at N chars, only after allowed characters.")
     parser.add_argument("input", nargs="?", type=argparse.FileType("r"), default=sys.stdin, help="Input JSON file (or stdin).")
-    parser.add_argument("-n", "--max-line-length", type=int, default=80, help="Maximum line length. (default 80)")
+    parser.add_argument("-n", "--max-line-length", type=int, default=80, help="Maximum line length. (default: %(default)s)")
     args = parser.parse_args()
 
     # Read and load JSON
