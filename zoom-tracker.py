@@ -26,7 +26,7 @@ def initialize_database():
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS zoom_logs (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                timestamp TEXT NOT NULL,
+                timestamp TEXT NOT NULL UNIQUE,
                 result INTEGER NOT NULL
             )
         """)
@@ -58,12 +58,12 @@ def check_for_zoom_meeting():
 
 def log_to_database(result):
     """Log the current datetime and result to the database."""
-    timestamp = datetime.now(UTC).isoformat()
+    timestamp = datetime.now(UTC).isoformat(timespec="minutes")
     with sqlite3.connect(DB_PATH) as conn:
         cursor = conn.cursor()
         cursor.execute(
             """
-            INSERT INTO zoom_logs (timestamp, result)
+            INSERT OR REPLACE INTO zoom_logs (timestamp, result)
             VALUES (?, ?)
         """,
             (timestamp, result),
@@ -131,4 +131,5 @@ if __name__ == "__main__":
 
     else:
         result = check_for_zoom_meeting()
-        log_to_database(result)
+        if result:
+            log_to_database(result)
