@@ -5,9 +5,10 @@
 
 See also: https://www.whatsmydns.net"""
 
+import asyncio
 import datetime
 
-import dns.resolver
+import dns.asyncresolver
 import typer
 
 app = typer.Typer(pretty_exceptions_enable=False, help=__doc__)
@@ -34,16 +35,16 @@ nameservers = [
 ]
 
 
-def lookup_host_in_nameserver(host, nameserver):
-    resolver = dns.resolver.Resolver()
+async def async_lookup_host_in_nameserver(host, nameserver):
+    resolver = dns.asyncresolver.Resolver()
     resolver.nameservers = [nameserver]
     try:
-        resolver.resolve(host, lifetime=2.0)
-        return "•"
+        await resolver.resolve(host, lifetime=2.0)
+        return [nameserver, "•"]
     except (dns.resolver.NXDOMAIN, dns.resolver.NoAnswer):
-        return "x"
+        return [nameserver, "x"]
     except dns.resolver.LifetimeTimeout:
-        return "?"
+        return [nameserver, "?"]
 
 
 @app.command()
@@ -51,20 +52,24 @@ def main(
     hosts: list[str] = typer.Argument(..., help="Host to check"),
     verbose: bool = typer.Option(False, "--verbose", "-v", help="Verbose mode"),
 ):
+    asyncio.run(async_main(hosts, verbose))
+
+
+async def async_main(hosts, verbose):
     now = datetime.datetime.now(local_timezone).strftime("%FT%T%z")
     host_column_length = max(len(host) for host in hosts)
     for host in hosts:
-        print(f"{now} {host:>{host_column_length}}", end=" ")
         failures = []
-        for nameserver in nameservers:
-            res = lookup_host_in_nameserver(host, nameserver)
-            if res == "x":
-                failures.append(nameserver)
-            print(lookup_host_in_nameserver(host, nameserver), end="", flush=True)
+        results = await asyncio.gather(*(async_lookup_host_in_nameserver(host, ns) for ns in nameservers))
+        print(f"{now} {host:>{host_column_length}}", end=" ")
+        for result in results:
+            print(result[1], end="")
+        for result, nameserver in zip(results, nameservers):
+            if result[1] in ["x", "?"]:
+                failures.append(result)
         if verbose:
             for failure in failures:
-                print(f"\n  {host} failed on {failure}", end="")
-
+                print(f"\n  Failure: {host} {failure[1]} {failure[0]:<15}", end="")
         print()
 
 
