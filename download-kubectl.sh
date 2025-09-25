@@ -46,9 +46,10 @@ shift $((OPTIND - 1))
 
 kubectl_releases=(
   1.30.14
-  1.31.11
-  1.32.7
-  1.33.3
+  1.31.13
+  1.32.9
+  1.33.5
+  1.34.1
 )
 
 case "${HOSTTYPE}" in
