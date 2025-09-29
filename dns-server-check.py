@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-# Author: github.com/danielhoherd
+# Author: github.com/danielhoherd, copilot GPT-4.1
 # License: MIT
-"""Check a hostname against a list of known public DNS resolvers and return a single-character result status.
+"""Check a hostname against a list of DNS resolvers and return a single-character result status.
 
 See also: https://www.whatsmydns.net"""
 
@@ -15,7 +15,7 @@ app = typer.Typer(pretty_exceptions_enable=False, help=__doc__)
 
 local_timezone = datetime.datetime.now(datetime.UTC).astimezone().tzinfo
 
-nameservers = [
+DEFAULT_NAMESERVERS = [
     "1.1.1.1",
     "4.2.2.1",
     "4.2.2.2",
@@ -35,6 +35,13 @@ nameservers = [
 ]
 
 
+def parse_nameservers(value: str) -> list[str]:
+    """Transform a comma-separated string into a list of nameservers, dropping empty values."""
+    if not value:
+        return DEFAULT_NAMESERVERS
+    return [ns.strip() for ns in value.split(",") if ns.strip()]
+
+
 async def async_lookup_host_in_nameserver(host, nameserver):
     resolver = dns.asyncresolver.Resolver()
     resolver.nameservers = [nameserver]
@@ -51,22 +58,26 @@ async def async_lookup_host_in_nameserver(host, nameserver):
 def main(
     hosts: list[str] = typer.Argument(..., help="Host to check"),
     verbose: bool = typer.Option(False, "--verbose", "-v", help="Verbose mode"),
+    servers: str = typer.Option(
+        "",
+        "--servers",
+        "-s",
+        help="Comma-separated list of DNS servers (default: well-known public resolvers)",
+        callback=parse_nameservers,
+    ),
 ):
-    asyncio.run(async_main(hosts, verbose))
+    asyncio.run(async_main(hosts, verbose, servers))
 
 
-async def async_main(hosts, verbose):
+async def async_main(hosts, verbose, servers):
     now = datetime.datetime.now(local_timezone).strftime("%FT%T%z")
     host_column_length = max(len(host) for host in hosts)
     for host in hosts:
-        failures = []
-        results = await asyncio.gather(*(async_lookup_host_in_nameserver(host, ns) for ns in nameservers))
+        results = await asyncio.gather(*(async_lookup_host_in_nameserver(host, ns) for ns in servers))
         print(f"{now} {host:>{host_column_length}}", end=" ")
         for result in results:
             print(result[1], end="")
-        for result, nameserver in zip(results, nameservers):
-            if result[1] in ["x", "?"]:
-                failures.append(result)
+        failures = [result for result, server in zip(results, servers) if result[1] in ["x", "?"]]
         if verbose:
             for failure in failures:
                 print(f"\n  Failure: {host} {failure[1]} {failure[0]:<15}", end="")
